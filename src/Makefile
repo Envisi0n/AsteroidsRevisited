@@ -2,6 +2,7 @@
 # Makefile for Asteroids
 
 SFMLFLAGS = -LSFML/lib -lsfml-graphics -lsfml-window -lsfml-system
+OTHER = -static-libgcc -static-libstdc++
 EXECS = test
 
 all: mingw
@@ -12,7 +13,7 @@ mingw: test.exe
 
 
 test.exe: test.cpp
-	$(CPP) $(CPPFLAGS) -o test.exe test.cpp $(SFMLFLAGS)
+	$(CPP) $(OTHER) $(CPPFLAGS) -o test.exe test.cpp $(SFMLFLAGS)
 	
 clean:
 	rm -rf $(EXECS)
