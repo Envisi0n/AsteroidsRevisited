@@ -3,7 +3,7 @@
 
 SFMLFLAGS = -LSFML/lib -lsfml-graphics -lsfml-window -lsfml-system
 OTHER = -static-libgcc -static-libstdc++
-EXECS = test
+EXECS = test.exe
 
 all: mingw
 
@@ -13,7 +13,7 @@ mingw: test.exe
 
 
 test.exe: test.cpp
-	$(CPP) $(OTHER) $(CPPFLAGS) -o test.exe test.cpp $(SFMLFLAGS)
+	$(CPP) $(CPPFLAGS) -o test.exe test.cpp $(SFMLFLAGS) $(OTHER)
 	
 clean:
 	rm -rf $(EXECS)
