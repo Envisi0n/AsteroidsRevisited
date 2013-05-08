@@ -6,7 +6,7 @@ SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 OTHER = -static-libgcc -static-libstdc++
 EXECS = test.exe test
 
-SHELL = /usr/bin/env sh
+SHELL = sh
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
