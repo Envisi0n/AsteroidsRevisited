@@ -22,7 +22,7 @@ all: mingw
 endif
 
 windows: CPP=i686-w64-mingw32-g++
-windows: CPPFLAGS = -O0 -Wall -L SFML/lib -I SFML/include 
+windows: CPPFLAGS = -O0 -g3 -Wall -L SFML/lib -I SFML/include 
 windows: test.exe
 
 mingw: CPP=g++
