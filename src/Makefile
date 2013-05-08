@@ -21,7 +21,7 @@ all: mingw
 
 endif
 
-windows: CPP=i686-w64-mingw32-g++
+windows: CPP=i586-mingw32msvc-g++
 windows: CPPFLAGS = -O0 -g3 -Wall -L SFML/lib -I SFML/include 
 windows: test.exe
 
