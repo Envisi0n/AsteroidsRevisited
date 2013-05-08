@@ -2,7 +2,7 @@
 # Makefile for Asteroids
 
 SFMLFLAGS = -LSFML/lib -lsfml-graphics -lsfml-window -lsfml-system
-OTHER = -static-libgcc -static libstdc++
+OTHER = -static-libgcc -static-libstdc++
 EXECS = test.exe
 
 all: mingw
