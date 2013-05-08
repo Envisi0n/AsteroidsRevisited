@@ -7,7 +7,7 @@ EXECS = test.exe
 
 all: mingw
 
-windows: CPP=i586-mingw32msvc-g++
+windows: CPP=i686-w64-mingw32-g++
 windows: CPPFLAGS = -O0 -g3 -Wall -I SFML/include 
 windows: test.exe
 
