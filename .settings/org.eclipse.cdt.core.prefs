@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.627982184/PATH/delimiter=;
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.627982184/PATH/operation=append
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.627982184/PATH/value=C\:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C\:\\Program Files (x86)\\ATI Stream\\bin\\x86_64;C\:\\Program Files (x86)\\ATI Stream\\bin\\x86;C\:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C\:\\Windows\\system32;C\:\\Windows;C\:\\Windows\\System32\\Wbem;C\:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C\:\\Program Files (x86)\\Common Files\\Roxio Shared\\DLLShared\\;C\:\\Program Files (x86)\\ATI Technologies\\ATI.ACE\\Core-Static;C\:\\Program Files (x86)\\doxygen\\bin;C\:\\Program Files (x86)\\QuickTime\\QTSystem\\;C\:\\Program Files (x86)\\CMake 2.8\\bin;C\:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C\:\\MinGW\\bin;C\:\\MinGW\\MSYS\\1.0\\bin
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.627982184/append=true
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.627982184/appendContributed=true
