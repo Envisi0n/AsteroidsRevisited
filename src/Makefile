@@ -6,20 +6,22 @@ SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 OTHER = -static-libgcc -static-libstdc++
 EXECS = test.exe test
 
-SHELL = sh
-UNAME := $(shell uname)
+#SHELL = sh
+#UNAME := $(shell uname)
 
-ifeq ($(UNAME), Linux)
+#ifeq ($(UNAME), Linux)
+#
+#all: linux
+#
+#endif
+#
+#ifeq ($(UNAME), MINGW32_NT-6.1)
+#
+#all: mingw
 
-all: linux
-
-endif
-
-ifeq ($(UNAME), MINGW32_NT-6.1)
+#endif
 
 all: mingw
-
-endif
 
 windows: CPP=i686-w64-mingw32-g++
 windows: CPPFLAGS = -O0 -g3 -Wall -L SFML/lib -I SFML/include 
