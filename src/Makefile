@@ -2,14 +2,18 @@
 # Makefile for Asteroids
 #
 
-SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
 OTHER = -static-libgcc -static-libstdc++
-EXECS = test.exe test
+EXECS = test.exe test testClient testServer
+OBJS = Client.o Server.o
 
 SHELL = sh
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
+
+CPP=g++
+CPPFLAGS = -O0 -g3 -Wall
 
 all: linux
 
@@ -33,11 +37,25 @@ linux: CPP=g++
 linux: CPPFLAGS = -O0 -g3 -Wall
 linux: test
 
-test.exe: test.cpp
-	$(CPP) $(CPPFLAGS) -o test.exe test.cpp $(SFMLFLAGS) $(OTHER)
+Client.o: Client.hpp Client.cpp
+	$(CPP) $(CPPFLAGS) -c -o Client.o Client.cpp
 
-test: test.cpp
-	$(CPP) $(CPPFLAGS) -o test test.cpp $(SFMLFLAGS) $(OTHER)
+Server.o: Server.hpp Server.cpp
+	$(CPP) $(CPPFLAGS) -c -o Server.o Server.cpp
+
+test.exe: test.cpp $(OBJS)
+	$(CPP) $(CPPFLAGS) -o test.exe test.cpp $(OBJS) $(SFMLFLAGS) $(OTHER)
+
+test: test.cpp $(OBJS)
+	$(CPP) $(CPPFLAGS) -o test test.cpp $(OBJS) $(SFMLFLAGS) $(OTHER)
+
+
+# Tests
+testClient: Client.o testClient.cpp
+	$(CPP) $(CPPFLAGS) -o testClient testClient.cpp Client.o $(SFMLFLAGS) $(OTHER)
+
+testServer: Server.o testServer.cpp
+	$(CPP) $(CPPFLAGS) -o testServer testServer.cpp Server.o $(SFMLFLAGS) $(OTHER)
 
 clean:
-	rm -rf $(EXECS)
+	rm -rf $(EXECS) $(OBJS)
