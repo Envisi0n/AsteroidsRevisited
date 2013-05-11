@@ -17,12 +17,17 @@ CGame::~CGame() {
 
 void CGame::init() {
 
+	// Init the background.
 	background.setSize(sf::Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
 
 	if (!backgroundImage.loadFromFile("images/background.png"))
-		return;
+		return; // Error message here.
 
 	background.setTexture(&backgroundImage);
+
+	// Init the Main Menu
+
+
 }
 
 void CGame::run() {
