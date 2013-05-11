@@ -29,7 +29,8 @@ void CGame::init() {
 	background.setTexture(&backgroundImage);
 
 	// Init the Main Menu
-
+	gameMenu.addButton(50,0, "images/title.gif");
+	gameMenu.addButton(283.5, 100, "images/sub2.gif");
 	gameMenu.addButton(SCREEN_WIDTH/2,SCREEN_HEIGHT/2, "images/test.png");
 
 	setState(MENU);
