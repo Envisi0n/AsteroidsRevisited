@@ -17,6 +17,9 @@ CGame::~CGame() {
 
 void CGame::init() {
 
+	if( !icon.loadFromFile("images/icon.png"))
+		return;
+
 	// Init the background.
 	background.setSize(sf::Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
 
@@ -35,9 +38,10 @@ void CGame::init() {
 
 void CGame::run() {
 
+	// Init window
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",
 			sf::Style::Titlebar | sf::Style::Close);
-
+	window.setIcon(96,96,icon.getPixelsPtr());
 
 	while (window.isOpen()) {
 		sf::Event event;
