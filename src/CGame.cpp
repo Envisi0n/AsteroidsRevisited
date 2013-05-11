@@ -28,6 +28,9 @@ void CGame::init() {
 	// Init the Main Menu
 
 
+
+	setState(MENU);
+
 }
 
 void CGame::run() {
@@ -52,7 +55,7 @@ void CGame::run() {
 			window.clear();
 			window.draw(background);
 			// Draw menu buttons.
-
+			gameMenu.draw(&window);
 			window.display();
 			break;
 		case PLAYING:
