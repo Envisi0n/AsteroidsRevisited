@@ -11,6 +11,7 @@
 #include "Button.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -20,7 +21,7 @@ public:
 	virtual ~Menu();
 
 	virtual void draw(sf::RenderWindow* window);
-	virtual void addButton(int height, int width, int x, int y, char* path);
+	virtual void addButton(float x, float y, const char* path);
 
 private:
 

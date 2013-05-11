@@ -32,8 +32,8 @@ void Menu::draw(sf::RenderWindow* window) {
 
 }
 
-void Menu::addButton(int height, int width, int x, int y, char* path) {
+void Menu::addButton(float x, float y, const char* path) {
 
-	buttons.push_back(new Button(height, width, x, y, path));
+	buttons.push_back(new Button(x, y, path));
 
 }
