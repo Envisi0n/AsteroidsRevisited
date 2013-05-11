@@ -27,7 +27,7 @@ void CGame::init() {
 
 	// Init the Main Menu
 
-
+	gameMenu.addButton(SCREEN_WIDTH/2,SCREEN_HEIGHT/2, "images/test.png");
 
 	setState(MENU);
 

@@ -7,7 +7,7 @@
 
 #include "Button.hpp"
 
-Button::Button(float x, float y, char* path) {
+Button::Button(float x, float y, const char* path) {
 	sprite.setPosition(x, y);
 
 	if (!texture.loadFromFile(path)) {
