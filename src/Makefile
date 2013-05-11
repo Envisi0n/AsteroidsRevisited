@@ -4,8 +4,8 @@
 
 SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
 OTHER = -static-libgcc -static-libstdc++
-EXECS = test.exe test testClient testServer
-OBJS = Client.o Server.o
+EXECS = Asteroids.exe Asteroids testClient testServer
+OBJS = Client.o Server.o Game.o
 
 SHELL = sh
 UNAME := $(shell uname)
@@ -27,15 +27,18 @@ endif
 
 windows: CPP=i586-mingw32msvc-g++
 windows: CPPFLAGS = -O0 -g3 -Wall -L SFML/lib -I SFML/include 
-windows: test.exe
+windows: Asteroids.exe
 
 mingw: CPP=g++
 mingw: CPPFLAGS = -O0 -g3 -Wall -L SFML/lib -I SFML/include 
-mingw: test.exe
+mingw: Asteroids.exe
 
 linux: CPP=g++
 linux: CPPFLAGS = -O0 -g3 -Wall
-linux: test
+linux: Asteroids
+
+Game.o: Game.hpp Game.cpp
+	$(CPP) $(CPPFLAGS) -c -o Game.o Game.cpp
 
 Client.o: Client.hpp Client.cpp
 	$(CPP) $(CPPFLAGS) -c -o Client.o Client.cpp
@@ -43,11 +46,11 @@ Client.o: Client.hpp Client.cpp
 Server.o: Server.hpp Server.cpp
 	$(CPP) $(CPPFLAGS) -c -o Server.o Server.cpp
 
-test.exe: test.cpp $(OBJS)
-	$(CPP) $(CPPFLAGS) -o test.exe test.cpp $(OBJS) $(SFMLFLAGS) $(OTHER)
+Asteroids.exe: Asteroids.cpp $(OBJS)
+	$(CPP) $(CPPFLAGS) -o Asteroids.exe Asteroids.cpp $(OBJS) $(SFMLFLAGS) $(OTHER)
 
-test: test.cpp $(OBJS)
-	$(CPP) $(CPPFLAGS) -o test test.cpp $(OBJS) $(SFMLFLAGS) $(OTHER)
+Asteroids: Asteroids.cpp $(OBJS)
+	$(CPP) $(CPPFLAGS) -o Asteroids Asteroids.cpp $(OBJS) $(SFMLFLAGS) $(OTHER)
 
 
 # Tests
