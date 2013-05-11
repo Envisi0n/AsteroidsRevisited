@@ -7,8 +7,14 @@
 
 #include "Button.hpp"
 
-Button::Button(int height, int width, int x, int y, char* path) {
-	// TODO Auto-generated constructor stub
+Button::Button(float x, float y, char* path) {
+	sprite.setPosition(x, y);
+
+	if (!texture.loadFromFile(path)) {
+		return;
+	}
+
+	sprite.setTexture(texture);
 
 }
 
@@ -17,4 +23,7 @@ Button::~Button() {
 }
 
 void Button::draw(sf::RenderWindow* window) {
+	window->draw(sprite);
+
+	return ;
 }
