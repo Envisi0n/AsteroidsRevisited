@@ -20,11 +20,11 @@ public:
 	virtual ~Menu();
 
 	virtual void draw(sf::RenderWindow* window);
-	virtual void addButton();
+	virtual void addButton(int height, int width, int x, int y, char* path);
 
 private:
 
-	vector<Button> buttons;
+	vector<Button*> buttons;
 };
 
 #endif /* MENU_HPP_ */

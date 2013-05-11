@@ -18,11 +18,13 @@ Menu::~Menu() {
 
 void Menu::draw(sf::RenderWindow* window) {
 
-	for (vector<Button*>::iterator it = buttons.begin(); it != buttons.end();
-			++it) {
+	for (vector<Button*>::iterator it = buttons.begin(); it != buttons.end(); ++it) {
 
 		(*it)->draw(window);
 
 	}
 
+}
+
+void Menu::addButton(int height, int width, int x, int y, char* path) {
 }

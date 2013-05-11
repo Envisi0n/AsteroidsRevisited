@@ -16,3 +16,5 @@ Button::~Button() {
 	// TODO Auto-generated destructor stub
 }
 
+void Button::draw(sf::RenderWindow* window) {
+}
