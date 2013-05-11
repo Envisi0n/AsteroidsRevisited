@@ -8,17 +8,23 @@
 #include "Menu.hpp"
 
 Menu::Menu() {
-	// TODO Auto-generated constructor stub
 
 }
 
 Menu::~Menu() {
-	// TODO Auto-generated destructor stub
+	// Delete all the buttons
+	for (vector<Button*>::iterator it = buttons.begin(); it != buttons.end();
+			++it) {
+
+		delete *it;
+
+	}
 }
 
 void Menu::draw(sf::RenderWindow* window) {
-
-	for (vector<Button*>::iterator it = buttons.begin(); it != buttons.end(); ++it) {
+	// Call draw on each button
+	for (vector<Button*>::iterator it = buttons.begin(); it != buttons.end();
+			++it) {
 
 		(*it)->draw(window);
 
@@ -27,4 +33,7 @@ void Menu::draw(sf::RenderWindow* window) {
 }
 
 void Menu::addButton(int height, int width, int x, int y, char* path) {
+
+	buttons.push_back(new Button(height, width, x, y, path));
+
 }
