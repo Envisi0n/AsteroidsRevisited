@@ -8,6 +8,8 @@
 #ifndef CGAME_HPP_
 #define CGAME_HPP_
 
+#include "Menu.hpp"
+
 enum gameState{
 
 	INIT,
@@ -37,10 +39,17 @@ public:
 
 private:
 
+	// Background drawable object
 	sf::RectangleShape background;
+	// Background texture
 	sf::Texture backgroundImage;
+	// State of the game
 	int state;
+	// Window of the game
 	sf::RenderWindow window;
+	// Game menu
+	Menu gameMenu;
+
 
 };
 
