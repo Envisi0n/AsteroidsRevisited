@@ -6,7 +6,7 @@
  */
 
 #include <SFML/Graphics.hpp>
-#include "Game.hpp"
+#include "CGame.hpp"
 
 int main(int argc, char *argv[]) {
 

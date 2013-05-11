@@ -1,18 +1,18 @@
 /*
- * Game.cpp
+ * CGame.cpp
  *
  *  Created on: May 11, 2013
  *      Author: Cam
  */
 
-#include "Game.hpp"
+#include "CGame.hpp"
 
-Game::Game() {
+CGame::CGame() {
 	// TODO Auto-generated constructor stub
 
 }
 
-Game::~Game() {
+CGame::~CGame() {
 	// TODO Auto-generated destructor stub
 }
 

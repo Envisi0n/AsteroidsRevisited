@@ -5,7 +5,7 @@
 SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
 OTHER = -static-libgcc -static-libstdc++
 EXECS = Asteroids.exe Asteroids testClient testServer
-OBJS = Client.o Server.o Game.o
+OBJS = Client.o Server.o CGame.o
 
 SHELL = sh
 UNAME := $(shell uname)
@@ -37,8 +37,8 @@ linux: CPP=g++
 linux: CPPFLAGS = -O0 -g3 -Wall
 linux: Asteroids
 
-Game.o: Game.hpp Game.cpp
-	$(CPP) $(CPPFLAGS) -c -o Game.o Game.cpp
+CGame.o: CGame.hpp CGame.cpp
+	$(CPP) $(CPPFLAGS) -c -o CGame.o CGame.cpp
 
 Client.o: Client.hpp Client.cpp
 	$(CPP) $(CPPFLAGS) -c -o Client.o Client.cpp

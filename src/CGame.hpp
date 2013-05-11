@@ -1,20 +1,20 @@
 /*
- * Game.hpp
+ * CGame.hpp
  *
  *  Created on: May 11, 2013
  *      Author: Cam
  */
 
-#ifndef GAME_HPP_
-#define GAME_HPP_
+#ifndef CGAME_HPP_
+#define CGAME_HPP_
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
-class Game {
+class CGame {
 public:
-	Game();
-	virtual ~Game();
+	CGame();
+	virtual ~CGame();
 };
 
-#endif /* GAME_HPP_ */
+#endif /* CGAME_HPP_ */
