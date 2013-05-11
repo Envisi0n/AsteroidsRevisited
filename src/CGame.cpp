@@ -43,9 +43,30 @@ void CGame::run() {
 				window.close();
 		}
 
-		window.clear();
-		window.draw(background);
-		window.display();
+		switch(getState()) {
+		case INIT:
+			// Error message here.
+			break;
+		case MENU:
+			// Draw the background.
+			window.clear();
+			window.draw(background);
+			// Draw menu buttons.
+
+			window.display();
+
+			break;
+		case PLAYING:
+			break;
+		case PAUSE:
+			break;
+		case QUIT:
+			break;
+		case default:
+			// Error message here.
+			break;
+		}
+
 	}
 
 }
