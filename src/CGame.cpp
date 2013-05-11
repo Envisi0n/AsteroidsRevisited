@@ -23,7 +23,6 @@ void CGame::init() {
 		return;
 
 	background.setTexture(&backgroundImage);
-
 }
 
 void CGame::run() {
