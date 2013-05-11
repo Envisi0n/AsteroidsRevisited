@@ -10,19 +10,13 @@
 
 int main(int argc, char *argv[]) {
 
-	sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT),
-			"Asteroids",sf::Style::Titlebar|sf::Style::Close);
+	CGame game;
 
-	while (window.isOpen()) {
-		sf::Event event;
-		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
+	game.init();
 
-		window.clear();
-		window.display();
-	}
+	game.run();
+
+	return 0;
 
 }
 
