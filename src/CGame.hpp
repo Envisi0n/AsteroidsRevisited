@@ -49,6 +49,8 @@ private:
 	sf::RenderWindow window;
 	// Game menu
 	Menu gameMenu;
+	// Window icon :D
+	sf::Image icon;
 
 
 };

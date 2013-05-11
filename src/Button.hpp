@@ -12,7 +12,7 @@
 
 class Button {
 public:
-	Button(float x, float y, char* path);
+	Button(float x, float y, const char* path);
 	virtual ~Button();
 
 	virtual void draw(sf::RenderWindow* window);
