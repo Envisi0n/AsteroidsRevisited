@@ -62,7 +62,7 @@ void CGame::run() {
 			break;
 		case QUIT:
 			break;
-		case default:
+		default:
 			// Error message here.
 			break;
 		}
