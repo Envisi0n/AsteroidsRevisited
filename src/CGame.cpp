@@ -54,7 +54,6 @@ void CGame::run() {
 			// Draw menu buttons.
 
 			window.display();
-
 			break;
 		case PLAYING:
 			break;
