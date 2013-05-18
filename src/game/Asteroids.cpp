@@ -15,7 +15,6 @@ int main(int argc, char *argv[]) {
 	game.init();
 
 	game.run();
-
 	return 0;
 
 }

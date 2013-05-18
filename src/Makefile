@@ -1,73 +1,73 @@
 #
-# Makefile for Asteroids
+# 'make depend' uses makedepend to automatically generate dependencies 
+#               (dependencies are added to end of Makefile)
+# 'make'        build executable file 'mycc'
+# 'make clean'  removes all .o and executable files
 #
 
-SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
-OTHER = -static-libgcc -static-libstdc++
-EXECS = Asteroids.exe Asteroids testClient testServer
-OBJS = Client.o Server.o CGame.o SGame.o Menu.o Button.o
+# define the C compiler to use
+CC = g++
 
-SHELL = sh
-UNAME := $(shell uname)
+# define any compile-time flags
+CFLAGS = -Wall -g
 
-ifeq ($(UNAME), Linux)
+# define any directories containing header files other than /usr/include
+#
+INCLUDES = -I SFML/include
 
-CPP=g++
-CPPFLAGS = -O0 -g3 -Wall
+# define library paths in addition to /usr/lib
+#   if I wanted to include libraries not in /usr/lib I'd specify
+#   their path using -Lpath, something like:
+LFLAGS = -L SFML/lib
 
-all: linux
+# define any libraries to link into executable:
+#   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
+#   option, something like (this will link in libmylib.so and libm.so:
+LIBS = -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
 
-endif
+# define the C source files
+SRCSRAW = $(foreach d,.,$(wildcard $(addprefix $(d)/game/*,.cpp)))
+TESTS = test.cpp testClient.cpp testServer.cpp
+SRCS = $(filter-out $(TESTS),$(SRCSRAW))
 
-ifeq ($(UNAME), MINGW32_NT-6.1)
+# define the C object files 
+#
+# This uses Suffix Replacement within a macro:
+#   $(name:string1=string2)
+#         For each word in 'name' replace 'string1' with 'string2'
+# Below we are replacing the suffix .c of all words in the macro SRCS
+# with the .o suffix
+#
+OBJS = $(SRCS:.cpp=.o)
 
-all: mingw
+# define the executable file 
+MAIN = AsteroidsRevisited.exe
 
-endif
+#
+# The following part of the makefile is generic; it can be used to 
+# build any executable just by changing the definitions above and by
+# deleting dependencies appended to the file from 'make depend'
+#
 
-windows: CPP=i586-mingw32msvc-g++
-windows: CPPFLAGS = -O0 -g3 -Wall -L SFML/lib -I SFML/include 
-windows: Asteroids.exe
+.PHONY: depend clean
 
-mingw: CPP=g++
-mingw: CPPFLAGS = -O0 -g3 -Wall -L SFML/lib -I SFML/include 
-mingw: Asteroids.exe
+all:    $(MAIN)
+	@echo  Asteroids Build Successful
 
-linux: CPP=g++
-linux: CPPFLAGS = -O0 -g3 -Wall
-linux: Asteroids
+$(MAIN): $(OBJS) 
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
 
-Button.o: Button.hpp Button.cpp
-	$(CPP) $(CPPFLAGS) -c -o Button.o Button.cpp
-	
-Menu.o: Menu.hpp Menu.cpp
-	$(CPP) $(CPPFLAGS) -c -o Menu.o Menu.cpp
-
-SGame.o: SGame.hpp SGame.cpp
-	$(CPP) $(CPPFLAGS) -c -o SGame.o SGame.cpp
-
-CGame.o: CGame.hpp CGame.cpp
-	$(CPP) $(CPPFLAGS) -c -o CGame.o CGame.cpp
-
-Client.o: Client.hpp Client.cpp
-	$(CPP) $(CPPFLAGS) -c -o Client.o Client.cpp
-
-Server.o: Server.hpp Server.cpp
-	$(CPP) $(CPPFLAGS) -c -o Server.o Server.cpp
-
-Asteroids.exe: Asteroids.cpp $(OBJS)
-	$(CPP) $(CPPFLAGS) -o Asteroids.exe Asteroids.cpp $(OBJS) $(SFMLFLAGS) $(OTHER)
-
-Asteroids: Asteroids.cpp $(OBJS)
-	$(CPP) $(CPPFLAGS) -o Asteroids Asteroids.cpp $(OBJS) $(SFMLFLAGS) $(OTHER)
-
-
-# Tests
-testClient: Client.o testClient.cpp
-	$(CPP) $(CPPFLAGS) -o testClient testClient.cpp Client.o $(SFMLFLAGS) $(OTHER)
-
-testServer: Server.o testServer.cpp
-	$(CPP) $(CPPFLAGS) -o testServer testServer.cpp Server.o $(SFMLFLAGS) $(OTHER)
+# this is a suffix replacement rule for building .o's from .c's
+# it uses automatic variables $<: the name of the prerequisite of
+# the rule(a .c file) and $@: the name of the target of the rule (a .o file) 
+# (see the gnu make manual section about automatic variables)
+.cpp.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
 clean:
-	rm -rf $(EXECS) $(OBJS)
+	$(RM) game/*.o *~ $(MAIN)
+
+depend: $(SRCS)
+	makedepend $(INCLUDES) $^
+
+# DO NOT DELETE THIS LINE -- make depend needs it
