@@ -55,7 +55,7 @@ all:    $(MAIN)
 	@echo  Asteroids Build Successful
 	
 windows:   CC=i586-mingw32msvc-g++
-windows:   CC+= -lsfml-main
+windows:   CFLAGS+= -lsfml-main
 windows: $(MAIN)
 	@echo  Asteroids Build Successful
 
