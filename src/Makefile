@@ -53,6 +53,10 @@ MAIN = AsteroidsRevisited.exe
 
 all:    $(MAIN)
 	@echo  Asteroids Build Successful
+	
+windows:   CC=i586-mingw32msvc-g++
+windows: $(MAIN)
+	@echo  Asteroids Build Successful
 
 $(MAIN): $(OBJS) 
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
