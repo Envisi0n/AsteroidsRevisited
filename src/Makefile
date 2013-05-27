@@ -5,6 +5,9 @@
 # 'make clean'  removes all .o and executable files
 #
 
+SHELL = sh
+UNAME := $(shell uname)
+
 # define the C compiler to use
 CC = g++
 
@@ -13,13 +16,20 @@ CFLAGS = -Wall -g
 
 # define any directories containing header files other than /usr/include
 #
-INCLUDES = -I SFML/include
 
+ifeq ($(UNAME), Linux)
+
+else
+INCLUDES = -I SFML/include
+endif
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS = -L SFML/lib
+ifeq ($(UNAME), Linux)
 
+else
+LFLAGS = -L SFML/lib
+endif
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
 #   option, something like (this will link in libmylib.so and libm.so:
@@ -40,8 +50,12 @@ SRCS = $(filter-out $(TESTS),$(SRCSRAW))
 #
 OBJS = $(SRCS:.cpp=.o)
 
-# define the executable file 
+# define the executable file
+ifeq ($(UNAME), Linux)
+MAIN = AsteroidsRevisited
+else
 MAIN = AsteroidsRevisited.exe
+endif
 
 #
 # The following part of the makefile is generic; it can be used to 
@@ -56,6 +70,7 @@ all:    $(MAIN)
 	
 windows:   CC=i586-mingw32msvc-g++
 windows:   LIBS+= -lsfml-main
+windows:   MAIN = AsteroidsRevisited.exe
 windows: $(MAIN)
 	@echo  Asteroids Build Successful
 
