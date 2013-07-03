@@ -9,7 +9,6 @@
 #define Button_HPP_
 
 #include <SFML/Graphics.hpp>
-#include "CGame.hpp"
 
 class Button {
 public:

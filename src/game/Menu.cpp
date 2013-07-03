@@ -32,7 +32,7 @@ void Menu::draw(sf::RenderWindow* window) {
 
 }
 
-void Menu::addButton(float x, float y, const char* path, void (CGame::*fun)()) {
+void Menu::addButton(float x, float y, const char* path, void (*fun)()) {
 
 	buttons.push_back(new Button(x, y, path, fun));
 

@@ -31,7 +31,7 @@ void CGame::init() {
 	// Init the Main Menu
 	gameMenu.addButton(50,0, "images/title.gif", NULL);
 	gameMenu.addButton(283.5, 100, "images/sub2.gif", NULL);
-	gameMenu.addButton(SCREEN_WIDTH/2,SCREEN_HEIGHT/2, "images/test.png", &CGame::testButton);
+	gameMenu.addButton(SCREEN_WIDTH/2,SCREEN_HEIGHT/2, "images/test.png", NULL);
 
 	setState(MENU);
 
