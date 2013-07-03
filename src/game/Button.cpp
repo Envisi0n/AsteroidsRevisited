@@ -36,6 +36,10 @@ void Button::setPosition(float x, float y) {
 
 void Button::animate(int color) {
 
+	// Don't animate if this button does nothing
+	if( getAction() == BUT_NOTHING)
+		return;
+
 	switch( color ) {
 
 	case NORMAL:
