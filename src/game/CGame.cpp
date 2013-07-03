@@ -43,6 +43,7 @@ void CGame::run() {
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",
 			sf::Style::Titlebar | sf::Style::Close);
 	window.setIcon(96,96,icon.getPixelsPtr());
+	window.setFramerateLimit(FRAMES_PER_SECOND);
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -60,8 +61,8 @@ void CGame::run() {
 			window.clear();
 			window.draw(background);
 			// Draw menu buttons.
+			gameMenu.update(sf::Mouse::getPosition(window));
 			gameMenu.draw(&window);
-			window.display();
 			break;
 		case PLAYING:
 			break;
@@ -74,6 +75,8 @@ void CGame::run() {
 			break;
 		}
 
+		window.display();
+
 	}
 
 }
@@ -85,10 +88,9 @@ int CGame::getState() const {
 	return state;
 }
 
-void CGame::testButton() {
 
-	gameMenu.addButton(10,10,"images/test.png", NULL);
 
+void CGame::showMenu() {
 }
 
 void CGame::setState(int state) {

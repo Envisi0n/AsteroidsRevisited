@@ -25,6 +25,7 @@ enum gameState{
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
+#define FRAMES_PER_SECOND 60
 
 class CGame {
 public:
@@ -35,7 +36,7 @@ public:
 	virtual void run();
 	virtual void update();
 
-	void testButton();
+	void showMenu();
 
 	int getState() const;
 	void setState(int state);

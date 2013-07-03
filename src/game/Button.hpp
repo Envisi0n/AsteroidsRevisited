@@ -9,6 +9,16 @@
 #define Button_HPP_
 
 #include <SFML/Graphics.hpp>
+#include <functional>
+
+enum buttonColors {
+
+	NORMAL,
+	OVER,
+	CLICK
+
+};
+
 
 class Button {
 public:
@@ -18,7 +28,9 @@ public:
 
 	// Game functions
 	void draw(sf::RenderWindow* window);
+	void update(sf::Vector2i mouseLoc);
 	void runAction();
+	void animate(int color);
 
 	// Accessors
 	void setPosition( float x, float y);
