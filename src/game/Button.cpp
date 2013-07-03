@@ -7,12 +7,13 @@
 
 #include "Button.hpp"
 
-Button::Button(float x, float y, const char* texturePath, void (*fun)()) {
+Button::Button(float x, float y, const char* texturePath, int action) {
 	setPosition(x, y);
-
+	setAction(action);
 	if (!texture.loadFromFile(texturePath)) {
 		return;
 	}
+
 
 	sprite.setTexture(texture);
 
@@ -26,11 +27,6 @@ void Button::draw(sf::RenderWindow* window) {
 	window->draw(sprite);
 
 	return ;
-}
-
-void Button::runAction() {
-
-	action();
 }
 
 void Button::setPosition(float x, float y) {
@@ -57,7 +53,7 @@ void Button::animate(int color) {
 	}
 
 }
-void Button::update(sf::Vector2i mouseLoc) {
+int Button::update(sf::Vector2i mouseLoc) {
 
 	sf::Vector2f tmp;
 	tmp.x = mouseLoc.x;
@@ -65,14 +61,28 @@ void Button::update(sf::Vector2i mouseLoc) {
 
 	if( sprite.getGlobalBounds().contains(tmp)) {
 
-		if( sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		if( sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			animate(CLICK);
-		else
+			return action;
+		}
+		else {
 			animate(OVER);
+			return BUT_NOTHING;
+		}
 
 	}
 	else
 		animate(NORMAL);
 
+	return BUT_NOTHING;
 
+
+}
+
+int Button::getAction() const {
+	return action;
+}
+
+void Button::setAction(int action) {
+	this->action = action;
 }

@@ -29,9 +29,9 @@ void CGame::init() {
 	background.setTexture(&backgroundImage);
 
 	// Init the Main Menu
-	gameMenu.addButton(50,0, "images/title.gif", NULL);
-	gameMenu.addButton(283.5, 100, "images/sub2.gif", NULL);
-	gameMenu.addButton(SCREEN_WIDTH/2,SCREEN_HEIGHT/2, "images/test.png", NULL);
+	gameMenu.addButton(50,0, "images/title.gif", BUT_NOTHING);
+	gameMenu.addButton(283.5, 100, "images/sub2.gif", BUT_NOTHING);
+	gameMenu.addButton(SCREEN_WIDTH/2,SCREEN_HEIGHT/2, "images/test.png", BUT_QUIT);
 
 	setState(MENU);
 
@@ -39,6 +39,7 @@ void CGame::init() {
 
 void CGame::run() {
 
+	int but_action ;
 	// Init window
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",
 			sf::Style::Titlebar | sf::Style::Close);
@@ -61,7 +62,19 @@ void CGame::run() {
 			window.clear();
 			window.draw(background);
 			// Draw menu buttons.
-			gameMenu.update(sf::Mouse::getPosition(window));
+			but_action = gameMenu.update(sf::Mouse::getPosition(window));
+
+			switch( but_action ) {
+
+			case BUT_PLAY:
+				setState(PLAYING);
+				break;
+			case BUT_QUIT:
+				setState(QUIT);
+
+
+			}
+
 			gameMenu.draw(&window);
 			break;
 		case PLAYING:
@@ -69,6 +82,7 @@ void CGame::run() {
 		case PAUSE:
 			break;
 		case QUIT:
+			return;
 			break;
 		default:
 			// Error message here.

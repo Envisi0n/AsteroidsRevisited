@@ -32,19 +32,22 @@ void Menu::draw(sf::RenderWindow* window) {
 
 }
 
-void Menu::update(sf::Vector2i mouseLoc) {
+int Menu::update(sf::Vector2i mouseLoc) {
 
+	int action = BUT_NOTHING;
 	// Call draw on each button
 	for (vector<Button*>::iterator it = buttons.begin(); it != buttons.end();
 			++it) {
-		(*it)->update(mouseLoc);
+		if( (action = (*it)->update(mouseLoc)) != BUT_NOTHING )
+			return action ;
 
 	}
 
+	return BUT_NOTHING;
 }
 
-void Menu::addButton(float x, float y, const char* path, void (*fun)()) {
+void Menu::addButton(float x, float y, const char* path, int action) {
 
-	buttons.push_back(new Button(x, y, path, fun));
+	buttons.push_back(new Button(x, y, path, action));
 
 }

@@ -9,6 +9,7 @@
 #define CGAME_HPP_
 
 #include "Menu.hpp"
+#include "CGame_shared.hpp"
 
 enum gameState{
 
