@@ -71,7 +71,7 @@ void CGame::run() {
 				break;
 			case BUT_QUIT:
 				setState(QUIT);
-
+				break;
 
 			}
 
