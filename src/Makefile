@@ -67,7 +67,10 @@ endif
 
 all:    $(MAIN)
 	@echo  Asteroids Build Successful
-	
+
+install: $(MAIN)
+	cp $(MAIN) ../assets/
+
 windows:   CC=i586-mingw32msvc-g++
 windows:   INCLUDES = -I SFML/include
 windows:   LFLAGS = -L SFML/lib
