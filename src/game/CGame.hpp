@@ -34,6 +34,9 @@ public:
 	virtual void init();
 	virtual void run();
 	virtual void update();
+
+	void testButton();
+
 	int getState() const;
 	void setState(int state);
 

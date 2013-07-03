@@ -7,10 +7,10 @@
 
 #include "Button.hpp"
 
-Button::Button(float x, float y, const char* path) {
-	sprite.setPosition(x, y);
+Button::Button(float x, float y, const char* texturePath, void (*fun)()) {
+	setPosition(x, y);
 
-	if (!texture.loadFromFile(path)) {
+	if (!texture.loadFromFile(texturePath)) {
 		return;
 	}
 
@@ -26,4 +26,14 @@ void Button::draw(sf::RenderWindow* window) {
 	window->draw(sprite);
 
 	return ;
+}
+
+void Button::runAction() {
+
+	action();
+}
+
+void Button::setPosition(float x, float y) {
+
+	this->sprite.setPosition(x, y);
 }

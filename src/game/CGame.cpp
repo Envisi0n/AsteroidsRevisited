@@ -29,9 +29,9 @@ void CGame::init() {
 	background.setTexture(&backgroundImage);
 
 	// Init the Main Menu
-	gameMenu.addButton(50,0, "images/title.gif");
-	gameMenu.addButton(283.5, 100, "images/sub2.gif");
-	gameMenu.addButton(SCREEN_WIDTH/2,SCREEN_HEIGHT/2, "images/test.png");
+	gameMenu.addButton(50,0, "images/title.gif", NULL);
+	gameMenu.addButton(283.5, 100, "images/sub2.gif", NULL);
+	gameMenu.addButton(SCREEN_WIDTH/2,SCREEN_HEIGHT/2, "images/test.png", &CGame::testButton);
 
 	setState(MENU);
 
@@ -83,6 +83,12 @@ void CGame::update() {
 
 int CGame::getState() const {
 	return state;
+}
+
+void CGame::testButton() {
+
+	gameMenu.addButton(10,10,"images/test.png", NULL);
+
 }
 
 void CGame::setState(int state) {

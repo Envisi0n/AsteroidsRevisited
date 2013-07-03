@@ -9,18 +9,30 @@
 #define Button_HPP_
 
 #include <SFML/Graphics.hpp>
+#include "CGame.hpp"
 
 class Button {
 public:
-	Button(float x, float y, const char* path);
+
+	Button(float x, float y, const char* texturePath, void (*fun)());
 	virtual ~Button();
 
-	virtual void draw(sf::RenderWindow* window);
+	// Game functions
+	void draw(sf::RenderWindow* window);
+	void runAction();
+
+	// Accessors
+	void setPosition( float x, float y);
+
 
 private:
-	sf::Sprite sprite;
-	sf::Texture texture;
 
+	// Drawable button
+	sf::Sprite sprite;
+	// Texture of button
+	sf::Texture texture;
+	// What the buttons does when clicked
+	void (*action)();
 };
 
 #endif /* Button_HPP_ */
