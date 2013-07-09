@@ -17,7 +17,7 @@ CGame::~CGame() {
 
 void CGame::init() {
 
-	if( !icon.loadFromFile("images/icon.png"))
+	if (!icon.loadFromFile("images/icon.png"))
 		return;
 
 	// Init the background.
@@ -29,9 +29,15 @@ void CGame::init() {
 	background.setTexture(&backgroundImage);
 
 	// Init the Main Menu
-	gameMenu.addButton(50,0, "images/title.gif", BUT_NOTHING);
+	gameMenu.addButton(50, 0, "images/title.gif", BUT_NOTHING);
 	gameMenu.addButton(283.5, 100, "images/sub2.gif", BUT_NOTHING);
-	gameMenu.addButton(SCREEN_WIDTH/2,SCREEN_HEIGHT/2, "images/test.png", BUT_QUIT);
+	gameMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, "images/test.png",
+			BUT_PLAY);
+
+	// Init GUI
+
+	this->guiwindow = sfg::Window::Create();
+	this->_sfdesktop.Add(guiwindow);
 
 	setState(MENU);
 
@@ -39,32 +45,35 @@ void CGame::init() {
 
 void CGame::run() {
 
-	int but_action ;
+	int but_action;
 	// Init window
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",
 			sf::Style::Titlebar | sf::Style::Close);
-	window.setIcon(96,96,icon.getPixelsPtr());
+	window.setIcon(96, 96, icon.getPixelsPtr());
 	window.setFramerateLimit(FRAMES_PER_SECOND);
 
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
+
+			_sfdesktop.HandleEvent(event);
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
 
-		switch(getState()) {
+		switch (getState()) {
 		case INIT:
 			// Error message here.
 			break;
 		case MENU:
+
 			// Draw the background.
 			window.clear();
 			window.draw(background);
 			// Draw menu buttons.
 			but_action = gameMenu.update(sf::Mouse::getPosition(window));
 
-			switch( but_action ) {
+			switch (but_action) {
 
 			case BUT_PLAY:
 				setState(PLAYING);
@@ -78,6 +87,10 @@ void CGame::run() {
 			gameMenu.draw(&window);
 			break;
 		case PLAYING:
+			window.clear();
+			window.draw(background);
+			_sfdesktop.Update(1.0f);
+			_sfgui.Display(window);
 			break;
 		case PAUSE:
 			break;
@@ -101,8 +114,6 @@ void CGame::update() {
 int CGame::getState() const {
 	return state;
 }
-
-
 
 void CGame::showMenu() {
 }
