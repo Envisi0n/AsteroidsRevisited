@@ -18,22 +18,22 @@ CFLAGS = -Wall -g
 #
 
 ifeq ($(UNAME), Linux)
-
+#INCLUDES = -I SFGUI/include
 else
-INCLUDES = -I SFML/include
+INCLUDES = -I SFML/include -I SFGUI/include
 endif
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
 ifeq ($(UNAME), Linux)
-
+#LFLAGS = -L SFGUI/lib
 else
-LFLAGS = -L SFML/lib
+LFLAGS = -L SFML/lib -L SFGUI/lib
 endif
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
 #   option, something like (this will link in libmylib.so and libm.so:
-LIBS = -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
+LIBS = -lsfgui -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
 
 # define the C source files
 SRCSRAW = $(foreach d,.,$(wildcard $(addprefix $(d)/game/*,.cpp)))
