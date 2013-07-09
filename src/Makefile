@@ -72,8 +72,8 @@ install: $(MAIN)
 	cp $(MAIN) ../assets/
 
 windows:   CC=i586-mingw32msvc-g++
-windows:   INCLUDES = -I SFML/include
-windows:   LFLAGS = -L SFML/lib
+windows:   INCLUDES = -I SFML/include -L SFGUI/include
+windows:   LFLAGS = -L SFML/lib -L SFGUI/lib
 windows:   LIBS+= -lsfml-main
 windows:   MAIN = AsteroidsRevisited.exe
 windows: $(MAIN)
