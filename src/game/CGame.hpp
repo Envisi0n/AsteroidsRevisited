@@ -9,7 +9,6 @@
 #define CGAME_HPP_
 
 #include "Menu.hpp"
-#include "SFGUI/SFGUI.hpp"
 #include "CGame_shared.hpp"
 
 enum gameState {
@@ -52,10 +51,6 @@ private:
 	Menu gameMenu;
 	// Window icon :D
 	sf::Image icon;
-	// SFGUI menu
-	sfg::SFGUI _sfgui;
-	sfg::Window::Ptr guiwindow;
-	sfg::Desktop _sfdesktop;
 
 };
 

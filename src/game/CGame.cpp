@@ -34,10 +34,6 @@ void CGame::init() {
 	gameMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, "images/test.png",
 			BUT_PLAY);
 
-	// Init GUI
-
-	this->guiwindow = sfg::Window::Create();
-	this->_sfdesktop.Add(guiwindow);
 
 	setState(MENU);
 
@@ -55,8 +51,6 @@ void CGame::run() {
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
-
-			_sfdesktop.HandleEvent(event);
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
@@ -89,8 +83,6 @@ void CGame::run() {
 		case PLAYING:
 			window.clear();
 			window.draw(background);
-			_sfdesktop.Update(1.0f);
-			_sfgui.Display(window);
 			break;
 		case PAUSE:
 			break;
