@@ -20,7 +20,7 @@ CFLAGS = -Wall -g
 ifeq ($(UNAME), Linux)
 #INCLUDES = -I SFGUI/include
 else
-INCLUDES = -I SFML/include -I SFGUI/include
+INCLUDES = -I SFML/include
 endif
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
@@ -28,12 +28,12 @@ endif
 ifeq ($(UNAME), Linux)
 #LFLAGS = -L SFGUI/lib
 else
-LFLAGS = -L SFML/lib -L SFGUI/lib
+LFLAGS = -L SFML/lib
 endif
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
 #   option, something like (this will link in libmylib.so and libm.so:
-LIBS = -lsfgui -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
+LIBS = -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
 
 # define the C source files
 SRCSRAW = $(foreach d,.,$(wildcard $(addprefix $(d)/game/*,.cpp)))
@@ -72,8 +72,8 @@ install: $(MAIN)
 	cp $(MAIN) ../assets/
 
 windows:   CC=i586-mingw32msvc-g++
-windows:   INCLUDES = -I SFML/include -I SFGUI/include
-windows:   LFLAGS = -L SFML/lib -L SFGUI/lib
+windows:   INCLUDES = -I SFML/include
+windows:   LFLAGS = -L SFML/lib
 windows:   LIBS+= -lsfml-main
 windows:   MAIN = AsteroidsRevisited.exe
 windows: $(MAIN)
