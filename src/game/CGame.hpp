@@ -13,7 +13,7 @@
 
 enum gameState {
 
-	INIT, MENU, PLAYING, PAUSE, QUIT
+	INIT, MENU, LOGIN, CONNECT, PLAYING, PAUSE, QUIT
 
 };
 
