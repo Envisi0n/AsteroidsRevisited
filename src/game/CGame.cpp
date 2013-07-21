@@ -43,6 +43,7 @@ void CGame::init() {
 }
 
 void CGame::run() {
+
 	// Init window
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",
 			sf::Style::Titlebar | sf::Style::Close);
@@ -79,6 +80,12 @@ void CGame::run() {
 			loginMenu.draw(&window);
 			break;
 
+		case NETCONNECT:
+			window.clear();
+
+
+
+			break;
 		case PLAYING:
 			window.clear();
 			window.draw(background);
@@ -120,10 +127,30 @@ void CGame::handleButton(int action) {
 	case BUT_PLAY:
 		setState(LOGIN);
 		break;
+	case BUT_LOGIN:
+		setState(NETCONNECT);
+		break;
 	case BUT_QUIT:
 		setState(QUIT);
 		break;
 
 	}
+
+}
+
+void CGame::netConnect() {
+
+	sf::Packet packet;
+	connectPacket info;
+	gameClient.setServerAddress("127.0.0.1");
+	gameClient.setServerPort(SERVER_PORT);
+	info.packetType = CONNECT;
+	packet << info;
+	if( gameClient.send(packet) ) {
+
+
+	}
+
+
 
 }

@@ -10,10 +10,12 @@
 
 #include "Menu.hpp"
 #include "CGame_shared.hpp"
+#include "Client.hpp"
+#include "Net_shared.hpp"
 
 enum gameState {
 
-	INIT, MENU, LOGIN, CONNECT, PLAYING, PAUSE, QUIT
+	INIT, MENU, LOGIN, NETCONNECT, PLAYING, PAUSE, QUIT
 
 };
 
@@ -40,7 +42,7 @@ public:
 private:
 
 	void handleButton(int action);
-
+	void netConnect();
 	// Background drawable object
 	sf::RectangleShape background;
 	// Background texture
@@ -55,6 +57,10 @@ private:
 	sf::Image icon;
 	// Login menu
 	Menu loginMenu;
+
+	// Networking
+	Client gameClient;
+
 
 };
 
