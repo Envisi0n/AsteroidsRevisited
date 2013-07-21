@@ -34,14 +34,15 @@ void CGame::init() {
 	gameMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, "images/test.png",
 			BUT_PLAY);
 
+	// Init login menu
+	loginMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, "images/login.png",
+			BUT_LOGIN);
 
 	setState(MENU);
 
 }
 
 void CGame::run() {
-
-	int but_action;
 	// Init window
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",
 			sf::Style::Titlebar | sf::Style::Close);
@@ -65,21 +66,19 @@ void CGame::run() {
 			window.clear();
 			window.draw(background);
 			// Draw menu buttons.
-			but_action = gameMenu.update(sf::Mouse::getPosition(window));
-
-			switch (but_action) {
-
-			case BUT_PLAY:
-				setState(PLAYING);
-				break;
-			case BUT_QUIT:
-				setState(QUIT);
-				break;
-
-			}
+			handleButton(gameMenu.update(sf::Mouse::getPosition(window)));
 
 			gameMenu.draw(&window);
 			break;
+
+		case LOGIN:
+			window.clear();
+			window.draw(background);
+			handleButton(loginMenu.update(sf::Mouse::getPosition(window)));
+
+			loginMenu.draw(&window);
+			break;
+
 		case PLAYING:
 			window.clear();
 			window.draw(background);
@@ -112,4 +111,19 @@ void CGame::showMenu() {
 
 void CGame::setState(int state) {
 	this->state = state;
+}
+
+void CGame::handleButton(int action) {
+
+	switch (action) {
+
+	case BUT_PLAY:
+		setState(LOGIN);
+		break;
+	case BUT_QUIT:
+		setState(QUIT);
+		break;
+
+	}
+
 }

@@ -39,6 +39,8 @@ public:
 
 private:
 
+	void handleButton(int action);
+
 	// Background drawable object
 	sf::RectangleShape background;
 	// Background texture
@@ -51,6 +53,8 @@ private:
 	Menu gameMenu;
 	// Window icon :D
 	sf::Image icon;
+	// Login menu
+	Menu loginMenu;
 
 };
 

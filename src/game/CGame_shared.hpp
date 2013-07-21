@@ -13,6 +13,7 @@ enum buttonActions {
 	BUT_PLAY,
 	BUT_QUIT,
 	BUT_NOTHING,
+	BUT_LOGIN,
 
 };
 
