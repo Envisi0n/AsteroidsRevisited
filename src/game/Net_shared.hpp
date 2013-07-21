@@ -7,13 +7,13 @@
 
 #ifndef NET_SHARED_HPP_
 #define NET_SHARED_HPP_
-
+#include <SFML/Network.hpp>
 #define SERVER_PORT 30000
 
 enum PacketTypes{
 
 	CONNECT,
-	LOGIN,
+	GAMELOGIN,
 	DISCONNECT,
 	CLIENT_UPDATE,
 	SERVER_UPDATE,
@@ -27,16 +27,9 @@ struct connectPacket {
 };
 
 
-sf::Packet& operator <<(sf::Packet& packet, const connectPacket& connect)
-{
-    return packet << connect.packetType;
-}
 
-sf::Packet& operator >>(sf::Packet& packet, connectPacket& connect)
-{
-    return packet >> connect.packetType;
-}
-
+sf::Packet& operator <<(sf::Packet& packet, const connectPacket& connect);
+sf::Packet& operator >>(sf::Packet& packet, connectPacket& connect);
 
 
 
