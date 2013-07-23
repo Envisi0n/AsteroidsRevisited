@@ -21,7 +21,8 @@ public:
 	virtual ~Menu();
 
 	virtual void draw(sf::RenderWindow* window);
-	virtual void addButton(float x, float y, const char* path);
+	virtual int update(sf::Vector2i mouseLoc);
+	virtual void addButton(float x, float y, const char* path, int action);
 
 private:
 

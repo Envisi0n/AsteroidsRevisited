@@ -7,6 +7,7 @@
 
 #include "Server.hpp"
 #include <iostream>
+
 Server::Server(unsigned short int port) {
 	if (this->socket.bind(port) != sf::Socket::Done)
 		return;

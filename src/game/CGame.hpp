@@ -9,15 +9,13 @@
 #define CGAME_HPP_
 
 #include "Menu.hpp"
+#include "CGame_shared.hpp"
+#include "Client.hpp"
+#include "Net_shared.hpp"
 
-enum gameState{
+enum gameState {
 
-	INIT,
-	MENU,
-	PLAYING,
-	PAUSE,
-	QUIT
-
+	INIT, MENU, LOGIN, NETCONNECT, PLAYING, PAUSE, QUIT
 
 };
 
@@ -25,6 +23,7 @@ enum gameState{
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
+#define FRAMES_PER_SECOND 60
 
 class CGame {
 public:
@@ -34,11 +33,16 @@ public:
 	virtual void init();
 	virtual void run();
 	virtual void update();
+
+	void showMenu();
+
 	int getState() const;
 	void setState(int state);
 
 private:
 
+	void handleButton(int action);
+	void netConnect();
 	// Background drawable object
 	sf::RectangleShape background;
 	// Background texture
@@ -51,6 +55,11 @@ private:
 	Menu gameMenu;
 	// Window icon :D
 	sf::Image icon;
+	// Login menu
+	Menu loginMenu;
+
+	// Networking
+	Client gameClient;
 
 
 };

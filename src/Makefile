@@ -18,7 +18,7 @@ CFLAGS = -Wall -g
 #
 
 ifeq ($(UNAME), Linux)
-
+#INCLUDES = -I SFGUI/include
 else
 INCLUDES = -I SFML/include
 endif
@@ -26,7 +26,7 @@ endif
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
 ifeq ($(UNAME), Linux)
-
+#LFLAGS = -L SFGUI/lib
 else
 LFLAGS = -L SFML/lib
 endif
@@ -67,7 +67,10 @@ endif
 
 all:    $(MAIN)
 	@echo  Asteroids Build Successful
-	
+
+install: $(MAIN)
+	cp $(MAIN) ../assets/
+
 windows:   CC=i586-mingw32msvc-g++
 windows:   INCLUDES = -I SFML/include
 windows:   LFLAGS = -L SFML/lib
