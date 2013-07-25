@@ -14,7 +14,6 @@
 #define MAXCLIENTS 2
 
 struct clientInfo {
-	sf::UdpSocket socket;
 	sf::IpAddress ip;
 	unsigned short int port;
 };

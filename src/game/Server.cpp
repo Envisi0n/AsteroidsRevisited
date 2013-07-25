@@ -33,11 +33,12 @@ void Server::setPort(unsigned short int port) {
 
 sf::Socket::Status Server::send( sf::Packet data, int client) {
 
-	return this->socket.send(data, clients[client].ip, clients[client].port);
+	std::cout << "Client " << client << ":";
+	return socket.send(data, clients[client].ip, clients[client].port);
 
 }
 
 sf::Socket::Status Server::receive( sf::Packet *data, int client) {
 
-	return this->socket.receive( *data, clients[client].ip, clients[client].port );
+	return socket.receive( *data, clients[client].ip, clients[client].port );
 }
