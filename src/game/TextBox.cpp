@@ -7,7 +7,7 @@
 
 #include "TextBox.hpp"
 
-TextBox::TextBox(float x, float y, int paramWidth) {
+TextBox::TextBox(float x, float y, float pWidth) {
 	setPosition(x, y);
 }
 
@@ -26,3 +26,7 @@ void TextBox::setPosition(float x, float y) {
 	this->rectangle.setPosition(x, y);
 }
 
+void TextBox::setSize(float pWidth) {
+
+	this->rectangle.setSize(sf::Vector2f(pWidth, 20));
+}

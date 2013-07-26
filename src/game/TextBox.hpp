@@ -14,15 +14,16 @@
 class TextBox {
 public:
 
-	TextBox(float x, float y, int paramWidth);
+	TextBox(float x, float y, float pWidth);
 	virtual ~TextBox();
 
 	// Game functions
 	void draw(sf::RenderWindow* window);
-	int update(sf::Vector2i mouseLoc, sf::Event event);
+	//int update(sf::Vector2i mouseLoc, sf::Event event);
 
 	// Assessors
 	void setPosition( float x, float y);
+	void setSize(float pWidth);
 
 
 private:

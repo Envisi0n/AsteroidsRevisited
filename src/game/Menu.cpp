@@ -36,6 +36,14 @@ void Menu::draw(sf::RenderWindow* window) {
 
 	}
 
+	// Call draw on each textbox
+	for (vector<TextBox*>::iterator it = TextBoxes.begin(); it != TextBoxes.end();
+			++it) {
+
+		(*it)->draw(window);
+
+	}
+
 }
 
 int Menu::update(sf::Vector2i mouseLoc, sf::Event event) {
@@ -57,5 +65,11 @@ int Menu::update(sf::Vector2i mouseLoc, sf::Event event) {
 void Menu::addButton(float x, float y, const char* path, int action) {
 
 	buttons.push_back(new Button(x, y, path, action));
+
+}
+
+void Menu::addTextBox(float x, float y, float pWidth) {
+
+	TextBoxes.push_back(new TextBox(x, y, pWidth));
 
 }

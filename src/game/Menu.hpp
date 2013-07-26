@@ -9,6 +9,7 @@
 #define MENU_HPP_
 
 #include "Button.hpp"
+#include "TextBox.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
@@ -24,10 +25,14 @@ public:
 	virtual void draw(sf::RenderWindow* window);
 	virtual int update(sf::Vector2i mouseLoc, sf::Event event);
 	virtual void addButton(float x, float y, const char* path, int action);
+	virtual void addTextBox(float x, float y, float pWidth);
 
 private:
 	// Holds all the buttons
 	vector<Button*> buttons;
+
+	// Holds all the textboxes
+	vector<TextBox*> TextBoxes;
 
 	// Timer
 	static sf::Clock reset;
