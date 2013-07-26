@@ -19,7 +19,7 @@ public:
 
 	// Game functions
 	void draw(sf::RenderWindow* window);
-	//int update(sf::Vector2i mouseLoc, sf::Event event);
+	void update(sf::Vector2i mouseLoc, sf::Event event);
 
 	// Assessors
 	void setPosition( float x, float y);

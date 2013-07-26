@@ -59,6 +59,10 @@ int Menu::update(sf::Vector2i mouseLoc, sf::Event event) {
 		}
 	}
 
+	for (vector<TextBox*>::iterator it = TextBoxes.begin(); it != TextBoxes.end(); ++it) {
+
+	}
+
 	return BUT_NOTHING;
 }
 
