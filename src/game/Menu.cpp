@@ -8,6 +8,9 @@
 #include "Menu.hpp"
 #include <iostream>
 
+sf::Clock Menu::reset;
+
+
 Menu::Menu() {
 
 	reset.restart();
@@ -41,9 +44,8 @@ int Menu::update(sf::Vector2i mouseLoc, sf::Event event) {
 	// Call draw on each button
 	for (vector<Button*>::iterator it = buttons.begin(); it != buttons.end();
 			++it) {
-		std::cout << reset.getElapsedTime().asSeconds() << std::endl;
-		if ((action = (*it)->update(mouseLoc, event)) != BUT_NOTHING
-				&& reset.getElapsedTime().asSeconds() > CLICK_DELAY) {
+		if ((action = (*it)->update(mouseLoc, event))
+				!= BUT_NOTHING && reset.getElapsedTime().asSeconds() > CLICK_DELAY) {
 			reset.restart();
 			return action;
 		}
