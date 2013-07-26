@@ -26,11 +26,19 @@ struct connectPacket {
 
 };
 
+struct loginPacket {
+	short packetType;
+	char username[32];
+	char password[32];
+};
+
 
 
 sf::Packet& operator <<(sf::Packet& packet, const connectPacket& connect);
 sf::Packet& operator >>(sf::Packet& packet, connectPacket& connect);
 
+sf::Packet& operator <<(sf::Packet& packet, const loginPacket& login);
+sf::Packet& operator >>(sf::Packet& packet, loginPacket& login);
 
 
 
