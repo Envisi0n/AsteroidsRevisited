@@ -5,14 +5,24 @@
  *      Author: Dave
  */
 
-#include "TextBox.h"
+#include "TextBox.hpp"
 
-TextBox::TextBox(int paramWidth) {
-
-
+TextBox::TextBox(float x, float y, int paramWidth) {
+	setPosition(x, y);
 }
 
 TextBox::~TextBox() {
 	// TODO Auto-generated destructor stub
+}
+
+void TextBox::draw(sf::RenderWindow* window) {
+	window->draw(rectangle);
+
+	return ;
+}
+
+void TextBox::setPosition(float x, float y) {
+
+	this->rectangle.setPosition(x, y);
 }
 

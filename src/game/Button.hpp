@@ -31,7 +31,7 @@ public:
 	int update(sf::Vector2i mouseLoc, sf::Event event);
 	void animate(int color);
 
-	// Accessors
+	// Assessors
 	void setPosition( float x, float y);
 	int getAction() const;
 	void setAction(int action);
