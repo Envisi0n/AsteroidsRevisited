@@ -8,6 +8,9 @@
 #include "Menu.hpp"
 #include <iostream>
 
+sf::Clock Menu::reset;
+
+
 Menu::Menu() {
 
 	reset.restart();

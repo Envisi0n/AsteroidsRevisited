@@ -12,7 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
-#define CLICK_DELAY 0.3
+#define CLICK_DELAY 0.1
 
 using namespace std;
 
@@ -30,7 +30,7 @@ private:
 	vector<Button*> buttons;
 
 	// Timer
-	sf::Clock reset;
+	static sf::Clock reset;
 };
 
 #endif /* MENU_HPP_ */
