@@ -9,6 +9,7 @@
 
 TextBox::TextBox(float x, float y, float pWidth) {
 	setPosition(x, y);
+	setSize(pWidth);
 }
 
 TextBox::~TextBox() {

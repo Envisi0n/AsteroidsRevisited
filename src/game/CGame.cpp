@@ -38,7 +38,8 @@ void CGame::init() {
 	// Init login menu
 	loginMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, "images/login.png",
 			BUT_LOGIN);
-	loginMenu.addTextBox(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 150);
+	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 60, 150);
+	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 30, 150);
 
 	setState(MENU);
 
