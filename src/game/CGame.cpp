@@ -7,6 +7,7 @@
 
 #include "CGame.hpp"
 #include <iostream>
+#include <string.h>
 CGame::CGame() {
 	setState(INIT);
 }
@@ -136,6 +137,7 @@ void CGame::handleButton(int action) {
 
 	}
 
+	sf::RectangleShape test;
 }
 
 void CGame::netConnect() {
@@ -143,10 +145,12 @@ void CGame::netConnect() {
 	std::cout <<"Attempting connect" << std::endl;
 
 	sf::Packet packet;
-	connectPacket info;
+	loginPacket info;
 	gameClient.setServerAddress("127.0.0.1");
 	gameClient.setServerPort(SERVER_PORT);
-	info.packetType = CONNECT;
+	info.packetType = GAMELOGIN;
+	strcpy(info.username,"test");
+	strcpy(info.password,"test123");
 	packet << info;
 	if( gameClient.send(packet) ) {
 

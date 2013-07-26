@@ -12,20 +12,16 @@ int main(int argc, char *argv[]) {
 	Server test(30000);
 	sf::Packet testPacket;
 	while (1) {
-			if (test.receive(&testPacket) == sf::Socket::Done) {
+		if (test.receive(&testPacket) == sf::Socket::Done) {
 
-				char buf[32];
+			short packetType;
 
-				testPacket >> buf;
+			testPacket >> packetType;
 
-				std::cout << "Received: " << buf << std::endl;
+			std::cout << "Received: " << packetType << std::endl;
 
-				testPacket.clear();
-				testPacket << buf;
-
-				test.send(testPacket, 0);
-
-			}
+			testPacket.clear();
+		}
 	}
 
 	return 0;
