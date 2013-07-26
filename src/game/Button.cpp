@@ -57,7 +57,7 @@ void Button::animate(int color) {
 	}
 
 }
-int Button::update(sf::Vector2i mouseLoc) {
+int Button::update(sf::Vector2i mouseLoc, sf::Event event) {
 
 	sf::Vector2f tmp;
 	tmp.x = mouseLoc.x;

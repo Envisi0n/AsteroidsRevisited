@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
+#define CLICK_DELAY 0.3
 
 using namespace std;
 
@@ -21,12 +22,15 @@ public:
 	virtual ~Menu();
 
 	virtual void draw(sf::RenderWindow* window);
-	virtual int update(sf::Vector2i mouseLoc);
+	virtual int update(sf::Vector2i mouseLoc, sf::Event event);
 	virtual void addButton(float x, float y, const char* path, int action);
 
 private:
-
+	// Holds all the buttons
 	vector<Button*> buttons;
+
+	// Timer
+	sf::Clock reset;
 };
 
 #endif /* MENU_HPP_ */
