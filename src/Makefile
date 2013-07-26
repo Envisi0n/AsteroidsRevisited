@@ -71,10 +71,10 @@ all:    $(MAIN) testServer testClient
 install: $(MAIN)
 	cp $(MAIN) ../assets/
 
-testServer: $(OBJS)
+testServer: $(OBJS) tests/testServer.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) -o testServer tests/testServer.cpp $(OBJS) $(LFLAGS) $(LIBS)
 	
-testClient: $(OBJS)
+testClient: $(OBJS) tests/testClient.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) -o testClient tests/testClient.cpp $(OBJS) $(LFLAGS) $(LIBS)
 
 windows:   CC=i586-mingw32msvc-g++

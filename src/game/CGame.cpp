@@ -67,7 +67,7 @@ void CGame::run() {
 			window.clear();
 			window.draw(background);
 			// Draw menu buttons.
-			handleButton(gameMenu.update(sf::Mouse::getPosition(window)));
+			handleButton(gameMenu.update(sf::Mouse::getPosition(window),event));
 
 			gameMenu.draw(&window);
 			break;
@@ -75,7 +75,7 @@ void CGame::run() {
 		case LOGIN:
 			window.clear();
 			window.draw(background);
-			handleButton(loginMenu.update(sf::Mouse::getPosition(window)));
+			handleButton(loginMenu.update(sf::Mouse::getPosition(window),event));
 
 			loginMenu.draw(&window);
 			break;

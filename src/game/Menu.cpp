@@ -6,8 +6,11 @@
  */
 
 #include "Menu.hpp"
+#include <iostream>
 
 Menu::Menu() {
+
+	reset.restart();
 
 }
 
@@ -32,15 +35,18 @@ void Menu::draw(sf::RenderWindow* window) {
 
 }
 
-int Menu::update(sf::Vector2i mouseLoc) {
+int Menu::update(sf::Vector2i mouseLoc, sf::Event event) {
 
 	int action = BUT_NOTHING;
 	// Call draw on each button
 	for (vector<Button*>::iterator it = buttons.begin(); it != buttons.end();
 			++it) {
-		if( (action = (*it)->update(mouseLoc)) != BUT_NOTHING )
-			return action ;
-
+		std::cout << reset.getElapsedTime().asSeconds() << std::endl;
+		if ((action = (*it)->update(mouseLoc, event)) != BUT_NOTHING
+				&& reset.getElapsedTime().asSeconds() > CLICK_DELAY) {
+			reset.restart();
+			return action;
+		}
 	}
 
 	return BUT_NOTHING;

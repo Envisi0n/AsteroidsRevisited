@@ -12,8 +12,7 @@ int main(int argc, char *argv[]) {
 	Server test(30000);
 	sf::Packet testPacket;
 	while (1) {
-		for (int i = 0; i < MAXCLIENTS; i++)
-			if (test.receive(&testPacket, i) == sf::Socket::Done) {
+			if (test.receive(&testPacket) == sf::Socket::Done) {
 
 				char buf[32];
 
@@ -24,7 +23,7 @@ int main(int argc, char *argv[]) {
 				testPacket.clear();
 				testPacket << buf;
 
-				test.send(testPacket, i);
+				test.send(testPacket, 0);
 
 			}
 	}
