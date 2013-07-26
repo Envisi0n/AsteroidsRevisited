@@ -37,8 +37,8 @@ LIBS = -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
 
 # define the C source files
 SRCSRAW = $(foreach d,.,$(wildcard $(addprefix $(d)/game/*,.cpp)))
-TESTS = test.cpp testClient.cpp testServer.cpp
-SRCS = $(filter-out $(TESTS),$(SRCSRAW))
+BINS = ./game/Asteroids.cpp
+SRCS = $(filter-out $(BINS),$(SRCSRAW))
 
 # define the C object files 
 #
@@ -65,11 +65,17 @@ endif
 
 .PHONY: depend clean
 
-all:    $(MAIN)
+all:    $(MAIN) testServer testClient
 	@echo  Asteroids Build Successful
 
 install: $(MAIN)
 	cp $(MAIN) ../assets/
+
+testServer: $(OBJS) tests/testServer.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) -o testServer tests/testServer.cpp $(OBJS) $(LFLAGS) $(LIBS)
+	
+testClient: $(OBJS) tests/testClient.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) -o testClient tests/testClient.cpp $(OBJS) $(LFLAGS) $(LIBS)
 
 windows:   CC=i586-mingw32msvc-g++
 windows:   INCLUDES = -I SFML/include
@@ -80,7 +86,7 @@ windows: $(MAIN)
 	@echo  Asteroids Build Successful
 
 $(MAIN): $(OBJS) 
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) game/Asteroids.cpp $(OBJS) $(LFLAGS) $(LIBS)
 
 # this is a suffix replacement rule for building .o's from .c's
 # it uses automatic variables $<: the name of the prerequisite of

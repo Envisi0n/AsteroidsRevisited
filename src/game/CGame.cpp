@@ -6,7 +6,7 @@
  */
 
 #include "CGame.hpp"
-
+#include <iostream>
 CGame::CGame() {
 	setState(INIT);
 }
@@ -67,7 +67,7 @@ void CGame::run() {
 			window.clear();
 			window.draw(background);
 			// Draw menu buttons.
-			handleButton(gameMenu.update(sf::Mouse::getPosition(window)));
+			handleButton(gameMenu.update(sf::Mouse::getPosition(window),event));
 
 			gameMenu.draw(&window);
 			break;
@@ -75,14 +75,14 @@ void CGame::run() {
 		case LOGIN:
 			window.clear();
 			window.draw(background);
-			handleButton(loginMenu.update(sf::Mouse::getPosition(window)));
+			handleButton(loginMenu.update(sf::Mouse::getPosition(window),event));
 
 			loginMenu.draw(&window);
 			break;
 
 		case NETCONNECT:
 			window.clear();
-
+			netConnect();
 
 
 			break;
@@ -140,6 +140,8 @@ void CGame::handleButton(int action) {
 
 void CGame::netConnect() {
 
+	std::cout <<"Attempting connect" << std::endl;
+
 	sf::Packet packet;
 	connectPacket info;
 	gameClient.setServerAddress("127.0.0.1");
@@ -148,8 +150,10 @@ void CGame::netConnect() {
 	packet << info;
 	if( gameClient.send(packet) ) {
 
-
+		std::cout << "failed" << std::endl;
 	}
+	setState(LOGIN);
+
 
 
 
