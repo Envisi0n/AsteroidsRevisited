@@ -14,7 +14,6 @@ Button::Button(float x, float y, const char* texturePath, int action) {
 		return;
 	}
 
-
 	sprite.setTexture(texture);
 
 }
@@ -26,7 +25,7 @@ Button::~Button() {
 void Button::draw(sf::RenderWindow* window) {
 	window->draw(sprite);
 
-	return ;
+	return;
 }
 
 void Button::setPosition(float x, float y) {
@@ -37,10 +36,10 @@ void Button::setPosition(float x, float y) {
 void Button::animate(int color) {
 
 	// Don't animate if this button does nothing
-	if( getAction() == BUT_NOTHING)
+	if (getAction() == BUT_NOTHING)
 		return;
 
-	switch( color ) {
+	switch (color) {
 
 	case NORMAL:
 		this->sprite.setColor(sf::Color(255, 255, 255));
@@ -52,8 +51,6 @@ void Button::animate(int color) {
 		this->sprite.setColor(sf::Color(0, 255, 0));
 		break;
 
-
-
 	}
 
 }
@@ -63,23 +60,20 @@ int Button::update(sf::Vector2i mouseLoc, sf::Event event) {
 	tmp.x = mouseLoc.x;
 	tmp.y = mouseLoc.y;
 
-	if( sprite.getGlobalBounds().contains(tmp)) {
+	if (sprite.getGlobalBounds().contains(tmp)) {
 
-		if( sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			animate(CLICK);
 			return action;
-		}
-		else {
+		} else {
 			animate(OVER);
 			return BUT_NOTHING;
 		}
 
-	}
-	else
+	} else
 		animate(NORMAL);
 
 	return BUT_NOTHING;
-
 
 }
 
