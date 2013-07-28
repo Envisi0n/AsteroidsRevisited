@@ -5,7 +5,7 @@
  *      Author: cam
  */
 
-#include "../game/Server.hpp"
+#include "../server/Server.hpp"
 #include "../game/Net_shared.hpp"
 #include <iostream>
 int main(int argc, char *argv[]) {

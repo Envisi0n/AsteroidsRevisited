@@ -13,12 +13,9 @@
 
 enum buttonColors {
 
-	NORMAL,
-	OVER,
-	CLICK
+	NORMAL, OVER, CLICK
 
 };
-
 
 class Button {
 public:
@@ -32,7 +29,7 @@ public:
 	void animate(int color);
 
 	// Assessors
-	void setPosition( float x, float y);
+	void setPosition(float x, float y);
 	int getAction() const;
 	void setAction(int action);
 
