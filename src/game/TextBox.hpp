@@ -27,6 +27,8 @@ public:
 
 	bool isHasFocus() const;
 	void setHasFocus(bool hasFocus);
+	const sf::Text& getText() const;
+	void setText(const sf::Text& text);
 
 private:
 
@@ -35,6 +37,9 @@ private:
 
 	// Has focus?
 	bool hasFocus;
+	
+	// Text Field
+	sf::Text Text;
 
 };
 

@@ -12,6 +12,12 @@ TextBox::TextBox(float x, float y, float pWidth) {
 	setSize(pWidth);
 	setHasFocus (false);
 
+	// Set Text field
+	Text.setPosition(x, y);
+	Text.setCharacterSize(12);
+
+	std::string test = "Hard Dicks!";
+	Text.setString(test);
 }
 
 TextBox::~TextBox() {
@@ -41,6 +47,7 @@ void TextBox::update(sf::Vector2i mouseLoc, sf::Event event) {
 	tmp.y = mouseLoc.y;
 
 	bool Focus = isHasFocus();
+	//sf::Text& tmpText;
 
 	if (rectangle.getGlobalBounds().contains(tmp)) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -52,13 +59,15 @@ void TextBox::update(sf::Vector2i mouseLoc, sf::Event event) {
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
-			setHasFocus (true);
+			setHasFocus (false);
 
 		}
 	}
 
 	if (Focus) { //Key is pressed.
+		if( true ) {
 
+		}
 	}
 }
 
@@ -68,4 +77,14 @@ bool TextBox::isHasFocus() const {
 
 void TextBox::setHasFocus(bool hasFocus) {
 	this->hasFocus = hasFocus;
+}
+
+const sf::Text& TextBox::getText() const
+{
+	return Text;
+}
+
+void TextBox::setText(const sf::Text& text)
+{
+	Text = text;
 }
