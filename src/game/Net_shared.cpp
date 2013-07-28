@@ -19,5 +19,5 @@ sf::Packet& operator <<(sf::Packet& packet, const loginPacket& login) {
 }
 
 sf::Packet& operator >>(sf::Packet& packet, loginPacket& login) {
-	return packet >> login.packetType << login.username >> login.password;
+	return packet >> login.packetType >> login.username >> login.password;
 }

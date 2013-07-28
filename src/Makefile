@@ -36,9 +36,17 @@ endif
 LIBS = -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
 
 # define the C source files
+
+# Client
 SRCSRAW = $(foreach d,.,$(wildcard $(addprefix $(d)/game/*,.cpp)))
 BINS = ./game/Asteroids.cpp
 SRCS = $(filter-out $(BINS),$(SRCSRAW))
+
+# Server
+S_SRCSRAW = $(foreach d,.,$(wildcard $(addprefix $(d)/server/*,.cpp)))
+SBIN = ./server/AsteroidsServer.cpp
+S_SRCS = $(filter-out $(SBIN),$(S_SRCSRAW))
+
 
 # define the C object files 
 #
@@ -49,12 +57,15 @@ SRCS = $(filter-out $(BINS),$(SRCSRAW))
 # with the .o suffix
 #
 OBJS = $(SRCS:.cpp=.o)
+SOBJS = $(S_SRCS:.cpp=.o)
 
 # define the executable file
 ifeq ($(UNAME), Linux)
 MAIN = AsteroidsRevisited
+SMAIN = AsteroidsRevisitedServer
 else
 MAIN = AsteroidsRevisited.exe
+SMAIN = AsteroidsRevisitedServer.exe
 endif
 
 #
@@ -65,14 +76,14 @@ endif
 
 .PHONY: depend clean
 
-all:    $(MAIN) testServer testClient
+all:    $(MAIN) $(SMAIN) testServer testClient
 	@echo  Asteroids Build Successful
 
 install: $(MAIN)
 	cp $(MAIN) ../assets/
 
-testServer: $(OBJS) tests/testServer.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) -o testServer tests/testServer.cpp $(OBJS) $(LFLAGS) $(LIBS)
+testServer: $(SOBJS) tests/testServer.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) -o testServer tests/testServer.cpp $(SOBJS) $(LFLAGS) $(LIBS)
 	
 testClient: $(OBJS) tests/testClient.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) -o testClient tests/testClient.cpp $(OBJS) $(LFLAGS) $(LIBS)
@@ -88,6 +99,9 @@ windows: $(MAIN)
 $(MAIN): $(OBJS) 
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) game/Asteroids.cpp $(OBJS) $(LFLAGS) $(LIBS)
 
+$(SMAIN): $(SOBJS) 
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(SMAIN) server/AsteroidsServer.cpp $(SOBJS) $(LFLAGS) $(LIBS)
+
 # this is a suffix replacement rule for building .o's from .c's
 # it uses automatic variables $<: the name of the prerequisite of
 # the rule(a .c file) and $@: the name of the target of the rule (a .o file) 
@@ -96,9 +110,9 @@ $(MAIN): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
 clean:
-	$(RM) game/*.o *~ $(MAIN)
+	$(RM) game/*.o *~ $(MAIN) $(SMAIN) testServer testClient
 
-depend: $(SRCS)
+depend: $(SRCS) $(S_SRCS)
 	makedepend $(INCLUDES) $^
 
 # DO NOT DELETE THIS LINE -- make depend needs it
