@@ -8,6 +8,7 @@
 #include "CGame.hpp"
 #include <iostream>
 #include <string.h>
+#include "MD5.h"
 CGame::CGame() {
 	setState(INIT);
 }
@@ -152,7 +153,7 @@ void CGame::netConnect() {
 	gameClient.setServerPort(SERVER_PORT);
 	info.packetType = GAMELOGIN;
 	strcpy(info.username,"test");
-	strcpy(info.password,"test123");
+	strcpy(info.password,md5("test123").c_str());
 	packet << info;
 	if( gameClient.send(packet) ) {
 
