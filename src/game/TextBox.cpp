@@ -10,6 +10,7 @@
 TextBox::TextBox(float x, float y, float pWidth) {
 	setPosition(x, y);
 	setSize(pWidth);
+	setHasFocus (FALSE);
 }
 
 TextBox::~TextBox() {
@@ -19,7 +20,7 @@ TextBox::~TextBox() {
 void TextBox::draw(sf::RenderWindow* window) {
 	window->draw(rectangle);
 
-	return ;
+	return;
 }
 
 void TextBox::setPosition(float x, float y) {
@@ -38,15 +39,32 @@ void TextBox::update(sf::Vector2i mouseLoc, sf::Event event) {
 	tmp.x = mouseLoc.x;
 	tmp.y = mouseLoc.y;
 
-	if( rectangle.getGlobalBounds().contains(tmp) ) {
+	bool Focus = isHasFocus();
 
-		if( sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+	if (rectangle.getGlobalBounds().contains(tmp)) {
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+
+			setHasFocus (TRUE);
+
+		}
+	} else {
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+
+			setHasFocus (TRUE);
 
 		}
 	}
+
+	if (Focus) { //Key is pressed.
+
+	}
 }
-// Focus():
-//   When Textbox is created it will continuously check input to see if a mouse click is
-//   triggered in the textbox.
-// InFocus()
-//
+
+bool TextBox::isHasFocus() const {
+	return hasFocus;
+}
+
+void TextBox::setHasFocus(bool hasFocus) {
+	this->hasFocus = hasFocus;
+}

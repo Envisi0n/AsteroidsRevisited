@@ -25,11 +25,16 @@ public:
 	void setPosition( float x, float y);
 	void setSize(float pWidth);
 
+	bool isHasFocus() const;
+	void setHasFocus(bool hasFocus);
 
 private:
 
 	// Drawable box
 	sf::RectangleShape rectangle;
+
+	// Has focus?
+	bool hasFocus;
 
 };
 
