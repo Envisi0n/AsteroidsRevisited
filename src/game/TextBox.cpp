@@ -11,6 +11,7 @@ TextBox::TextBox(float x, float y, float pWidth) {
 	setPosition(x, y);
 	setSize(pWidth);
 	setHasFocus (false);
+
 }
 
 TextBox::~TextBox() {
