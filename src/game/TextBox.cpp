@@ -10,7 +10,7 @@
 TextBox::TextBox(float x, float y, float pWidth) {
 	setPosition(x, y);
 	setSize(pWidth);
-	setHasFocus (FALSE);
+	setHasFocus (false);
 }
 
 TextBox::~TextBox() {
@@ -44,14 +44,14 @@ void TextBox::update(sf::Vector2i mouseLoc, sf::Event event) {
 	if (rectangle.getGlobalBounds().contains(tmp)) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
-			setHasFocus (TRUE);
+			setHasFocus (true);
 
 		}
 	} else {
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
-			setHasFocus (TRUE);
+			setHasFocus (true);
 
 		}
 	}
