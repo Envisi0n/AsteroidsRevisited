@@ -35,6 +35,9 @@ endif
 #   option, something like (this will link in libmylib.so and libm.so:
 LIBS = -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system
 
+# Other flags
+OTHER = -static-libgcc -static-libstdc++
+
 # define the C source files
 
 # Client
@@ -83,10 +86,10 @@ install: $(MAIN)
 	cp $(MAIN) ../assets/
 
 testServer: $(SOBJS) tests/testServer.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) -o testServer tests/testServer.cpp $(SOBJS) $(LFLAGS) $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o testServer tests/testServer.cpp $(SOBJS) $(LFLAGS) $(LIBS) $(OTHER)
 	
 testClient: $(OBJS) tests/testClient.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) -o testClient tests/testClient.cpp $(OBJS) $(LFLAGS) $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o testClient tests/testClient.cpp $(OBJS) $(LFLAGS) $(LIBS) $(OTHER)
 
 windows:   CC=i586-mingw32msvc-g++
 windows:   INCLUDES = -I SFML/include
@@ -97,10 +100,10 @@ windows: $(MAIN)
 	@echo  Asteroids Build Successful
 
 $(MAIN): $(OBJS) 
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) game/Asteroids.cpp $(OBJS) $(LFLAGS) $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) game/Asteroids.cpp $(OBJS) $(LFLAGS) $(LIBS) $(OTHER)
 
 $(SMAIN): $(SOBJS) 
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(SMAIN) server/AsteroidsServer.cpp $(SOBJS) $(LFLAGS) $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(SMAIN) server/AsteroidsServer.cpp $(SOBJS) $(LFLAGS) $(LIBS) $(OTHER)
 
 # this is a suffix replacement rule for building .o's from .c's
 # it uses automatic variables $<: the name of the prerequisite of
