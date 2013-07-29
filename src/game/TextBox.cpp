@@ -13,7 +13,7 @@ TextBox::TextBox(float x, float y, float pWidth) {
 	setHasFocus (false);
 
 	// Set Text field
-	Text.setPosition(x, y);
+	Text.setPosition(x+3, y+2);
 	Text.setCharacterSize(14);
 
 	// Load font
@@ -21,10 +21,9 @@ TextBox::TextBox(float x, float y, float pWidth) {
 		// error
 	}
 	Text.setFont(font);
-	//Text.setColor
+	Text.setColor(sf::Color::Black);
 	Text.setStyle(sf::Text::Regular);
 
-	Text.setString("Hard Dicks!");
 }
 
 TextBox::~TextBox() {
