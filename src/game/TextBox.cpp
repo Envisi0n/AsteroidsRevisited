@@ -8,21 +8,20 @@
 #include "TextBox.hpp"
 
 TextBox::TextBox(float x, float y, float pWidth) {
-	sf::Font font;
-
 	setPosition(x, y);
 	setSize(pWidth);
 	setHasFocus (false);
 
 	// Set Text field
 	Text.setPosition(x, y);
-	Text.setCharacterSize(25);
+	Text.setCharacterSize(14);
 
 	// Load font
 	if(!font.loadFromFile("fonts/TitilliumWeb-Regular.ttf")) {
 		// error
 	}
 	Text.setFont(font);
+	//Text.setColor
 	Text.setStyle(sf::Text::Regular);
 
 	Text.setString("Hard Dicks!");
@@ -54,7 +53,7 @@ void TextBox::update(sf::Vector2i mouseLoc, sf::Event event) {
 	tmp.x = mouseLoc.x;
 	tmp.y = mouseLoc.y;
 
-	bool Focus = isHasFocus();
+	bool Focus = getHasFocus();
 	//sf::Text& tmpText;
 
 	if (rectangle.getGlobalBounds().contains(tmp)) {
@@ -79,7 +78,7 @@ void TextBox::update(sf::Vector2i mouseLoc, sf::Event event) {
 	}
 }
 
-bool TextBox::isHasFocus() const {
+bool TextBox::getHasFocus() const {
 	return hasFocus;
 }
 

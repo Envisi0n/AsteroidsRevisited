@@ -25,7 +25,7 @@ public:
 	void setPosition( float x, float y);
 	void setSize(float pWidth);
 
-	bool isHasFocus() const;
+	bool getHasFocus() const;
 	void setHasFocus(bool hasFocus);
 	const sf::Text& getText() const;
 	void setText(const sf::Text& text);
