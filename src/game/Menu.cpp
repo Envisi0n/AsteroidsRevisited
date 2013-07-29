@@ -60,7 +60,11 @@ int Menu::update(sf::Vector2i mouseLoc, sf::Event event) {
 	}
 
 	for (vector<TextBox*>::iterator it = TextBoxes.begin(); it != TextBoxes.end(); ++it) {
-		(*it)->update(mouseLoc, event);
+		if (reset.getElapsedTime().asSeconds() > CLICK_DELAY) {
+			(*it)->update(mouseLoc, event);
+			reset.restart();
+			return action;
+		}
 	}
 
 	return BUT_NOTHING;
