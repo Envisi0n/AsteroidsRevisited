@@ -6,7 +6,6 @@
  */
 
 #include "TextBox.hpp"
-#include <iostream>
 
 TextBox::TextBox(float x, float y, float pWidth) {
 	setPosition(x, y);
@@ -54,7 +53,7 @@ void TextBox::update(sf::Vector2i mouseLoc, sf::Event event) {
 	tmp.y = mouseLoc.y;
 
 	bool Focus = getHasFocus();
-	std::string myString;
+	sf::String myString;
 
 	if (rectangle.getGlobalBounds().contains(tmp)) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -70,15 +69,21 @@ void TextBox::update(sf::Vector2i mouseLoc, sf::Event event) {
 
 		}
 	}
-	std::cout << "Here: " << std::endl;
+
 	if (Focus) {
-		std::cout << "Here2: " << std::endl;
-		if( sf::Keyboard::isKeyPressed(sf::Keyboard::A) ) {
+
+		if (event.type == sf::Event::TextEntered) {
 			myString = Text.getString();
-			std::cout << "Test 1: " << myString << std::endl;
-			myString = myString + "a";
+			myString = myString + (event.text.unicode);
 			Text.setString(myString);
 		}
+
+		//if( sf::Keyboard::isKeyPressed(sf::Keyboard::A) ) {
+		//	myString = Text.getString();
+		//	std::cout << "Test 1: " << myString << std::endl;
+		//	myString = myString + "a";
+		//	Text.setString(myString);
+		//}
 	}
 }
 
