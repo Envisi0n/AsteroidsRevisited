@@ -113,7 +113,7 @@ $(SMAIN): $(SOBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
 clean:
-	$(RM) game/*.o *~ $(MAIN) $(SMAIN) testServer testClient
+	$(RM) game/*.o server/*.o *~ $(MAIN) $(SMAIN) testServer testClient
 
 depend: $(SRCS) $(S_SRCS)
 	makedepend $(INCLUDES) $^
