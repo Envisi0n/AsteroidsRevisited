@@ -9,7 +9,6 @@
 
 TextBox::TextBox(float x, float y, float pWidth) {
 	sf::Font font;
-	std::string test;
 
 	setPosition(x, y);
 	setSize(pWidth);
@@ -17,17 +16,16 @@ TextBox::TextBox(float x, float y, float pWidth) {
 
 	// Set Text field
 	Text.setPosition(x, y);
-	Text.setCharacterSize(12);
+	Text.setCharacterSize(25);
 
 	// Load font
 	if(!font.loadFromFile("fonts/TitilliumWeb-Regular.ttf")) {
 		// error
 	}
-	//Text.setFont(font);
+	Text.setFont(font);
 	Text.setStyle(sf::Text::Regular);
 
-	test = "Hard Dicks!";
-	Text.setString(test);
+	Text.setString("Hard Dicks!");
 }
 
 TextBox::~TextBox() {
