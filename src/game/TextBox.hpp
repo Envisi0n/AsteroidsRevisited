@@ -40,7 +40,7 @@ private:
 	
 	// Text Field
 	sf::Text Text;
-
+	sf::Font font;
 };
 
 #endif /* TEXTBOX_H_ */
