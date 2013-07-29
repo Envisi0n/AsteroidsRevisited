@@ -152,7 +152,7 @@ void CGame::netConnect() {
 	gameClient.setServerAddress("127.0.0.1");
 	gameClient.setServerPort(SERVER_PORT);
 	info.packetType = GAMELOGIN;
-	strcpy(info.username,"test");
+	strcpy(info.username,"test2");
 	strcpy(info.password,md5("test123").c_str());
 	packet << info;
 	if( gameClient.send(packet) ) {

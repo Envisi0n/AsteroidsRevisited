@@ -10,7 +10,6 @@
 
 sf::Clock Menu::reset;
 
-
 Menu::Menu() {
 
 	reset.restart();
@@ -37,8 +36,8 @@ void Menu::draw(sf::RenderWindow* window) {
 	}
 
 	// Call draw on each textbox
-	for (vector<TextBox*>::iterator it = TextBoxes.begin(); it != TextBoxes.end();
-			++it) {
+	for (vector<TextBox*>::iterator it = TextBoxes.begin();
+			it != TextBoxes.end(); ++it) {
 
 		(*it)->draw(window);
 
@@ -53,18 +52,15 @@ int Menu::update(sf::Vector2i mouseLoc, sf::Event event) {
 	for (vector<Button*>::iterator it = buttons.begin(); it != buttons.end();
 			++it) {
 		if ((action = (*it)->update(mouseLoc, event))
-				!= BUT_NOTHING && reset.getElapsedTime().asSeconds() > CLICK_DELAY) {
+				!= BUT_NOTHING&& reset.getElapsedTime().asSeconds() > CLICK_DELAY) {
 			reset.restart();
 			return action;
 		}
 	}
 
-	for (vector<TextBox*>::iterator it = TextBoxes.begin(); it != TextBoxes.end(); ++it) {
-		if (reset.getElapsedTime().asSeconds() > CLICK_DELAY) {
-			(*it)->update(mouseLoc, event);
-			reset.restart();
-			return action;
-		}
+	for (vector<TextBox*>::iterator it = TextBoxes.begin();
+			it != TextBoxes.end(); ++it) {
+		(*it)->update(mouseLoc, event);
 	}
 
 	return BUT_NOTHING;

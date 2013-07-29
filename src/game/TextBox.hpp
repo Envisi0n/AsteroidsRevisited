@@ -37,6 +37,8 @@ private:
 
 	// Has focus?
 	bool hasFocus;
+	// Repeat flag
+	bool flag;
 	
 	// Text Field
 	sf::Text Text;
