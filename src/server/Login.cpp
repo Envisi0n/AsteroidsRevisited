@@ -25,7 +25,6 @@ Login::Login() {
 
 		if( line.length() > 0 ) {
 
-
 		// Username
 		tmp = strdup(line.c_str());
 		tok = strtok(tmp, ":");
@@ -35,6 +34,8 @@ Login::Login() {
 		tok = strtok( NULL, ":");
 		tmpuser.setPassword(tok);
 		delete tmp;
+
+		users.push_back(tmpuser);
 
 		}
 
@@ -51,7 +52,7 @@ Login::~Login() {
 	for (std::vector<User>::iterator it = users.begin(); it != users.end();
 			++it) {
 
-		std::cout << (*it).toString() << std::endl;
+		std::cout << "WRITING:" << (*it).toString() << std::endl;
 		db << (*it).toString() << std::endl;
 
 	}
@@ -91,6 +92,8 @@ int Login::registerUser(std::string username, std::string password) {
 	std::cout << "Registering user: " << username << std::endl;
 	tmp.setUsername(username);
 	tmp.setPassword(password);
+
+	users.push_back(tmp);
 
 	return REG_SUCCESS;
 
