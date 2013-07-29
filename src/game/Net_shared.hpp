@@ -14,10 +14,16 @@ enum PacketTypes{
 
 	CONNECT,
 	GAMELOGIN,
+	GAMEREGISTER,
 	DISCONNECT,
 	CLIENT_UPDATE,
 	SERVER_UPDATE,
 
+};
+
+enum loginTypes {
+	LOG_REGISTER,
+	LOG_LOGIN,
 };
 
 
@@ -26,6 +32,8 @@ struct connectPacket {
 
 };
 
+
+// Used for both registering and login
 struct loginPacket {
 	short packetType;
 	char username[32];

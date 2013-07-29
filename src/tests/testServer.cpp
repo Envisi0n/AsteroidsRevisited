@@ -18,24 +18,35 @@ int main(int argc, char *argv[]) {
 		if (test.receive(&testPacket) == sf::Socket::Done) {
 
 			short packetType;
+			struct loginPacket login;
 
 			testPacket >> packetType;
 
-			switch( packetType) {
+			switch (packetType) {
 
 			case GAMELOGIN:
-
-				struct loginPacket login;
-
 				testPacket >> login.username;
 				testPacket >> login.password;
 
-				std::cout << "Username: " << login.username << " " <<  "Password: " << login.password << std::endl;
+				if (loginHandler.authenticateUser(login.username,
+						login.password) == AUTH_VALID) {
 
-				if( loginHandler.registerUser(login.username,login.password) == REG_SUCCESS )
+					std::cout << login.username << " authenticated."
+							<< std::endl;
 					return 0;
+				}
 
+				break;
 
+			case GAMEREGISTER:
+				testPacket >> login.username;
+				testPacket >> login.password;
+
+				if (loginHandler.registerUser(login.username, login.password)
+						== REG_SUCCESS) {
+					std::cout << login.username << " registered." << std::endl;
+					return 0;
+				}
 				break;
 
 			}
