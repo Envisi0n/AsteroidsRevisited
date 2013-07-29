@@ -8,6 +8,9 @@
 #include "TextBox.hpp"
 
 TextBox::TextBox(float x, float y, float pWidth) {
+	sf::Font font;
+	std::string test;
+
 	setPosition(x, y);
 	setSize(pWidth);
 	setHasFocus (false);
@@ -16,7 +19,14 @@ TextBox::TextBox(float x, float y, float pWidth) {
 	Text.setPosition(x, y);
 	Text.setCharacterSize(12);
 
-	std::string test = "Hard Dicks!";
+	// Load font
+	if(!font.loadFromFile("fonts/TitilliumWeb-Regular.ttf")) {
+		// error
+	}
+	//Text.setFont(font);
+	Text.setStyle(sf::Text::Regular);
+
+	test = "Hard Dicks!";
 	Text.setString(test);
 }
 
@@ -26,7 +36,7 @@ TextBox::~TextBox() {
 
 void TextBox::draw(sf::RenderWindow* window) {
 	window->draw(rectangle);
-
+	window->draw(Text);
 	return;
 }
 
