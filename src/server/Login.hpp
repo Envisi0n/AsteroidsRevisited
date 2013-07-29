@@ -10,12 +10,12 @@
 
 #include <vector>
 #include <string>
-#include "User.h"
+#include "User.hpp"
 
 enum authenticationTypes {
-	VALID,
-	UNKNOWN_USER,
-	INVALID_PASSWORD
+	AUTH_VALID,
+	AUTH_UNKNOWN_USER,
+	AUTH_INVALID_PASSWORD
 
 };
 

@@ -5,7 +5,7 @@
  *      Author: cameron
  */
 
-#include "User.h"
+#include "User.hpp"
 #include <sstream>
 
 User::User() {
