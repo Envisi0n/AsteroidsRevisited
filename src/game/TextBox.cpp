@@ -6,6 +6,7 @@
  */
 
 #include "TextBox.hpp"
+#include <iostream>
 
 TextBox::TextBox(float x, float y, float pWidth) {
 	setPosition(x, y);
@@ -72,26 +73,38 @@ void TextBox::update(sf::Vector2i mouseLoc, sf::Event event) {
 
 	if (Focus) {
 
-		if (event.type == sf::Event::TextEntered && !flag) {
+		if (event.type == sf::Event::TextEntered) {
 
-			//backspace
-			if (event.text.unicode == 8) {
+			if ((prevEvent == event.text.unicode && reset.getElapsedTime().asMilliseconds() > TYPE_DELAY)
+					|| prevEvent != event.text.unicode) {
 
-				myString = Text.getString();
-				myString.erase(myString.getSize() - 1, 1);
-				Text.setString(myString);
-				flag = true;
-			} else {
+				//backspace
+				if (event.text.unicode == 8) {
 
-				myString = Text.getString();
-				myString = myString + (event.text.unicode);
-				Text.setString(myString);
-				flag = true;
+					myString = Text.getString();
+
+					if (myString != "") {
+						myString.erase(myString.getSize() - 1, 1);
+						Text.setString(myString);
+					}
+
+					reset.restart();
+
+				} else if (event.text.unicode > 0x21
+						&& event.text.unicode < 0x7e) {
+
+					myString = Text.getString();
+					myString = myString + (event.text.unicode);
+					Text.setString(myString);
+
+					reset.restart();
+
+				} else {
+					std::cout << "FUCK YOU CAM" << std::endl;
+				}
 			}
-		}
 
-		if (event.type == sf::Event::KeyReleased) {
-			flag = false;
+			prevEvent = event.text.unicode;
 		}
 	}
 }

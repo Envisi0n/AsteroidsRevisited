@@ -11,6 +11,7 @@
 #include <SFML/Graphics.hpp>
 #include "CGame_shared.hpp"
 #include <string>
+#define TYPE_DELAY 125
 
 class TextBox {
 public:
@@ -40,8 +41,9 @@ private:
 
 	// Has focus?
 	bool hasFocus;
-	// Repeat flag
-	bool flag;
+	// Previous Event Tracker
+	sf::Uint32 prevEvent;
+	sf::Clock reset;
 	
 	// Text Field
 	sf::Text Text;
