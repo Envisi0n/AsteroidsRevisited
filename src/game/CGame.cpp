@@ -149,11 +149,14 @@ void CGame::netConnect() {
 
 	sf::Packet packet;
 	loginPacket info;
+	std::string tmp ;
+
 	gameClient.setServerAddress("127.0.0.1");
 	gameClient.setServerPort(SERVER_PORT);
 	info.packetType = GAMEREGISTER;
 	strcpy(info.username,loginMenu.getTextBoxes().at(0)->toString().c_str());
-	strcpy(info.password,md5(loginMenu.getTextBoxes().at(1)->toString()).c_str());
+	tmp = loginMenu.getTextBoxes().at(1)->toString() + "coolsalt";
+	strcpy(info.password,md5(tmp).c_str());
 	packet << info;
 	if( gameClient.send(packet) ) {
 
