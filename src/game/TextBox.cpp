@@ -111,3 +111,9 @@ const sf::Text& TextBox::getText() const {
 void TextBox::setText(const sf::Text& text) {
 	Text = text;
 }
+
+std::string TextBox::toString() {
+
+	return Text.getString();
+
+}

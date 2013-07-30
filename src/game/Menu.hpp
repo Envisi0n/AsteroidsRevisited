@@ -26,6 +26,7 @@ public:
 	virtual int update(sf::Vector2i mouseLoc, sf::Event event);
 	virtual void addButton(float x, float y, const char* path, int action);
 	virtual void addTextBox(float x, float y, float pWidth);
+	const vector<TextBox*>& getTextBoxes() const;
 
 private:
 	// Holds all the buttons
