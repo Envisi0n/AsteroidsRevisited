@@ -77,3 +77,7 @@ void Menu::addTextBox(float x, float y, float pWidth) {
 	TextBoxes.push_back(new TextBox(x, y, pWidth));
 
 }
+
+const vector<TextBox*>& Menu::getTextBoxes() const {
+	return TextBoxes;
+}
