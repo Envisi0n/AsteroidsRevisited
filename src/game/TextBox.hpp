@@ -10,6 +10,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "CGame_shared.hpp"
+#include <string>
 
 class TextBox {
 public:
@@ -29,6 +30,8 @@ public:
 	void setHasFocus(bool hasFocus);
 	const sf::Text& getText() const;
 	void setText(const sf::Text& text);
+
+	std::string toString();
 
 private:
 
