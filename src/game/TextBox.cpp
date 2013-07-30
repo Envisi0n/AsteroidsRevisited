@@ -10,14 +10,14 @@
 TextBox::TextBox(float x, float y, float pWidth) {
 	setPosition(x, y);
 	setSize(pWidth);
-	setHasFocus (false);
+	setHasFocus(false);
 
 	// Set Text field
-	Text.setPosition(x+3, y+2);
+	Text.setPosition(x + 3, y + 2);
 	Text.setCharacterSize(14);
 
 	// Load font
-	if(!font.loadFromFile("fonts/TitilliumWeb-Regular.ttf")) {
+	if (!font.loadFromFile("fonts/TitilliumWeb-Regular.ttf")) {
 		// error
 	}
 	Text.setFont(font);
@@ -58,32 +58,41 @@ void TextBox::update(sf::Vector2i mouseLoc, sf::Event event) {
 	if (rectangle.getGlobalBounds().contains(tmp)) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
-			setHasFocus (true);
+			setHasFocus(true);
 
 		}
 	} else {
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
-			setHasFocus (false);
+			setHasFocus(false);
 
 		}
 	}
 
 	if (Focus) {
 
-		if (event.type == sf::Event::TextEntered) {
-			myString = Text.getString();
-			myString = myString + (event.text.unicode);
-			Text.setString(myString);
+		if (event.type == sf::Event::TextEntered && !flag) {
+
+			//backspace
+			if (event.text.unicode == 8) {
+
+				myString = Text.getString();
+				myString.erase(myString.getSize() - 1, 1);
+				Text.setString(myString);
+				flag = true;
+			} else {
+
+				myString = Text.getString();
+				myString = myString + (event.text.unicode);
+				Text.setString(myString);
+				flag = true;
+			}
 		}
 
-		//if( sf::Keyboard::isKeyPressed(sf::Keyboard::A) ) {
-		//	myString = Text.getString();
-		//	std::cout << "Test 1: " << myString << std::endl;
-		//	myString = myString + "a";
-		//	Text.setString(myString);
-		//}
+		if (event.type == sf::Event::KeyReleased) {
+			flag = false;
+		}
 	}
 }
 
@@ -95,12 +104,10 @@ void TextBox::setHasFocus(bool hasFocus) {
 	this->hasFocus = hasFocus;
 }
 
-const sf::Text& TextBox::getText() const
-{
+const sf::Text& TextBox::getText() const {
 	return Text;
 }
 
-void TextBox::setText(const sf::Text& text)
-{
+void TextBox::setText(const sf::Text& text) {
 	Text = text;
 }
