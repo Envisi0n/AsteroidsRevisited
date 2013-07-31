@@ -146,7 +146,7 @@ void CGame::handleButton(int action) {
 	sf::RectangleShape test;
 }
 
-void CGame::netConnect() {
+void CGame::login() {
 
 	sf::Packet packet;
 	loginPacket info;

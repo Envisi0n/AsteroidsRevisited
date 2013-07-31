@@ -52,6 +52,12 @@ int Server::receive(sf::Packet* data) {
 
 		for (int i = 0; i < MAXCLIENTS; i++) {
 
+			// We know this client already
+			if( clients[i].inUse && clients[i].ip == ip && clients[i].port == port) {
+				return i;
+			}
+
+			// new client
 			if (!clients[i].inUse) {
 
 				clients[i].ip = ip;

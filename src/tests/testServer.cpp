@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 	sf::Packet testPacket;
 	int client;
 	while (1) {
-		if ( (client = test.receive(&testPacket)) != -1) {
+		if ((client = test.receive(&testPacket)) != -1) {
 
 			short packetType;
 			struct loginPacket login;
@@ -41,9 +41,9 @@ int main(int argc, char *argv[]) {
 					response.response = AUTH_VALID;
 					testPacket << response.packetType << response.response;
 
-					std::cout << "Sending to client: " << client << std::endl;
+					std::cout << "Sending to client: " << client;
 
-					test.send(testPacket,client);
+					test.send(testPacket, client);
 
 					testPacket.clear();
 				}

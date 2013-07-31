@@ -42,7 +42,7 @@ public:
 private:
 
 	void handleButton(int action);
-	void netConnect();
+	void login();
 	// Background drawable object
 	sf::RectangleShape background;
 	// Background texture
