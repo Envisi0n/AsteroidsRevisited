@@ -9,6 +9,15 @@
 #include <iostream>
 
 Server::Server(unsigned short int port) {
+
+	for(int i =0; i < MAXCLIENTS; i++ ) {
+
+		clients[i].inUse = false;
+		clients[i].ip = "0.0.0.0";
+		clients[i].port = 0;
+
+	}
+
 	if (this->socket.bind(port) != sf::Socket::Done)
 		return;
 
@@ -33,7 +42,6 @@ void Server::setPort(unsigned short int port) {
 
 sf::Socket::Status Server::send(sf::Packet data, int client) {
 
-	std::cout << "Client " << client << ":";
 	return socket.send(data, clients[client].ip, clients[client].port);
 
 }
@@ -59,7 +67,6 @@ int Server::receive(sf::Packet* data) {
 
 			// new client
 			if (!clients[i].inUse) {
-
 				clients[i].ip = ip;
 				clients[i].port = port;
 				clients[i].inUse = true;

@@ -29,24 +29,43 @@ int main(int argc, char *argv[]) {
 			case GAMELOGIN:
 				testPacket >> login.username;
 				testPacket >> login.password;
+				testPacket.clear();
+				response.packetType = GAMELOGINRESPONSE;
+				switch (loginHandler.authenticateUser(login.username,
+						login.password)) {
 
-				if (loginHandler.authenticateUser(login.username,
-						login.password) == AUTH_VALID) {
+				case AUTH_VALID:
 
 					std::cout << login.username << " authenticated."
 							<< std::endl;
 
-					testPacket.clear();
-					response.packetType = GAMELOGINRESPONSE;
 					response.response = AUTH_VALID;
-					testPacket << response.packetType << response.response;
 
-					std::cout << "Sending to client: " << client;
+					break;
+				case AUTH_UNKNOWN_USER:
 
-					test.send(testPacket, client);
+					std::cout << login.username << " invalid user."
+							<< std::endl;
 
-					testPacket.clear();
+					response.response = AUTH_UNKNOWN_USER;
+
+					break;
+
+				case AUTH_INVALID_PASSWORD:
+
+					std::cout << login.username << " invalid password."
+							<< std::endl;
+
+					response.response = AUTH_INVALID_PASSWORD;
+
+					break;
 				}
+
+				testPacket << response.packetType << response.response;
+				std::cout << "Sending to client: " << client;
+
+				test.send(testPacket, client);
+				testPacket.clear();
 
 				break;
 
@@ -62,8 +81,6 @@ int main(int argc, char *argv[]) {
 				break;
 
 			}
-			std::cout << "Received: " << packetType << std::endl;
-
 			testPacket.clear();
 		}
 	}

@@ -64,7 +64,6 @@ int Login::authenticateUser(std::string username, std::string password) {
 	for (std::vector<User>::iterator it = users.begin(); it != users.end();
 			++it) {
 
-		std::cout << (*it).getUsername() << "==" << username;
 		if ((*it).getUsername() == username) {
 
 			if ((*it).getPassword() == password) {

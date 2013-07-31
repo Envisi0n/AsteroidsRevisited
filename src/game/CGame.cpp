@@ -89,8 +89,7 @@ void CGame::run() {
 
 		case NETCONNECT:
 			window.clear();
-			netConnect();
-
+			login();
 
 			break;
 		case PLAYING:
@@ -198,10 +197,12 @@ void CGame::login() {
 		return;
 		break;
 	case AUTH_UNKNOWN_USER:
+		std::cout << "Invalid user!" << std::endl;
 		setState(LOGIN);
 		return;
 		break;
 	case AUTH_INVALID_PASSWORD:
+		std::cout << "Unknown password!" << std::endl;
 		setState(LOGIN);
 		return;
 		break;
