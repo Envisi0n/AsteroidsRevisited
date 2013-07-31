@@ -15,6 +15,7 @@ enum PacketTypes{
 	CONNECT,
 	GAMELOGIN,
 	GAMEREGISTER,
+	GAMELOGINRESPONSE,
 	DISCONNECT,
 	CLIENT_UPDATE,
 	SERVER_UPDATE,
@@ -40,6 +41,11 @@ struct loginPacket {
 	char password[32];
 };
 
+struct loginResponse {
+	short packetType;
+	short response;
+};
+
 
 
 sf::Packet& operator <<(sf::Packet& packet, const connectPacket& connect);
@@ -47,6 +53,9 @@ sf::Packet& operator >>(sf::Packet& packet, connectPacket& connect);
 
 sf::Packet& operator <<(sf::Packet& packet, const loginPacket& login);
 sf::Packet& operator >>(sf::Packet& packet, loginPacket& login);
+
+sf::Packet& operator <<(sf::Packet& packet, const loginResponse& login);
+sf::Packet& operator >>(sf::Packet& packet, loginResponse& login);
 
 
 
