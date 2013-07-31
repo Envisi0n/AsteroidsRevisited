@@ -15,15 +15,10 @@
 enum authenticationTypes {
 	AUTH_VALID,
 	AUTH_UNKNOWN_USER,
-	AUTH_INVALID_PASSWORD
-
-};
-
-enum registerTypes {
-
+	AUTH_INVALID_PASSWORD,
 	REG_SUCCESS,
 	REG_INUSE,
-	REG_FAIL,
+	REG_FAIL
 
 };
 

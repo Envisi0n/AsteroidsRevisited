@@ -43,7 +43,7 @@ sf::Socket::Status Server::receive(sf::Packet *data, int client) {
 	return socket.receive(*data, clients[client].ip, clients[client].port);
 }
 
-sf::Socket::Status Server::receive(sf::Packet* data) {
+int Server::receive(sf::Packet* data) {
 
 	sf::IpAddress ip;
 	unsigned short int port;
@@ -57,9 +57,10 @@ sf::Socket::Status Server::receive(sf::Packet* data) {
 				clients[i].ip = ip;
 				clients[i].port = port;
 				clients[i].inUse = true;
+				return i;
 			}
 		}
-		return sf::Socket::Done;
+		return -1;
 	}
-	return sf::Socket::NotReady;
+	return -1;
 }

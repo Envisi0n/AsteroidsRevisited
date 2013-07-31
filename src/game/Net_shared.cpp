@@ -21,3 +21,11 @@ sf::Packet& operator <<(sf::Packet& packet, const loginPacket& login) {
 sf::Packet& operator >>(sf::Packet& packet, loginPacket& login) {
 	return packet >> login.packetType >> login.username >> login.password;
 }
+
+sf::Packet& operator <<(sf::Packet& packet, const loginResponse& login) {
+	return packet << login.packetType << login.response;
+}
+
+sf::Packet& operator >>(sf::Packet& packet, loginResponse& login) {
+	return packet >> login.packetType >> login.response;
+}
