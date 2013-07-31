@@ -10,7 +10,6 @@
 #include <string.h>
 #include "MD5.h"
 #include <SFML/Network.hpp>
-#include "../server/Login.hpp"
 
 CGame::CGame() {
 	setState(INIT);
@@ -42,6 +41,7 @@ void CGame::init() {
 	// Init login menu
 	loginMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, "images/login.png",
 			BUT_LOGIN);
+	loginMenu.addButton(SCREEN_WIDTH /2 + 100, SCREEN_HEIGHT /2, "images/register.png", BUT_REGISTER);
 	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 60, 150);
 	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 30, 150);
 
@@ -74,7 +74,8 @@ void CGame::run() {
 			window.clear();
 			window.draw(background);
 			// Draw menu buttons.
-			handleButton(gameMenu.update(sf::Mouse::getPosition(window),event));
+			handleButton(
+					gameMenu.update(sf::Mouse::getPosition(window), event));
 
 			gameMenu.draw(&window);
 			break;
@@ -82,16 +83,12 @@ void CGame::run() {
 		case LOGIN:
 			window.clear();
 			window.draw(background);
-			handleButton(loginMenu.update(sf::Mouse::getPosition(window),event));
+			handleButton(
+					loginMenu.update(sf::Mouse::getPosition(window), event));
 
 			loginMenu.draw(&window);
 			break;
 
-		case NETCONNECT:
-			window.clear();
-			login();
-
-			break;
 		case PLAYING:
 			window.clear();
 			window.draw(background);
@@ -134,11 +131,15 @@ void CGame::handleButton(int action) {
 		setState(LOGIN);
 		break;
 	case BUT_LOGIN:
-		setState(NETCONNECT);
+		login();
+		break;
+	case BUT_REGISTER:
+		gameRegister();
 		break;
 	case BUT_QUIT:
 		setState(QUIT);
 		break;
+
 
 	}
 
@@ -149,9 +150,8 @@ void CGame::login() {
 
 	sf::Packet packet;
 	loginPacket info;
-	std::string tmp ;
+	std::string tmp;
 	short packetType;
-	short response;
 
 	std::cout << "Sending login..." << std::endl;
 
@@ -161,13 +161,13 @@ void CGame::login() {
 
 	// Setup login packet
 	info.packetType = GAMELOGIN;
-	strcpy(info.username,loginMenu.getTextBoxes().at(0)->toString().c_str());
+	strcpy(info.username, loginMenu.getTextBoxes().at(0)->toString().c_str());
 	tmp = loginMenu.getTextBoxes().at(1)->toString() + "coolsalt";
-	strcpy(info.password,md5(tmp).c_str());
+	strcpy(info.password, md5(tmp).c_str());
 	packet << info;
 
 	// Send login packet to server
-	if( gameClient.send(packet) ) {
+	if (gameClient.send(packet)) {
 		std::cout << "failed to login" << std::endl;
 		setState(QUIT);
 	}
@@ -176,32 +176,24 @@ void CGame::login() {
 	packet.clear();
 	std::cout << "Waiting for server response...";
 
-	while( gameClient.receive(&packet) != sf::Socket::Done ) {
+	while (gameClient.receive(&packet) != sf::Socket::Done) {
 	}
 
 	packet >> packetType;
 
-	if( packetType != GAMELOGINRESPONSE ) {
+	switch (packetType) {
 
-		setState(QUIT);
-		return;
-	}
-
-	packet >> response;
-
-	switch( response ) {
-
-	case AUTH_VALID:
+	case LOGIN_AUTH_VALID:
 		std::cout << "Logged in!" << std::endl;
 		setState(PLAYING);
 		return;
 		break;
-	case AUTH_UNKNOWN_USER:
+	case LOGIN_AUTH_UNKNOWN_USER:
 		std::cout << "Invalid user!" << std::endl;
 		setState(LOGIN);
 		return;
 		break;
-	case AUTH_INVALID_PASSWORD:
+	case LOGIN_AUTH_INVALID_PASSWORD:
 		std::cout << "Unknown password!" << std::endl;
 		setState(LOGIN);
 		return;
@@ -210,7 +202,57 @@ void CGame::login() {
 
 	setState(LOGIN);
 
+}
 
+void CGame::gameRegister() {
 
+	sf::Packet packet;
+	loginPacket info;
+	std::string tmp;
+	short packetType;
+
+	std::cout << "Sending register..." << std::endl;
+
+	// FIXME get this from a config or something
+	gameClient.setServerAddress("127.0.0.1");
+	gameClient.setServerPort(SERVER_PORT);
+
+	// Setup login packet
+	info.packetType = GAMEREGISTER;
+	strcpy(info.username, loginMenu.getTextBoxes().at(0)->toString().c_str());
+	tmp = loginMenu.getTextBoxes().at(1)->toString() + "coolsalt";
+	strcpy(info.password, md5(tmp).c_str());
+	packet << info;
+
+	// Send login packet to server
+	if (gameClient.send(packet)) {
+		std::cout << "failed to login" << std::endl;
+		setState(QUIT);
+	}
+
+	// Wait from response
+	packet.clear();
+	std::cout << "Waiting for server response...";
+
+	while (gameClient.receive(&packet) != sf::Socket::Done) {
+	}
+
+	packet >> packetType;
+
+	switch (packetType) {
+
+	case LOGIN_REG_SUCCESS:
+		std::cout << "Registered & Logged in!" << std::endl;
+		setState(PLAYING);
+		return;
+		break;
+	case LOGIN_REG_INUSE:
+		std::cout << "User already in use!" << std::endl;
+		setState(LOGIN);
+		return;
+		break;
+	}
+
+	setState(LOGIN);
 
 }

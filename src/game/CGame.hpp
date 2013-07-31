@@ -15,7 +15,7 @@
 
 enum gameState {
 
-	INIT, MENU, LOGIN, NETCONNECT, PLAYING, PAUSE, QUIT
+	INIT, MENU, LOGIN, PLAYING, PAUSE, QUIT
 
 };
 
@@ -43,6 +43,7 @@ private:
 
 	void handleButton(int action);
 	void login();
+	void gameRegister();
 	// Background drawable object
 	sf::RectangleShape background;
 	// Background texture

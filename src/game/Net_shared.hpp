@@ -12,10 +12,15 @@
 
 enum PacketTypes{
 
-	CONNECT,
 	GAMELOGIN,
 	GAMEREGISTER,
-	GAMELOGINRESPONSE,
+
+	LOGIN_AUTH_VALID,
+	LOGIN_AUTH_UNKNOWN_USER,
+	LOGIN_AUTH_INVALID_PASSWORD,
+	LOGIN_REG_SUCCESS,
+	LOGIN_REG_INUSE,
+
 	DISCONNECT,
 	CLIENT_UPDATE,
 	SERVER_UPDATE,
@@ -28,7 +33,7 @@ enum loginTypes {
 };
 
 
-struct connectPacket {
+struct genericPacket {
 	short packetType;
 
 };
@@ -48,8 +53,8 @@ struct loginResponse {
 
 
 
-sf::Packet& operator <<(sf::Packet& packet, const connectPacket& connect);
-sf::Packet& operator >>(sf::Packet& packet, connectPacket& connect);
+sf::Packet& operator <<(sf::Packet& packet, const genericPacket& connect);
+sf::Packet& operator >>(sf::Packet& packet, genericPacket& connect);
 
 sf::Packet& operator <<(sf::Packet& packet, const loginPacket& login);
 sf::Packet& operator >>(sf::Packet& packet, loginPacket& login);

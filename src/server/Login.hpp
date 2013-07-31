@@ -18,7 +18,6 @@ enum authenticationTypes {
 	AUTH_INVALID_PASSWORD,
 	REG_SUCCESS,
 	REG_INUSE,
-	REG_FAIL
 
 };
 

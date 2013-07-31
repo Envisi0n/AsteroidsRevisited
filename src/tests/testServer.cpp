@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
 			short packetType;
 			struct loginPacket login;
-			struct loginResponse response;
+			struct genericPacket response;
 
 			testPacket >> packetType;
 
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 				testPacket >> login.username;
 				testPacket >> login.password;
 				testPacket.clear();
-				response.packetType = GAMELOGINRESPONSE;
+
 				switch (loginHandler.authenticateUser(login.username,
 						login.password)) {
 
@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
 					std::cout << login.username << " authenticated."
 							<< std::endl;
 
-					response.response = AUTH_VALID;
+					response.packetType = LOGIN_AUTH_VALID;
 
 					break;
 				case AUTH_UNKNOWN_USER:
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 					std::cout << login.username << " invalid user."
 							<< std::endl;
 
-					response.response = AUTH_UNKNOWN_USER;
+					response.packetType = LOGIN_AUTH_UNKNOWN_USER;
 
 					break;
 
@@ -56,12 +56,12 @@ int main(int argc, char *argv[]) {
 					std::cout << login.username << " invalid password."
 							<< std::endl;
 
-					response.response = AUTH_INVALID_PASSWORD;
+					response.packetType = LOGIN_AUTH_INVALID_PASSWORD;
 
 					break;
 				}
 
-				testPacket << response.packetType << response.response;
+				testPacket << response.packetType;
 				std::cout << "Sending to client: " << client;
 
 				test.send(testPacket, client);
@@ -72,12 +72,27 @@ int main(int argc, char *argv[]) {
 			case GAMEREGISTER:
 				testPacket >> login.username;
 				testPacket >> login.password;
+				testPacket.clear();
 
-				if (loginHandler.registerUser(login.username, login.password)
-						== REG_SUCCESS) {
-					std::cout << login.username << " registered." << std::endl;
-					return 0;
+				switch (loginHandler.registerUser(login.username,
+						login.password)) {
+				case REG_SUCCESS:
+					std::cout << login.username << " " << "registered."
+							<< std::endl;
+					response.packetType = LOGIN_REG_SUCCESS;
+					break;
+				case REG_INUSE:
+					std::cout << login.username << " " << "already in use."
+							<< std::endl;
+					response.packetType = LOGIN_REG_INUSE;
+					break;
 				}
+
+				testPacket << response.packetType;
+				std::cout << "Sending to client: " << client;
+
+				test.send(testPacket, client);
+				testPacket.clear();
 				break;
 
 			}
