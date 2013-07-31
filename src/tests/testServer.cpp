@@ -14,11 +14,13 @@ int main(int argc, char *argv[]) {
 	Login loginHandler;
 	Server test(30000);
 	sf::Packet testPacket;
+	int client;
 	while (1) {
-		if (test.receive(&testPacket) == sf::Socket::Done) {
+		if ( (client = test.receive(&testPacket)) != -1) {
 
 			short packetType;
 			struct loginPacket login;
+			struct loginResponse response;
 
 			testPacket >> packetType;
 
@@ -33,7 +35,17 @@ int main(int argc, char *argv[]) {
 
 					std::cout << login.username << " authenticated."
 							<< std::endl;
-					return 0;
+
+					testPacket.clear();
+					response.packetType = GAMELOGINRESPONSE;
+					response.response = AUTH_VALID;
+					testPacket << response.packetType << response.response;
+
+					std::cout << "Sending to client: " << client << std::endl;
+
+					test.send(testPacket,client);
+
+					testPacket.clear();
 				}
 
 				break;

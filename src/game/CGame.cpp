@@ -9,6 +9,9 @@
 #include <iostream>
 #include <string.h>
 #include "MD5.h"
+#include <SFML/Network.hpp>
+#include "../server/Login.hpp"
+
 CGame::CGame() {
 	setState(INIT);
 }
@@ -145,23 +148,65 @@ void CGame::handleButton(int action) {
 
 void CGame::netConnect() {
 
-	std::cout <<"Attempting connect" << std::endl;
-
 	sf::Packet packet;
 	loginPacket info;
 	std::string tmp ;
+	short packetType;
+	short response;
 
+	std::cout << "Sending login..." << std::endl;
+
+	// FIXME get this from a config or something
 	gameClient.setServerAddress("127.0.0.1");
 	gameClient.setServerPort(SERVER_PORT);
-	info.packetType = GAMEREGISTER;
+
+	// Setup login packet
+	info.packetType = GAMELOGIN;
 	strcpy(info.username,loginMenu.getTextBoxes().at(0)->toString().c_str());
 	tmp = loginMenu.getTextBoxes().at(1)->toString() + "coolsalt";
 	strcpy(info.password,md5(tmp).c_str());
 	packet << info;
-	if( gameClient.send(packet) ) {
 
-		std::cout << "failed" << std::endl;
+	// Send login packet to server
+	if( gameClient.send(packet) ) {
+		std::cout << "failed to login" << std::endl;
+		setState(QUIT);
 	}
+
+	// Wait from response
+	packet.clear();
+	std::cout << "Waiting for server response...";
+
+	while( gameClient.receive(&packet) != sf::Socket::Done ) {
+	}
+
+	packet >> packetType;
+
+	if( packetType != GAMELOGINRESPONSE ) {
+
+		setState(QUIT);
+		return;
+	}
+
+	packet >> response;
+
+	switch( response ) {
+
+	case AUTH_VALID:
+		std::cout << "Logged in!" << std::endl;
+		setState(PLAYING);
+		return;
+		break;
+	case AUTH_UNKNOWN_USER:
+		setState(LOGIN);
+		return;
+		break;
+	case AUTH_INVALID_PASSWORD:
+		setState(LOGIN);
+		return;
+		break;
+	}
+
 	setState(LOGIN);
 
 
