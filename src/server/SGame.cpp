@@ -10,9 +10,10 @@
 #include <iostream>
 
 SGame::SGame() :
-		gameServer(SERVER_PORT) {
+		shellThread(&SGame::shell, this), gameServer(SERVER_PORT) {
 
 	setState(INIT);
+	setShellState(SHELL_RUNNING);
 
 }
 
@@ -32,6 +33,7 @@ void SGame::init() {
 void SGame::shutdown() {
 
 	std::cout << "Server shutting down..." << std::endl;
+	setState(SHUTDOWN);
 
 	// Login shutdown
 	std::cout << "Saving users...";
@@ -44,6 +46,8 @@ void SGame::run() {
 
 	sf::Packet packet;
 	int client;
+
+	shellThread.launch();
 
 	while (getState() == RUNNING) {
 
@@ -65,11 +69,63 @@ SGame::~SGame() {
 }
 
 int SGame::getState() const {
+
 	return state;
+
 }
 
 void SGame::setState(int state) {
+	shellMutex.lock();
+
 	this->state = state;
+
+	shellMutex.unlock();
+}
+
+void SGame::shell() {
+
+	std::string line;
+
+	while (getShellState() == SHELL_RUNNING) {
+
+		// Print indicator
+		std::cout << "[>] ";
+
+		// Get the entered text
+		std::getline(std::cin, line);
+
+		// Parse
+		if (handleShellCommand(line)) {
+
+			std::cout << "Invalid command" << std::endl;
+
+		}
+
+	}
+
+}
+
+int SGame::handleShellCommand(std::string command) {
+
+	if (command == "stop") {
+
+		setShellState(SHELL_SHUTDOWN);
+		setState(SHUTDOWN);
+		return 0;
+	}
+
+	return 1;
+}
+
+int SGame::getShellState() const {
+	return shellState;
+}
+
+void SGame::setShellState(int shellState) {
+
+	shellMutex.lock();
+	this->shellState = shellState;
+	shellMutex.unlock();
 }
 
 void SGame::handlePacket(int client, sf::Packet packet) {
