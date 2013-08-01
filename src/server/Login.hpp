@@ -26,6 +26,8 @@ public:
 	Login();
 	virtual ~Login();
 
+	int loadDB();
+	int saveDB();
 	int authenticateUser(std::string username, std::string password);
 	int registerUser(std::string username, std::string password);
 
