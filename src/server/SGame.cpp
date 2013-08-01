@@ -58,6 +58,10 @@ void SGame::run() {
 			handlePacket(client, packet);
 		}
 
+		// Update game
+
+		// Send updates to clients
+
 	}
 
 	shutdown();

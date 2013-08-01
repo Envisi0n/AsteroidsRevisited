@@ -10,7 +10,7 @@
 
 Server::Server(unsigned short int port) {
 
-	for(int i =0; i < MAXCLIENTS; i++ ) {
+	for (int i = 0; i < MAXCLIENTS; i++) {
 
 		clients[i].inUse = false;
 		clients[i].ip = "0.0.0.0";
@@ -61,7 +61,8 @@ int Server::receive(sf::Packet* data) {
 		for (int i = 0; i < MAXCLIENTS; i++) {
 
 			// We know this client already
-			if( clients[i].inUse && clients[i].ip == ip && clients[i].port == port) {
+			if (clients[i].inUse && clients[i].ip == ip
+					&& clients[i].port == port) {
 				return i;
 			}
 
