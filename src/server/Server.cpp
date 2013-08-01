@@ -21,7 +21,7 @@ Server::Server(unsigned short int port) {
 	if (this->socket.bind(port) != sf::Socket::Done)
 		return;
 
-	socket.setBlocking(true);
+	socket.setBlocking(false);
 	setPort(port);
 
 	std::cout << "Created socket with: " << getPort() << std::endl;
