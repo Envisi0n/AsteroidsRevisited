@@ -6,11 +6,11 @@
  */
 #include "Net_shared.hpp"
 
-sf::Packet& operator <<(sf::Packet& packet, const connectPacket& connect) {
+sf::Packet& operator <<(sf::Packet& packet, const genericPacket& connect) {
 	return packet << connect.packetType;
 }
 
-sf::Packet& operator >>(sf::Packet& packet, connectPacket& connect) {
+sf::Packet& operator >>(sf::Packet& packet, genericPacket& connect) {
 	return packet >> connect.packetType;
 }
 
