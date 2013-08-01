@@ -12,6 +12,15 @@ World::World() {
 
 }
 
+void World::update() {
+
+	for (std::vector<Entity*>::iterator it = entities.begin(); it != entities.end(); ) {
+
+		(*it)->update();
+	}
+
+}
+
 World::~World() {
 	// TODO Auto-generated destructor stub
 }

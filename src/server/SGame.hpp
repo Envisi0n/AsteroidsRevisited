@@ -11,6 +11,7 @@
 #include <SFML/System.hpp>
 #include "Server.hpp"
 #include "Login.hpp"
+#include "World.hpp"
 #include <string>
 
 enum gameState {
@@ -39,6 +40,9 @@ public:
 	void setShellState(int shellState);
 
 private:
+
+	// Asteroids game
+	World gameWorld;
 
 	// Shell
 	int shellState;
