@@ -87,8 +87,8 @@ endif
 all:    $(CLIENT_MAIN) $(SERVER_MAIN) testServer testClient
 	@echo  Asteroids Build Successful
 
-install: $(CLIENT_MAIN)
-	cp $(CLIENT_MAIN) ../assets/
+install: $(CLIENT_MAIN) $(SERVER_MAIN)
+	cp $(CLIENT_MAIN) ../assets/ ; cp $(SERVER_MAIN) ../assets/
 
 testServer: $(SERVER_OBJS) $(SHARED_OBJS) tests/testServer.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) -o testServer tests/testServer.cpp $(SERVER_OBJS) $(SHARED_OBJS) $(LFLAGS) $(LIBS) $(OTHER)
@@ -118,7 +118,7 @@ $(SERVER_MAIN): $(SERVER_OBJS) $(SHARED_OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
 clean:
-	$(RM) game/*.o server/*.o *~ $(CLIENT_MAIN) $(SERVER_MAIN) testServer testClient
+	$(RM) game/*.o server/*.o *~ ../assets/$(SERVER_MAIN) ../assets/$(CLIENT_MAIN) $(CLIENT_MAIN) $(SERVER_MAIN) testServer testClient
 
 depend: $(SRCS) $(S_SRCS)
 	makedepend $(INCLUDES) $^
