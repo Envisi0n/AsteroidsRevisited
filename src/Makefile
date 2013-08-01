@@ -41,15 +41,19 @@ OTHER = -static-libgcc -static-libstdc++
 # define the C source files
 
 # Client
-SRCSRAW = $(foreach d,.,$(wildcard $(addprefix $(d)/game/*,.cpp)))
-BINS = ./game/Asteroids.cpp
-SRCS = $(filter-out $(BINS),$(SRCSRAW))
+CLIENT_SRCSRAW = $(foreach d,.,$(wildcard $(addprefix $(d)/game/*,.cpp)))
+CLIENT_BIN = ./game/Asteroids.cpp
+CLIENT_SRCS = $(filter-out $(CLIENT_BIN),$(CLIENT_SRCSRAW))
 
 # Server
-S_SRCSRAW = $(foreach d,.,$(wildcard $(addprefix $(d)/server/*,.cpp)))
-SBIN = ./server/AsteroidsServer.cpp
-S_SRCS = $(filter-out $(SBIN),$(S_SRCSRAW))
+SERVER_SRCSRAW = $(foreach d,.,$(wildcard $(addprefix $(d)/server/*,.cpp)))
+SERVER_BIN = ./server/AsteroidsServer.cpp
+SERVER_SRCS = $(filter-out $(SERVER_BIN),$(SERVER_SRCSRAW))
 
+# Shared
+SHARED_SRCSRAW =  $(foreach d,.,$(wildcard $(addprefix $(d)/shared/*,.cpp)))
+SHARED_FILTER =
+SHARED_SRCS =  $(filter-out $(SHARED_FILTER),$(SHARED_SRCSRAW))
 
 # define the C object files 
 #
@@ -59,16 +63,17 @@ S_SRCS = $(filter-out $(SBIN),$(S_SRCSRAW))
 # Below we are replacing the suffix .c of all words in the macro SRCS
 # with the .o suffix
 #
-OBJS = $(SRCS:.cpp=.o)
-SOBJS = $(S_SRCS:.cpp=.o)
+CLIENT_OBJS = $(CLIENT_SRCS:.cpp=.o)
+SERVER_OBJS = $(SERVER_SRCS:.cpp=.o)
+SHARED_OBJS = $(SHARED_SRCS:.cpp=.o)
 
 # define the executable file
 ifeq ($(UNAME), Linux)
-MAIN = AsteroidsRevisited
-SMAIN = AsteroidsRevisitedServer
+CLIENT_MAIN = AsteroidsRevisited
+SERVER_MAIN = AsteroidsRevisitedServer
 else
-MAIN = AsteroidsRevisited.exe
-SMAIN = AsteroidsRevisitedServer.exe
+CLIENT_MAIN = AsteroidsRevisited.exe
+SERVER_MAIN = AsteroidsRevisitedServer.exe
 endif
 
 #
@@ -79,31 +84,31 @@ endif
 
 .PHONY: depend clean
 
-all:    $(MAIN) $(SMAIN) testServer testClient
+all:    $(CLIENT_MAIN) $(SERVER_MAIN) testServer testClient
 	@echo  Asteroids Build Successful
 
-install: $(MAIN)
-	cp $(MAIN) ../assets/
+install: $(CLIENT_MAIN)
+	cp $(CLIENT_MAIN) ../assets/
 
-testServer: $(SOBJS) tests/testServer.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) -o testServer tests/testServer.cpp $(SOBJS) $(LFLAGS) $(LIBS) $(OTHER)
+testServer: $(SERVER_OBJS) $(SHARED_OBJS) tests/testServer.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) -o testServer tests/testServer.cpp $(SERVER_OBJS) $(SHARED_OBJS) $(LFLAGS) $(LIBS) $(OTHER)
 	
-testClient: $(OBJS) tests/testClient.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) -o testClient tests/testClient.cpp $(OBJS) $(LFLAGS) $(LIBS) $(OTHER)
+testClient: $(CLIENT_OBJS) $(SHARED_OBJS) tests/testClient.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) -o testClient tests/testClient.cpp $(CLIENT_OBJS) $(SHARED_OBJS) $(LFLAGS) $(LIBS) $(OTHER)
 
 windows:   CC=i586-mingw32msvc-g++
 windows:   INCLUDES = -I SFML/include
 windows:   LFLAGS = -L SFML/lib
 windows:   LIBS+= -lsfml-main
 windows:   MAIN = AsteroidsRevisited.exe
-windows: $(MAIN)
+windows: $(CLIENT_MAIN)
 	@echo  Asteroids Build Successful
 
-$(MAIN): $(OBJS) 
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) game/Asteroids.cpp $(OBJS) $(LFLAGS) $(LIBS) $(OTHER)
+$(CLIENT_MAIN): $(CLIENT_OBJS) $(SHARED_OBJS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(CLIENT_MAIN) game/Asteroids.cpp $(CLIENT_OBJS) $(SHARED_OBJS) $(LFLAGS) $(LIBS) $(OTHER)
 
-$(SMAIN): $(SOBJS) 
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(SMAIN) server/AsteroidsServer.cpp $(SOBJS) $(LFLAGS) $(LIBS) $(OTHER)
+$(SERVER_MAIN): $(SERVER_OBJS) $(SHARED_OBJS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(SERVER_MAIN) server/AsteroidsServer.cpp $(SERVER_OBJS) $(SHARED_OBJS) $(LFLAGS) $(LIBS) $(OTHER)
 
 # this is a suffix replacement rule for building .o's from .c's
 # it uses automatic variables $<: the name of the prerequisite of
@@ -113,7 +118,7 @@ $(SMAIN): $(SOBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
 clean:
-	$(RM) game/*.o server/*.o *~ $(MAIN) $(SMAIN) testServer testClient
+	$(RM) game/*.o server/*.o *~ $(CLIENT_MAIN) $(SERVER_MAIN) testServer testClient
 
 depend: $(SRCS) $(S_SRCS)
 	makedepend $(INCLUDES) $^

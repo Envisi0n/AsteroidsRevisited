@@ -7,7 +7,7 @@
 
 #include "../server/Server.hpp"
 #include "../server/Login.hpp"
-#include "../game/Net_shared.hpp"
+#include "../shared/Net_shared.hpp"
 #include <iostream>
 int main(int argc, char *argv[]) {
 

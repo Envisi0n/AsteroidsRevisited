@@ -11,7 +11,7 @@
 #include "Menu.hpp"
 #include "CGame_shared.hpp"
 #include "Client.hpp"
-#include "Net_shared.hpp"
+#include "../shared/Net_shared.hpp"
 
 enum gameState {
 
