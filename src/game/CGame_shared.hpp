@@ -14,6 +14,7 @@ enum buttonActions {
 	BUT_QUIT,
 	BUT_NOTHING,
 	BUT_LOGIN,
+	BUT_REGISTER,
 
 };
 

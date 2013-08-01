@@ -12,6 +12,35 @@
 
 Login::Login() {
 
+
+
+}
+
+Login::~Login() {
+
+
+
+}
+
+int Login::authenticateUser(std::string username, std::string password) {
+
+	for (std::vector<User>::iterator it = users.begin(); it != users.end();
+			++it) {
+
+		if ((*it).getUsername() == username) {
+
+			if ((*it).getPassword() == password) {
+				return AUTH_VALID;
+			} else {
+				return AUTH_INVALID_PASSWORD;
+			}
+		}
+	}
+	return AUTH_UNKNOWN_USER;
+}
+
+int Login::loadDB() {
+
 	std::ifstream db;
 	User tmpuser;
 	std::string line;
@@ -21,29 +50,33 @@ Login::Login() {
 	db.open("serverdb");
 	while (db.is_open() && std::getline(db, line)) {
 
-		if( line.length() > 0 ) {
+		if (line.length() > 0) {
 
-		// Username
-		tmp = strdup(line.c_str());
-		tok = strtok(tmp, ":");
+			// Username
+			tmp = strdup(line.c_str());
+			tok = strtok(tmp, ":");
 
-		tmpuser.setUsername(tok);
+			tmpuser.setUsername(tok);
 
-		// Password
-		tok = strtok( NULL, ":");
-		tmpuser.setPassword(tok);
-		delete tmp;
+			// Password
+			tok = strtok(NULL, ":");
+			tmpuser.setPassword(tok);
+			delete tmp;
 
-		users.push_back(tmpuser);
+			users.push_back(tmpuser);
 
 		}
 
 	}
 
 	db.close();
+
+	return 1;
+
 }
 
-Login::~Login() {
+int Login::saveDB() {
+
 	std::ofstream db;
 
 	db.open("serverdb");
@@ -57,24 +90,9 @@ Login::~Login() {
 	}
 
 	db.close();
-}
 
-int Login::authenticateUser(std::string username, std::string password) {
+	return 1;
 
-	for (std::vector<User>::iterator it = users.begin(); it != users.end();
-			++it) {
-
-		std::cout << (*it).getUsername() << "==" << username;
-		if ((*it).getUsername() == username) {
-
-			if ((*it).getPassword() == password) {
-				return AUTH_VALID;
-			} else {
-				return AUTH_INVALID_PASSWORD;
-			}
-		}
-	}
-	return AUTH_UNKNOWN_USER;
 }
 
 int Login::registerUser(std::string username, std::string password) {

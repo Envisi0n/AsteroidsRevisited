@@ -7,7 +7,7 @@
 
 #include "../server/Server.hpp"
 #include "../server/Login.hpp"
-#include "../game/Net_shared.hpp"
+#include "../shared/Net_shared.hpp"
 #include <iostream>
 int main(int argc, char *argv[]) {
 
@@ -16,11 +16,11 @@ int main(int argc, char *argv[]) {
 	sf::Packet testPacket;
 	int client;
 	while (1) {
-		if ( (client = test.receive(&testPacket)) != -1) {
+		if ((client = test.receive(&testPacket)) != -1) {
 
 			short packetType;
 			struct loginPacket login;
-			struct loginResponse response;
+			struct genericPacket response;
 
 			testPacket >> packetType;
 
@@ -29,41 +29,73 @@ int main(int argc, char *argv[]) {
 			case GAMELOGIN:
 				testPacket >> login.username;
 				testPacket >> login.password;
+				testPacket.clear();
 
-				if (loginHandler.authenticateUser(login.username,
-						login.password) == AUTH_VALID) {
+				switch (loginHandler.authenticateUser(login.username,
+						login.password)) {
+
+				case AUTH_VALID:
 
 					std::cout << login.username << " authenticated."
 							<< std::endl;
 
-					testPacket.clear();
-					response.packetType = GAMELOGINRESPONSE;
-					response.response = AUTH_VALID;
-					testPacket << response.packetType << response.response;
+					response.packetType = LOGIN_AUTH_VALID;
 
-					std::cout << "Sending to client: " << client << std::endl;
+					break;
+				case AUTH_UNKNOWN_USER:
 
-					test.send(testPacket,client);
+					std::cout << login.username << " invalid user."
+							<< std::endl;
 
-					testPacket.clear();
+					response.packetType = LOGIN_AUTH_UNKNOWN_USER;
+
+					break;
+
+				case AUTH_INVALID_PASSWORD:
+
+					std::cout << login.username << " invalid password."
+							<< std::endl;
+
+					response.packetType = LOGIN_AUTH_INVALID_PASSWORD;
+
+					break;
 				}
+
+				testPacket << response.packetType;
+				std::cout << "Sending to client: " << client;
+
+				test.send(testPacket, client);
+				testPacket.clear();
 
 				break;
 
 			case GAMEREGISTER:
 				testPacket >> login.username;
 				testPacket >> login.password;
+				testPacket.clear();
 
-				if (loginHandler.registerUser(login.username, login.password)
-						== REG_SUCCESS) {
-					std::cout << login.username << " registered." << std::endl;
-					return 0;
+				switch (loginHandler.registerUser(login.username,
+						login.password)) {
+				case REG_SUCCESS:
+					std::cout << login.username << " " << "registered."
+							<< std::endl;
+					response.packetType = LOGIN_REG_SUCCESS;
+					break;
+				case REG_INUSE:
+					std::cout << login.username << " " << "already in use."
+							<< std::endl;
+					response.packetType = LOGIN_REG_INUSE;
+					break;
 				}
+
+				testPacket << response.packetType;
+				std::cout << "Sending to client: " << client;
+
+				test.send(testPacket, client);
+				testPacket.clear();
 				break;
 
 			}
-			std::cout << "Received: " << packetType << std::endl;
-
 			testPacket.clear();
 		}
 	}
