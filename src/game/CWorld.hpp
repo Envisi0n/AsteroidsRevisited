@@ -18,8 +18,9 @@ public:
 	virtual ~CWorld();
 	void draw(sf::RenderWindow* window);
 	void update(sf::Event event);
+	void packetToWorld(sf::Packet packet);
 private:
-	std::vector<CEntity*> entities;
+	std::vector<CEntity*> centities;
 };
 
 #endif /* CWORLD_HPP_ */

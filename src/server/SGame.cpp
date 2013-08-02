@@ -60,7 +60,11 @@ void SGame::run() {
 
 		// Update game
 
+		gameWorld.update();
+
 		// Send updates to clients
+
+		gameServer.broadcast(gameWorld.toPacket());
 
 	}
 

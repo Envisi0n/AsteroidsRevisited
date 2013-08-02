@@ -6,10 +6,13 @@
  */
 
 #include "Entity.hpp"
+#include "GameGlobals.hpp"
 
 Entity::Entity() {
 	setX(0);
 	setY(0);
+	velX = 1;
+	velY = 1;
 
 }
 
@@ -39,6 +42,13 @@ void Entity::setY(float y) {
 }
 
 void Entity::update() {
-	x++;
-	y++;
+
+	if( getX()+velX > WORLD_WIDTH || getX()+velX < 0 )
+		velX = -velX;
+	if( getY()+velY > WORLD_HEIGHT || getY()+velY < 0 )
+		velY = -velY;
+
+
+	setX(getX()+velX);
+	setY(getY()+velY);
 }

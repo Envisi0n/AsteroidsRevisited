@@ -90,6 +90,7 @@ void CGame::run() {
 			break;
 
 		case PLAYING:
+			receiveServerUpdate();
 			gameWorld.update(event);
 			window.clear();
 			window.draw(background);
@@ -110,6 +111,17 @@ void CGame::run() {
 	}
 
 }
+
+void CGame::receiveServerUpdate() {
+
+	sf::Packet serverPacket;
+	short packetType;
+
+	gameClient.receive(&serverPacket);
+
+	gameWorld.packetToWorld(serverPacket);
+}
+
 
 void CGame::update() {
 
@@ -209,6 +221,7 @@ void CGame::login() {
 
 void CGame::draw(sf::RenderWindow* window) {
 }
+
 
 void CGame::gameRegister() {
 
