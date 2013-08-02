@@ -24,8 +24,13 @@ public:
 	Server( unsigned short int port);
 	virtual ~Server();
 
+	// Sends to a specific client
 	sf::Socket::Status send(sf::Packet data, int client);
+	// Receives from a specific client
 	sf::Socket::Status receive(sf::Packet *data, int client);
+	// Sends to all clients
+	int broadcast(sf::Packet data);
+	// Receives a packet from any source
 	int receive(sf::Packet *data);
 	unsigned short int getPort() const;
 	void setPort(unsigned short int port);

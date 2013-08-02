@@ -36,6 +36,19 @@ unsigned short int Server::getPort() const {
 	return port;
 }
 
+int Server::broadcast(sf::Packet data) {
+
+	for (int i = 0; i < MAXCLIENTS; i++) {
+
+		socket.send(data, clients[i].ip, clients[i].port);
+
+
+	}
+
+	return 0;
+
+}
+
 void Server::setPort(unsigned short int port) {
 	this->port = port;
 }
