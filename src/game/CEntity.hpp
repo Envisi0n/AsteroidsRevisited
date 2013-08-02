@@ -12,10 +12,12 @@
 
 #include "../shared/Entity.hpp"
 
-class ClientEntity: public Entity {
+class CEntity: public Entity {
 public:
-	ClientEntity();
-	virtual ~ClientEntity();
+	CEntity();
+	virtual ~CEntity();
+
+	virtual void setPosition(float x, float y);
 
 	void draw(sf::RenderWindow* window);
 

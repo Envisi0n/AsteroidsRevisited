@@ -5,9 +5,9 @@
  *      Author: Cam
  */
 
-#include "ClientEntity.hpp"
+#include "CEntity.hpp"
 
-ClientEntity::ClientEntity() {
+CEntity::CEntity() {
 
 	if (!texture.loadFromFile("images/test.png")) {
 		return;
@@ -18,11 +18,20 @@ ClientEntity::ClientEntity() {
 
 }
 
-ClientEntity::~ClientEntity() {
+CEntity::~CEntity() {
 	// TODO Auto-generated destructor stub
 }
 
-void ClientEntity::draw(sf::RenderWindow* window) {
+void CEntity::setPosition(float x, float y) {
+
+	setX(x);
+	setY(y);
+
+	sprite.setPosition(x,y);
+
+}
+
+void CEntity::draw(sf::RenderWindow* window) {
 
 	window->draw(sprite);
 }

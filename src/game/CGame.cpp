@@ -90,9 +90,10 @@ void CGame::run() {
 			break;
 
 		case PLAYING:
-			update();
+			//gameWorld.update(event);
 			window.clear();
 			window.draw(background);
+			gameWorld.draw(&window);
 			break;
 		case PAUSE:
 			break;
@@ -111,10 +112,6 @@ void CGame::run() {
 }
 
 void CGame::update() {
-
-	for (vector<ClientEntity>::iterator it = entities.begin(); it != entities.end(); ) {
-		(*it).update();
-	}
 
 }
 

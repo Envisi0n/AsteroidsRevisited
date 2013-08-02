@@ -12,7 +12,7 @@
 #include "CGame_shared.hpp"
 #include "Client.hpp"
 #include "../shared/Net_shared.hpp"
-#include "ClientEntity.hpp"
+#include "CWorld.hpp"
 
 enum gameState {
 
@@ -65,8 +65,8 @@ private:
 	Client gameClient;
 
 	// Asteroids game
+	CWorld gameWorld;
 
-	std::vector<ClientEntity> entities;
 
 };
 
