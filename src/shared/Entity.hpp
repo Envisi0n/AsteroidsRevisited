@@ -22,6 +22,7 @@ public:
 
 private:
 	float x, y;
+	float velX, velY;
 };
 
 #endif /* ENTITY_HPP_ */

@@ -36,6 +36,8 @@ public:
 	virtual void draw(sf::RenderWindow* window);
 	virtual void update();
 
+	virtual void receiveServerUpdate();
+
 	void showMenu();
 
 	int getState() const;
