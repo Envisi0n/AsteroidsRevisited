@@ -8,6 +8,7 @@
 #include "SGame.hpp"
 #include "../shared/Net_shared.hpp"
 #include <iostream>
+#include "../shared/GameGlobals.hpp"
 
 SGame::SGame() :
 		shellThread(&SGame::shell, this), gameServer(SERVER_PORT) {
@@ -65,6 +66,8 @@ void SGame::run() {
 		// Send updates to clients
 
 		gameServer.broadcast(gameWorld.toPacket());
+
+		sf::sleep(sf::milliseconds(1000/SERVER_TICK_SPEED));
 
 	}
 
