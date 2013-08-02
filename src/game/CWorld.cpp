@@ -20,8 +20,8 @@ CWorld::~CWorld() {
 
 void CWorld::draw(sf::RenderWindow* window) {
 
-	for (std::vector<CEntity*>::iterator it = entities.begin(); it != entities.end();
-			) {
+	for (std::vector<CEntity*>::iterator it = entities.begin();
+			it != entities.end(); ++it) {
 		(*it)->draw(window);
 	}
 
@@ -29,8 +29,8 @@ void CWorld::draw(sf::RenderWindow* window) {
 
 void CWorld::update(sf::Event event) {
 	for (std::vector<CEntity*>::iterator it = entities.begin();
-			it != entities.end();) {
-		(*it)->update();
+			it != entities.end(); ++it) {
+		(*it)->update(event);
 	}
 
 }

@@ -90,7 +90,7 @@ void CGame::run() {
 			break;
 
 		case PLAYING:
-			//gameWorld.update(event);
+			gameWorld.update(event);
 			window.clear();
 			window.draw(background);
 			gameWorld.draw(&window);

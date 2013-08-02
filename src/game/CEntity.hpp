@@ -19,7 +19,8 @@ public:
 
 	virtual void setPosition(float x, float y);
 
-	void draw(sf::RenderWindow* window);
+	virtual void draw(sf::RenderWindow* window);
+	virtual void update(sf::Event event);
 
 private:
 	sf::Sprite sprite;

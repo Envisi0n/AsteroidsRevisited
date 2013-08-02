@@ -6,7 +6,7 @@
  */
 
 #include "CEntity.hpp"
-
+#include <iostream>
 CEntity::CEntity() {
 
 	if (!texture.loadFromFile("images/test.png")) {
@@ -27,11 +27,20 @@ void CEntity::setPosition(float x, float y) {
 	setX(x);
 	setY(y);
 
-	sprite.setPosition(x,y);
+	sprite.setPosition(getX(),getY());
 
 }
 
 void CEntity::draw(sf::RenderWindow* window) {
 
 	window->draw(sprite);
+}
+
+void CEntity::update(sf::Event event) {
+
+	setX(getX()+1);
+	setY(getY()+1);
+
+	sprite.setPosition(getX(),getY());
+
 }
