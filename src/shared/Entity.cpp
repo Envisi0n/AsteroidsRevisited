@@ -7,6 +7,7 @@
 
 #include "Entity.hpp"
 #include "GameGlobals.hpp"
+#include <iostream>
 
 Entity::Entity() {
 	setX(0);
@@ -51,4 +52,5 @@ void Entity::update() {
 
 	setX(getX()+velX);
 	setY(getY()+velY);
+
 }
