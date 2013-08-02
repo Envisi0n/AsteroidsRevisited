@@ -10,7 +10,7 @@
 
 Server::Server(unsigned short int port) {
 
-	for(int i =0; i < MAXCLIENTS; i++ ) {
+	for (int i = 0; i < MAXCLIENTS; i++) {
 
 		clients[i].inUse = false;
 		clients[i].ip = "0.0.0.0";
@@ -34,6 +34,19 @@ Server::~Server() {
 
 unsigned short int Server::getPort() const {
 	return port;
+}
+
+int Server::broadcast(sf::Packet data) {
+
+	for (int i = 0; i < MAXCLIENTS; i++) {
+
+		socket.send(data, clients[i].ip, clients[i].port);
+
+
+	}
+
+	return 0;
+
 }
 
 void Server::setPort(unsigned short int port) {
@@ -61,7 +74,8 @@ int Server::receive(sf::Packet* data) {
 		for (int i = 0; i < MAXCLIENTS; i++) {
 
 			// We know this client already
-			if( clients[i].inUse && clients[i].ip == ip && clients[i].port == port) {
+			if (clients[i].inUse && clients[i].ip == ip
+					&& clients[i].port == port) {
 				return i;
 			}
 

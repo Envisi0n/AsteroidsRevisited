@@ -14,6 +14,7 @@ Client::Client() {
 
 	setPort(socket.getLocalPort());
 
+	socket.setBlocking(false);
 
 	std::cout << "Created socket with: " << getPort() << std::endl;
 }

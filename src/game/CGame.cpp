@@ -90,8 +90,10 @@ void CGame::run() {
 			break;
 
 		case PLAYING:
+			gameWorld.update(event);
 			window.clear();
 			window.draw(background);
+			gameWorld.draw(&window);
 			break;
 		case PAUSE:
 			break;
@@ -110,6 +112,7 @@ void CGame::run() {
 }
 
 void CGame::update() {
+
 }
 
 int CGame::getState() const {
@@ -202,6 +205,9 @@ void CGame::login() {
 
 	setState(LOGIN);
 
+}
+
+void CGame::draw(sf::RenderWindow* window) {
 }
 
 void CGame::gameRegister() {
