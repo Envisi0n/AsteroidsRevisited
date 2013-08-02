@@ -115,7 +115,6 @@ void CGame::run() {
 void CGame::receiveServerUpdate() {
 
 	sf::Packet serverPacket;
-	short packetType;
 
 	gameClient.receive(&serverPacket);
 
