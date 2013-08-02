@@ -11,7 +11,7 @@
 #include <SFML/System.hpp>
 #include "Server.hpp"
 #include "Login.hpp"
-#include "World.hpp"
+#include "../shared/World.hpp"
 #include <string>
 
 enum gameState {

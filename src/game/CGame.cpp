@@ -90,6 +90,7 @@ void CGame::run() {
 			break;
 
 		case PLAYING:
+			update();
 			window.clear();
 			window.draw(background);
 			break;
@@ -110,6 +111,11 @@ void CGame::run() {
 }
 
 void CGame::update() {
+
+	for (vector<ClientEntity>::iterator it = entities.begin(); it != entities.end(); ) {
+		(*it).update();
+	}
+
 }
 
 int CGame::getState() const {
@@ -202,6 +208,9 @@ void CGame::login() {
 
 	setState(LOGIN);
 
+}
+
+void CGame::draw(sf::RenderWindow* window) {
 }
 
 void CGame::gameRegister() {
