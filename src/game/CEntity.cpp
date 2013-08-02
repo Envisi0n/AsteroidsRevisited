@@ -14,7 +14,17 @@ CEntity::CEntity() {
 	}
 
 	sprite.setTexture(texture);
-	// TODO Auto-generated constructor stub
+
+}
+
+CEntity::CEntity(float x, float y) :
+		Entity(x, y) {
+
+	if (!texture.loadFromFile("images/test.png")) {
+		return;
+	}
+
+	sprite.setTexture(texture);
 
 }
 
@@ -27,7 +37,7 @@ void CEntity::setPosition(float x, float y) {
 	setX(x);
 	setY(y);
 
-	sprite.setPosition(getX(),getY());
+	sprite.setPosition(getX(), getY());
 
 }
 
@@ -38,9 +48,6 @@ void CEntity::draw(sf::RenderWindow* window) {
 
 void CEntity::update(sf::Event event) {
 
-	setX(getX()+1);
-	setY(getY()+1);
 
-	sprite.setPosition(getX(),getY());
 
 }

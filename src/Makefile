@@ -84,17 +84,17 @@ endif
 
 .PHONY: depend clean
 
-all:    $(CLIENT_MAIN) $(SERVER_MAIN) testServer testClient
+all:    $(CLIENT_MAIN) $(SERVER_MAIN)
 	@echo  Asteroids Build Successful
 
 install: $(CLIENT_MAIN) $(SERVER_MAIN)
 	cp $(CLIENT_MAIN) ../assets/ ; cp $(SERVER_MAIN) ../assets/
 
-testServer: $(SERVER_OBJS) $(SHARED_OBJS) tests/testServer.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) -o testServer tests/testServer.cpp $(SERVER_OBJS) $(SHARED_OBJS) $(LFLAGS) $(LIBS) $(OTHER)
+#testServer: $(SERVER_OBJS) $(SHARED_OBJS) tests/testServer.cpp
+#	$(CC) $(CFLAGS) $(INCLUDES) -o testServer tests/testServer.cpp $(SERVER_OBJS) $(SHARED_OBJS) $(LFLAGS) $(LIBS) $(OTHER)
 	
-testClient: $(CLIENT_OBJS) $(SHARED_OBJS) tests/testClient.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) -o testClient tests/testClient.cpp $(CLIENT_OBJS) $(SHARED_OBJS) $(LFLAGS) $(LIBS) $(OTHER)
+#testClient: $(CLIENT_OBJS) $(SHARED_OBJS) tests/testClient.cpp
+#	$(CC) $(CFLAGS) $(INCLUDES) -o testClient tests/testClient.cpp $(CLIENT_OBJS) $(SHARED_OBJS) $(LFLAGS) $(LIBS) $(OTHER)
 
 windows:   CC=i586-mingw32msvc-g++
 windows:   INCLUDES = -I SFML/include

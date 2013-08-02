@@ -10,15 +10,16 @@
 
 #include <vector>
 #include "Entity.hpp"
+#include <SFML/Network.hpp>
 
-#define WORLD_HEIGHT 800
-#define WORLD_WIDTH 600
 
 class World {
 public:
 	World();
 	virtual void update();
 	virtual ~World();
+
+	sf::Packet toPacket();
 private:
 
 	std::vector<Entity*> entities;

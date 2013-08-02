@@ -45,6 +45,10 @@ void CGame::init() {
 	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 60, 150);
 	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 30, 150);
 
+	// Init networking
+	gameClient.setServerAddress("127.0.0.1");
+	gameClient.setServerPort(SERVER_PORT);
+
 	setState(MENU);
 
 }
@@ -90,6 +94,7 @@ void CGame::run() {
 			break;
 
 		case PLAYING:
+			receiveServerUpdate();
 			gameWorld.update(event);
 			window.clear();
 			window.draw(background);
@@ -110,6 +115,16 @@ void CGame::run() {
 	}
 
 }
+
+void CGame::receiveServerUpdate() {
+
+	sf::Packet serverPacket;
+
+	gameClient.receive(&serverPacket);
+
+	gameWorld.packetToWorld(serverPacket);
+}
+
 
 void CGame::update() {
 
@@ -157,10 +172,6 @@ void CGame::login() {
 	short packetType;
 
 	std::cout << "Sending login..." << std::endl;
-
-	// FIXME get this from a config or something
-	gameClient.setServerAddress("127.0.0.1");
-	gameClient.setServerPort(SERVER_PORT);
 
 	// Setup login packet
 	info.packetType = GAMELOGIN;
@@ -210,6 +221,7 @@ void CGame::login() {
 void CGame::draw(sf::RenderWindow* window) {
 }
 
+
 void CGame::gameRegister() {
 
 	sf::Packet packet;
@@ -218,10 +230,6 @@ void CGame::gameRegister() {
 	short packetType;
 
 	std::cout << "Sending register..." << std::endl;
-
-	// FIXME get this from a config or something
-	gameClient.setServerAddress("127.0.0.1");
-	gameClient.setServerPort(SERVER_PORT);
 
 	// Setup login packet
 	info.packetType = GAMEREGISTER;
