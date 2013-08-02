@@ -12,6 +12,7 @@
 #include "CGame_shared.hpp"
 #include "Client.hpp"
 #include "../shared/Net_shared.hpp"
+#include "CWorld.hpp"
 
 enum gameState {
 
@@ -32,6 +33,7 @@ public:
 
 	virtual void init();
 	virtual void run();
+	virtual void draw(sf::RenderWindow* window);
 	virtual void update();
 
 	void showMenu();
@@ -61,6 +63,9 @@ private:
 
 	// Networking
 	Client gameClient;
+
+	// Asteroids game
+	CWorld gameWorld;
 
 
 };

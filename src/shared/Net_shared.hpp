@@ -8,6 +8,8 @@
 #ifndef NET_SHARED_HPP_
 #define NET_SHARED_HPP_
 #include <SFML/Network.hpp>
+#include "World.hpp"
+
 #define SERVER_PORT 30000
 
 enum PacketTypes{
@@ -51,6 +53,10 @@ struct loginResponse {
 	short response;
 };
 
+struct serverUpdatePacket {
+	short packetType;
+	World world;
+};
 
 
 sf::Packet& operator <<(sf::Packet& packet, const genericPacket& connect);
