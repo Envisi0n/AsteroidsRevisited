@@ -11,6 +11,9 @@
 #include "MD5.h"
 #include <SFML/Network.hpp>
 
+int SCREEN_WIDTH = 800;
+int SCREEN_HEIGHT = 600;
+
 CGame::CGame() {
 	setState(INIT);
 }
@@ -53,8 +56,9 @@ void CGame::init() {
 void CGame::run() {
 
 	// Init window
-	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",
-			sf::Style::Titlebar | sf::Style::Close);
+	SCREEN_HEIGHT = sf::VideoMode::getDesktopMode().height;
+	SCREEN_WIDTH = sf::VideoMode::getDesktopMode().width;
+	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids", sf::Style::Fullscreen);
 	window.setIcon(96, 96, ResourceHandler.loadImage("images/icon.png")->getPixelsPtr());
 	window.setFramerateLimit(FRAMES_PER_SECOND);
 
