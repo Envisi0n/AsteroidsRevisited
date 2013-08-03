@@ -26,18 +26,18 @@ void CGame::init() {
 
 	// Init the background.
 	background.setSize(sf::Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
-	background.setTexture(textureHandler.loadTexture("images/background.png"));
+	background.setTexture(ResourceHandler.loadTexture("images/background.png"));
 
 	// Init the Main Menu
-	gameMenu.addButton(50, 0, textureHandler.loadTexture("images/title.gif"), BUT_NOTHING);
-	gameMenu.addButton(283.5, 100, textureHandler.loadTexture("images/sub2.gif"), BUT_NOTHING);
-	gameMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, textureHandler.loadTexture("images/test.png"),
+	gameMenu.addButton(50, 0, ResourceHandler.loadTexture("images/title.gif"), BUT_NOTHING);
+	gameMenu.addButton(283.5, 100, ResourceHandler.loadTexture("images/sub2.gif"), BUT_NOTHING);
+	gameMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, ResourceHandler.loadTexture("images/test.png"),
 			BUT_PLAY);
 
 	// Init login menu
-	loginMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, textureHandler.loadTexture("images/login.png"),
+	loginMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, ResourceHandler.loadTexture("images/login.png"),
 			BUT_LOGIN);
-	loginMenu.addButton(SCREEN_WIDTH /2 + 100, SCREEN_HEIGHT /2, textureHandler.loadTexture("images/register.png"), BUT_REGISTER);
+	loginMenu.addButton(SCREEN_WIDTH /2 + 100, SCREEN_HEIGHT /2, ResourceHandler.loadTexture("images/register.png"), BUT_REGISTER);
 	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 60, 150);
 	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 30, 150);
 	// Init networking

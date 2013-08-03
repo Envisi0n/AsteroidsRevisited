@@ -13,7 +13,7 @@
 #include "Client.hpp"
 #include "../shared/Net_shared.hpp"
 #include "CWorld.hpp"
-#include "TextureManager.hpp"
+#include "ResourceManager.hpp"
 
 enum gameState {
 
@@ -69,7 +69,7 @@ private:
 	CWorld gameWorld;
 
 	//Texture manager
-	TextureManager textureHandler;
+	ResourceManager ResourceHandler;
 
 
 };
