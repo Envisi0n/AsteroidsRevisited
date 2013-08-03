@@ -43,16 +43,12 @@ void TextBox::setSize(float pWidth) {
 	this->rectangle.setSize(sf::Vector2f(pWidth, 20));
 }
 
-void TextBox::update(sf::Vector2i mouseLoc, sf::Event event) {
-
-	sf::Vector2f tmp;
-	tmp.x = mouseLoc.x;
-	tmp.y = mouseLoc.y;
+void TextBox::update(sf::Vector2f mouseLoc, sf::Event event) {
 
 	bool Focus = getHasFocus();
 	sf::String myString;
 
-	if (rectangle.getGlobalBounds().contains(tmp)) {
+	if (rectangle.getGlobalBounds().contains(mouseLoc)) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 			setHasFocus(true);

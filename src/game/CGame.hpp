@@ -71,6 +71,9 @@ private:
 	//Texture manager
 	ResourceManager ResourceHandler;
 
+	//Game view
+	sf::View gameView;
+
 
 };
 

@@ -45,7 +45,7 @@ void Menu::draw(sf::RenderWindow* window) {
 
 }
 
-int Menu::update(sf::Vector2i mouseLoc, sf::Event event) {
+int Menu::update(sf::Vector2f mouseLoc, sf::Event event) {
 
 	int action = BUT_NOTHING;
 	// Call draw on each button

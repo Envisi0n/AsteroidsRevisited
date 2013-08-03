@@ -61,7 +61,8 @@ void CGame::run() {
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids", sf::Style::Fullscreen);
 	window.setIcon(96, 96, ResourceHandler.loadImage("images/icon.png")->getPixelsPtr());
 	window.setFramerateLimit(FRAMES_PER_SECOND);
-
+	gameView.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
+	window.setView(gameView);
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -80,7 +81,7 @@ void CGame::run() {
 			window.draw(background);
 			// Draw menu buttons.
 			handleButton(
-					gameMenu.update(sf::Mouse::getPosition(window), event));
+					gameMenu.update(window.mapPixelToCoords(sf::Mouse::getPosition(window)), event));
 
 			gameMenu.draw(&window);
 			break;
@@ -89,7 +90,7 @@ void CGame::run() {
 			window.clear();
 			window.draw(background);
 			handleButton(
-					loginMenu.update(sf::Mouse::getPosition(window), event));
+					loginMenu.update(window.mapPixelToCoords(sf::Mouse::getPosition(window)), event));
 
 			loginMenu.draw(&window);
 			break;
