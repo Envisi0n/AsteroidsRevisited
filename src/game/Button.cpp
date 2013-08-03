@@ -49,13 +49,9 @@ void Button::animate(int color) {
 	}
 
 }
-int Button::update(sf::Vector2i mouseLoc, sf::Event event) {
+int Button::update(sf::Vector2f mouseLoc, sf::Event event) {
 
-	sf::Vector2f tmp;
-	tmp.x = mouseLoc.x;
-	tmp.y = mouseLoc.y;
-
-	if (sprite.getGlobalBounds().contains(tmp)) {
+	if (sprite.getGlobalBounds().contains(mouseLoc)) {
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			animate(CLICK);

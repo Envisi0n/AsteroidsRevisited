@@ -23,7 +23,7 @@ public:
 	virtual ~Menu();
 
 	virtual void draw(sf::RenderWindow* window);
-	virtual int update(sf::Vector2i mouseLoc, sf::Event event);
+	virtual int update(sf::Vector2f mouseLoc, sf::Event event);
 	virtual void addButton(float x, float y, sf::Texture* texture, int action);
 	virtual void addTextBox(float x, float y, sf::Font* font, float pWidth);
 	const vector<TextBox*>& getTextBoxes() const;

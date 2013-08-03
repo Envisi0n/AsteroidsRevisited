@@ -12,7 +12,6 @@
 #include "Entity.hpp"
 #include <SFML/Network.hpp>
 
-
 class World {
 public:
 	World();
