@@ -16,7 +16,7 @@
 class TextBox {
 public:
 
-	TextBox(float x, float y, float pWidth);
+	TextBox(float x, float y, sf::Font* font, float pWidth);
 	virtual ~TextBox();
 
 	// Game functions

@@ -8,7 +8,7 @@
 #include "TextBox.hpp"
 #include <iostream>
 
-TextBox::TextBox(float x, float y, float pWidth) {
+TextBox::TextBox(float x, float y, sf::Font* font, float pWidth) {
 	setPosition(x, y);
 	setSize(pWidth);
 	setHasFocus(false);
@@ -18,10 +18,14 @@ TextBox::TextBox(float x, float y, float pWidth) {
 	Text.setCharacterSize(14);
 
 	// Load font
+
+
+	/*// Load font
 	if (!font.loadFromFile("fonts/TitilliumWeb-Regular.ttf")) {
 		// error
-	}
-	Text.setFont(font);
+	}*/
+
+	Text.setFont(*font);
 	Text.setColor(sf::Color::Black);
 	Text.setStyle(sf::Text::Regular);
 

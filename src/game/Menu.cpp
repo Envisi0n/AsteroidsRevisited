@@ -72,9 +72,9 @@ void Menu::addButton(float x, float y, sf::Texture *texture, int action) {
 
 }
 
-void Menu::addTextBox(float x, float y, float pWidth) {
+void Menu::addTextBox(float x, float y, sf::Font *font, float pWidth) {
 
-	TextBoxes.push_back(new TextBox(x, y, pWidth));
+	TextBoxes.push_back(new TextBox(x, y, font, pWidth));
 
 }
 

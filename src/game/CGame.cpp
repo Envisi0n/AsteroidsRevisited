@@ -38,8 +38,8 @@ void CGame::init() {
 			ResourceHandler.loadTexture("images/login.png"), BUT_LOGIN);
 	loginMenu.addButton(SCREEN_WIDTH / 2 + 100, SCREEN_HEIGHT / 2,
 			ResourceHandler.loadTexture("images/register.png"), BUT_REGISTER);
-	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 60, 150);
-	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 30, 150);
+	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 60, ResourceHandler.loadFont("fonts/TitilliumWeb-Regular.ttf"), 150);
+	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 30, ResourceHandler.loadFont("fonts/TitilliumWeb-Regular.ttf"), 150);
 	// Init networking
 	gameClient.setServerAddress("127.0.0.1");
 	gameClient.setServerPort(SERVER_PORT);
