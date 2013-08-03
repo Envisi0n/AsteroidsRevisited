@@ -21,23 +21,23 @@ CGame::~CGame() {
 
 void CGame::init() {
 
-	if (!icon.loadFromFile("images/icon.png"))
-		return;
-
 	// Init the background.
 	background.setSize(sf::Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
 	background.setTexture(ResourceHandler.loadTexture("images/background.png"));
 
 	// Init the Main Menu
-	gameMenu.addButton(50, 0, ResourceHandler.loadTexture("images/title.gif"), BUT_NOTHING);
-	gameMenu.addButton(283.5, 100, ResourceHandler.loadTexture("images/sub2.gif"), BUT_NOTHING);
-	gameMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, ResourceHandler.loadTexture("images/test.png"),
-			BUT_PLAY);
+	gameMenu.addButton(50, 0, ResourceHandler.loadTexture("images/title.gif"),
+			BUT_NOTHING);
+	gameMenu.addButton(283.5, 100,
+			ResourceHandler.loadTexture("images/sub2.gif"), BUT_NOTHING);
+	gameMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
+			ResourceHandler.loadTexture("images/test.png"), BUT_PLAY);
 
 	// Init login menu
-	loginMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, ResourceHandler.loadTexture("images/login.png"),
-			BUT_LOGIN);
-	loginMenu.addButton(SCREEN_WIDTH /2 + 100, SCREEN_HEIGHT /2, ResourceHandler.loadTexture("images/register.png"), BUT_REGISTER);
+	loginMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
+			ResourceHandler.loadTexture("images/login.png"), BUT_LOGIN);
+	loginMenu.addButton(SCREEN_WIDTH / 2 + 100, SCREEN_HEIGHT / 2,
+			ResourceHandler.loadTexture("images/register.png"), BUT_REGISTER);
 	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 60, 150);
 	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 30, 150);
 	// Init networking
@@ -53,7 +53,7 @@ void CGame::run() {
 	// Init window
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",
 			sf::Style::Titlebar | sf::Style::Close);
-	window.setIcon(96, 96, icon.getPixelsPtr());
+	window.setIcon(96, 96, ResourceHandler.loadImage("images/icon.png")->getPixelsPtr());
 	window.setFramerateLimit(FRAMES_PER_SECOND);
 
 	while (window.isOpen()) {
@@ -120,7 +120,6 @@ void CGame::receiveServerUpdate() {
 	gameWorld.packetToWorld(serverPacket);
 }
 
-
 void CGame::update() {
 
 }
@@ -152,7 +151,6 @@ void CGame::handleButton(int action) {
 	case BUT_QUIT:
 		setState(QUIT);
 		break;
-
 
 	}
 
@@ -215,7 +213,6 @@ void CGame::login() {
 
 void CGame::draw(sf::RenderWindow* window) {
 }
-
 
 void CGame::gameRegister() {
 
