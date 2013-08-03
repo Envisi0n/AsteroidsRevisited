@@ -25,7 +25,7 @@ public:
 
 	// Game functions
 	void draw(sf::RenderWindow* window);
-	int update(sf::Vector2i mouseLoc, sf::Event event);
+	int update(sf::Vector2f mouseLoc, sf::Event event);
 	void animate(int color);
 
 	// Assessors
