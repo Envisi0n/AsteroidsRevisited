@@ -61,7 +61,8 @@ void CGame::run() {
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids", sf::Style::Fullscreen);
 	window.setIcon(96, 96, ResourceHandler.loadImage("images/icon.png")->getPixelsPtr());
 	window.setFramerateLimit(FRAMES_PER_SECOND);
-	gameView.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
+	gameView.setSize(800,600);
+	gameView.setCenter(400,300);
 	window.setView(gameView);
 	while (window.isOpen()) {
 		sf::Event event;
