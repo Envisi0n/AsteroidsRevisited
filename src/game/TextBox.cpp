@@ -17,14 +17,6 @@ TextBox::TextBox(float x, float y, sf::Font* font, float pWidth) {
 	Text.setPosition(x + 3, y + 2);
 	Text.setCharacterSize(14);
 
-	// Load font
-
-
-	/*// Load font
-	if (!font.loadFromFile("fonts/TitilliumWeb-Regular.ttf")) {
-		// error
-	}*/
-
 	Text.setFont(*font);
 	Text.setColor(sf::Color::Black);
 	Text.setStyle(sf::Text::Regular);

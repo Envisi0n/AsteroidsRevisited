@@ -6,18 +6,6 @@
  */
 
 #include "Button.hpp"
-/*
- Button::Button(float x, float y, const char* texturePath, int action) {
- setPosition(x, y);
- setAction(action);
- if (!texture.loadFromFile(texturePath)) {
- return;
- }
-
- sprite.setTexture(texture);
-
- }
- */
 
 Button::Button(float x, float y, sf::Texture* texture, int action) {
 	setPosition(x, y);
