@@ -11,6 +11,9 @@
 #include "MD5.h"
 #include <SFML/Network.hpp>
 
+int SCREEN_WIDTH = 800;
+int SCREEN_HEIGHT = 600;
+
 CGame::CGame() {
 	setState(INIT);
 }
@@ -32,6 +35,7 @@ void CGame::init() {
 			ResourceHandler.loadTexture("images/sub2.gif"), BUT_NOTHING);
 	gameMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
 			ResourceHandler.loadTexture("images/test.png"), BUT_PLAY);
+	gameMenu.addButton(SCREEN_WIDTH-50,SCREEN_HEIGHT-50,ResourceHandler.loadTexture("images/quit.png"),BUT_QUIT);
 
 	// Init login menu
 	loginMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
@@ -40,6 +44,7 @@ void CGame::init() {
 			ResourceHandler.loadTexture("images/register.png"), BUT_REGISTER);
 	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 60, ResourceHandler.loadFont("fonts/TitilliumWeb-Regular.ttf"), 150);
 	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 30, ResourceHandler.loadFont("fonts/TitilliumWeb-Regular.ttf"), 150);
+	loginMenu.addButton(SCREEN_WIDTH-50,SCREEN_HEIGHT-50,ResourceHandler.loadTexture("images/quit.png"),BUT_QUIT);
 	// Init networking
 	gameClient.setServerAddress("127.0.0.1");
 	gameClient.setServerPort(SERVER_PORT);
@@ -51,8 +56,9 @@ void CGame::init() {
 void CGame::run() {
 
 	// Init window
-	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",
-			sf::Style::Titlebar | sf::Style::Close);
+	SCREEN_HEIGHT = sf::VideoMode::getDesktopMode().height;
+	SCREEN_WIDTH = sf::VideoMode::getDesktopMode().width;
+	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids", sf::Style::Fullscreen);
 	window.setIcon(96, 96, ResourceHandler.loadImage("images/icon.png")->getPixelsPtr());
 	window.setFramerateLimit(FRAMES_PER_SECOND);
 

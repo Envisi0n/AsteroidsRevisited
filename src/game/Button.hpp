@@ -20,7 +20,6 @@ enum buttonColors {
 class Button {
 public:
 
-	//Button(float x, float y, const char* texturePath, int action);
 	Button(float x, float y, sf::Texture* texture, int action);
 	virtual ~Button();
 
