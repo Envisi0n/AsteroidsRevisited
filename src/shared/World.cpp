@@ -12,6 +12,10 @@ World::World() {
 	// TODO Auto-generated constructor stub
 
 	entities.push_back(new Entity());
+	entities.push_back(new Entity(100,100));
+	entities.push_back(new Entity(200,200));
+	entities.push_back(new Entity(300,300));
+	entities.push_back(new Entity(400,400));
 }
 
 void World::update() {

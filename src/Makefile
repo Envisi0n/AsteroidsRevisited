@@ -118,7 +118,7 @@ $(SERVER_MAIN): $(SERVER_OBJS) $(SHARED_OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
 clean:
-	$(RM) game/*.o server/*.o *~ ../assets/$(SERVER_MAIN) ../assets/$(CLIENT_MAIN) $(CLIENT_MAIN) $(SERVER_MAIN) testServer testClient
+	$(RM) game/*.o server/*.o shared/*.o *~ ../assets/$(SERVER_MAIN) ../assets/$(CLIENT_MAIN) $(CLIENT_MAIN) $(SERVER_MAIN) testServer testClient
 
 depend: $(SRCS) $(S_SRCS)
 	makedepend $(INCLUDES) $^
