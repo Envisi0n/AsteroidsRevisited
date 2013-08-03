@@ -66,9 +66,9 @@ int Menu::update(sf::Vector2i mouseLoc, sf::Event event) {
 	return BUT_NOTHING;
 }
 
-void Menu::addButton(float x, float y, const char* path, int action) {
+void Menu::addButton(float x, float y, sf::Texture *texture, int action) {
 
-	buttons.push_back(new Button(x, y, path, action));
+	buttons.push_back(new Button(x, y, texture, action));
 
 }
 

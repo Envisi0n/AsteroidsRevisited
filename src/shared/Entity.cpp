@@ -36,6 +36,8 @@ float Entity::getY() const {
 Entity::Entity(float x, float y) {
 	setX(x);
 	setY(y);
+	velX = 1;
+	velY = 1;
 }
 
 void Entity::setY(float y) {
@@ -44,13 +46,12 @@ void Entity::setY(float y) {
 
 void Entity::update() {
 
-	if( getX()+velX > WORLD_WIDTH || getX()+velX < 0 )
+	if (getX() + velX > WORLD_WIDTH || getX() + velX < 0)
 		velX = -velX;
-	if( getY()+velY > WORLD_HEIGHT || getY()+velY < 0 )
+	if (getY() + velY > WORLD_HEIGHT || getY() + velY < 0)
 		velY = -velY;
 
-
-	setX(getX()+velX);
-	setY(getY()+velY);
+	setX(getX() + velX);
+	setY(getY() + velY);
 
 }
