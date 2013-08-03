@@ -14,6 +14,7 @@
 #include "../shared/Net_shared.hpp"
 #include "CWorld.hpp"
 #include "ResourceManager.hpp"
+#include <SFML/Graphics.hpp>
 
 enum gameState {
 
@@ -21,10 +22,9 @@ enum gameState {
 
 };
 
-#include <SFML/Graphics.hpp>
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+extern int SCREEN_WIDTH;
+extern int SCREEN_HEIGHT;
 #define FRAMES_PER_SECOND 60
 
 class CGame {
