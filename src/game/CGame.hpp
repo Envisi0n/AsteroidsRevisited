@@ -13,6 +13,7 @@
 #include "Client.hpp"
 #include "../shared/Net_shared.hpp"
 #include "CWorld.hpp"
+#include "ResourceManager.hpp"
 
 enum gameState {
 
@@ -50,8 +51,6 @@ private:
 	void gameRegister();
 	// Background drawable object
 	sf::RectangleShape background;
-	// Background texture
-	sf::Texture backgroundImage;
 	// State of the game
 	int state;
 	// Window of the game
@@ -68,6 +67,9 @@ private:
 
 	// Asteroids game
 	CWorld gameWorld;
+
+	//Texture manager
+	ResourceManager ResourceHandler;
 
 
 };

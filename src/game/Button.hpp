@@ -20,7 +20,8 @@ enum buttonColors {
 class Button {
 public:
 
-	Button(float x, float y, const char* texturePath, int action);
+	//Button(float x, float y, const char* texturePath, int action);
+	Button(float x, float y, sf::Texture* texture, int action);
 	virtual ~Button();
 
 	// Game functions
@@ -38,7 +39,7 @@ private:
 	// Drawable button
 	sf::Sprite sprite;
 	// Texture of button
-	sf::Texture texture;
+	//sf::Texture texture;
 	// What the buttons does when clicked
 	int action;
 };
