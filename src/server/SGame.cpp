@@ -27,6 +27,8 @@ void SGame::init() {
 	loginHandler.loadDB();
 	std::cout << "done." << std::endl;
 
+	heartBeatTimer.restart();
+
 	setState(RUNNING);
 
 }
@@ -67,7 +69,13 @@ void SGame::run() {
 
 		gameServer.broadcast(gameWorld.toPacket());
 
-		sf::sleep(sf::milliseconds(1000/SERVER_TICK_SPEED));
+		// Send heartbeat
+		if( heartBeatTimer.getElapsedTime().asSeconds() > 5) {
+			sendHeartbeats();
+			heartBeatTimer.restart();
+		}
+
+		sf::sleep(sf::milliseconds(1000 / SERVER_TICK_SPEED));
 
 	}
 
@@ -156,6 +164,9 @@ void SGame::handlePacket(int client, sf::Packet packet) {
 		registerUser(client, packet);
 
 		break;
+	case HEARTBEAT:
+		std::cout << "Got heartbeat from " << client << std::endl;
+		break;
 
 	}
 
@@ -228,5 +239,16 @@ void SGame::registerUser(int client, sf::Packet loginInfo) {
 
 	responsePacket << response.packetType;
 	gameServer.send(responsePacket, client);
+
+}
+
+void SGame::sendHeartbeats() {
+
+	sf::Packet packet;
+	genericPacket heartbeat;
+
+	heartbeat.packetType = HEARTBEAT;
+	packet << heartbeat;
+	gameServer.broadcast(packet);
 
 }

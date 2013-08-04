@@ -122,10 +122,37 @@ void CGame::run() {
 void CGame::receiveServerUpdate() {
 
 	sf::Packet serverPacket;
+	short packetType;
 
 	gameClient.receive(&serverPacket);
 
-	gameWorld.packetToWorld(serverPacket);
+	serverPacket >> packetType;
+
+	switch( packetType ) {
+
+	case SERVER_UPDATE:
+		gameWorld.packetToWorld(serverPacket);
+		break;
+	case HEARTBEAT:
+		sendHeartbeat();
+		break;
+	}
+
+
+}
+
+void CGame::sendHeartbeat() {
+
+	sf::Packet packet;
+	genericPacket heartbeat;
+
+	heartbeat.packetType = HEARTBEAT;
+	packet << heartbeat;
+	gameClient.send(packet);
+
+}
+
+void CGame::handlePacket(sf::Packet packet) {
 }
 
 void CGame::update() {

@@ -40,9 +40,11 @@ int Server::broadcast(sf::Packet data) {
 
 	for (int i = 0; i < MAXCLIENTS; i++) {
 
-		socket.send(data, clients[i].ip, clients[i].port);
+		if (clients[i].inUse) {
 
+			socket.send(data, clients[i].ip, clients[i].port);
 
+		}
 	}
 
 	return 0;
