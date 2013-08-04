@@ -32,6 +32,9 @@ public:
 	int broadcast(sf::Packet data);
 	// Receives a packet from any source
 	int receive(sf::Packet *data);
+	// Disconnect a client
+	void disconnectClient(int client);
+	void disconnectAll();
 	unsigned short int getPort() const;
 	void setPort(unsigned short int port);
 

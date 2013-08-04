@@ -37,16 +37,8 @@ void CWorld::update(sf::Event event) {
 
 void CWorld::packetToWorld(sf::Packet packet) {
 
-	short packetType;
 	float tmpX;
 	float tmpY;
-
-	packet >> packetType;
-
-	if (packetType != SERVER_UPDATE) {
-		std::cout << "NOT A SERVER UPDATE PACKET" << std::endl;
-		return;
-	}
 
 	// Nothing in here yet
 	if (centities.empty()) {

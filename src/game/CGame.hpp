@@ -37,7 +37,9 @@ public:
 	virtual void draw(sf::RenderWindow* window);
 	virtual void update();
 
+	virtual void handlePacket(sf::Packet packet);
 	virtual void receiveServerUpdate();
+	virtual void sendHeartbeat();
 
 	void showMenu();
 
