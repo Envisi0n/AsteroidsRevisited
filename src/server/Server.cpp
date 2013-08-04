@@ -7,6 +7,7 @@
 
 #include "Server.hpp"
 #include <iostream>
+#include "../shared/Net_shared.hpp"
 
 Server::Server(unsigned short int port) {
 
@@ -40,12 +41,43 @@ int Server::broadcast(sf::Packet data) {
 
 	for (int i = 0; i < MAXCLIENTS; i++) {
 
-		socket.send(data, clients[i].ip, clients[i].port);
+		if (clients[i].inUse) {
 
+			socket.send(data, clients[i].ip, clients[i].port);
 
+		}
 	}
 
 	return 0;
+
+}
+
+void Server::disconnectClient(int client) {
+
+	sf::Packet disconnectPacket;
+	genericPacket data;
+
+	if( client > MAXCLIENTS ) {
+		return;
+	}
+
+	data.packetType = DISCONNECT;
+
+	disconnectPacket << data;
+
+	send(disconnectPacket,client);
+
+	clients[client].ip = "0.0.0.0";
+	clients[client].port = 0;
+	clients[client].inUse = false;
+
+}
+
+void Server::disconnectAll() {
+
+	for(int i = 0; i < MAXCLIENTS; i++) {
+		disconnectClient(i);
+	}
 
 }
 

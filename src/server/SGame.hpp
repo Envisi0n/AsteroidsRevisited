@@ -61,6 +61,8 @@ private:
 	// Networking for server
 	Server gameServer;
 	void handlePacket(int client, sf::Packet packet);
+	sf::Clock heartBeatTimer;
+	void sendHeartbeats();
 
 };
 

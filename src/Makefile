@@ -84,7 +84,7 @@ endif
 
 .PHONY: depend clean
 
-all:    $(CLIENT_MAIN) $(SERVER_MAIN)
+all:    $(CLIENT_MAIN) $(SERVER_MAIN) install
 	@echo  Asteroids Build Successful
 
 install: $(CLIENT_MAIN) $(SERVER_MAIN)
