@@ -35,16 +35,20 @@ void CGame::init() {
 			ResourceHandler.loadTexture("images/sub2.gif"), BUT_NOTHING);
 	gameMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
 			ResourceHandler.loadTexture("images/test.png"), BUT_PLAY);
-	gameMenu.addButton(SCREEN_WIDTH-50,SCREEN_HEIGHT-50,ResourceHandler.loadTexture("images/quit.png"),BUT_QUIT);
+	gameMenu.addButton(SCREEN_WIDTH - 50, SCREEN_HEIGHT - 50,
+			ResourceHandler.loadTexture("images/quit.png"), BUT_QUIT);
 
 	// Init login menu
 	loginMenu.addButton(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
 			ResourceHandler.loadTexture("images/login.png"), BUT_LOGIN);
 	loginMenu.addButton(SCREEN_WIDTH / 2 + 100, SCREEN_HEIGHT / 2,
 			ResourceHandler.loadTexture("images/register.png"), BUT_REGISTER);
-	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 60, ResourceHandler.loadFont("fonts/TitilliumWeb-Regular.ttf"), 150);
-	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 30, ResourceHandler.loadFont("fonts/TitilliumWeb-Regular.ttf"), 150);
-	loginMenu.addButton(SCREEN_WIDTH-50,SCREEN_HEIGHT-50,ResourceHandler.loadTexture("images/quit.png"),BUT_QUIT);
+	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 60,
+			ResourceHandler.loadFont("fonts/TitilliumWeb-Regular.ttf"), 150);
+	loginMenu.addTextBox(SCREEN_WIDTH / 2 - 75, SCREEN_HEIGHT / 2 - 30,
+			ResourceHandler.loadFont("fonts/TitilliumWeb-Regular.ttf"), 150);
+	loginMenu.addButton(SCREEN_WIDTH - 50, SCREEN_HEIGHT - 50,
+			ResourceHandler.loadTexture("images/quit.png"), BUT_QUIT);
 	// Init networking
 	gameClient.setServerAddress("127.0.0.1");
 	gameClient.setServerPort(SERVER_PORT);
@@ -58,11 +62,13 @@ void CGame::run() {
 	// Init window
 	SCREEN_HEIGHT = sf::VideoMode::getDesktopMode().height;
 	SCREEN_WIDTH = sf::VideoMode::getDesktopMode().width;
-	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids", sf::Style::Fullscreen);
-	window.setIcon(96, 96, ResourceHandler.loadImage("images/icon.png")->getPixelsPtr());
+	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",
+			sf::Style::Fullscreen);
+	window.setIcon(96, 96,
+			ResourceHandler.loadImage("images/icon.png")->getPixelsPtr());
 	window.setFramerateLimit(FRAMES_PER_SECOND);
-	gameView.setSize(800,600);
-	gameView.setCenter(400,300);
+	gameView.setSize(800, 600);
+	gameView.setCenter(400, 300);
 	window.setView(gameView);
 	while (window.isOpen()) {
 		sf::Event event;
@@ -82,7 +88,9 @@ void CGame::run() {
 			window.draw(background);
 			// Draw menu buttons.
 			handleButton(
-					gameMenu.update(window.mapPixelToCoords(sf::Mouse::getPosition(window)), event));
+					gameMenu.update(
+							window.mapPixelToCoords(
+									sf::Mouse::getPosition(window)), event));
 
 			gameMenu.draw(&window);
 			break;
@@ -91,7 +99,9 @@ void CGame::run() {
 			window.clear();
 			window.draw(background);
 			handleButton(
-					loginMenu.update(window.mapPixelToCoords(sf::Mouse::getPosition(window)), event));
+					loginMenu.update(
+							window.mapPixelToCoords(
+									sf::Mouse::getPosition(window)), event));
 
 			loginMenu.draw(&window);
 			break;
@@ -128,7 +138,7 @@ void CGame::receiveServerUpdate() {
 
 	serverPacket >> packetType;
 
-	switch( packetType ) {
+	switch (packetType) {
 
 	case SERVER_UPDATE:
 		gameWorld.packetToWorld(serverPacket);
@@ -140,7 +150,6 @@ void CGame::receiveServerUpdate() {
 		setState(LOGIN);
 		break;
 	}
-
 
 }
 
@@ -201,6 +210,7 @@ void CGame::login() {
 	loginPacket info;
 	std::string tmp;
 	short packetType;
+	sf::Clock retry;
 
 	std::cout << "Sending login..." << std::endl;
 
@@ -220,8 +230,12 @@ void CGame::login() {
 	// Wait from response
 	packet.clear();
 	std::cout << "Waiting for server response...";
-
+	retry.restart();
 	while (gameClient.receive(&packet) != sf::Socket::Done) {
+
+		if (retry.getElapsedTime().asSeconds() > 3)
+			return;
+
 	}
 
 	packet >> packetType;
@@ -258,6 +272,7 @@ void CGame::gameRegister() {
 	loginPacket info;
 	std::string tmp;
 	short packetType;
+	sf::Clock retry;
 
 	std::cout << "Sending register..." << std::endl;
 
@@ -277,8 +292,12 @@ void CGame::gameRegister() {
 	// Wait from response
 	packet.clear();
 	std::cout << "Waiting for server response...";
-
+	retry.restart();
 	while (gameClient.receive(&packet) != sf::Socket::Done) {
+
+		if (retry.getElapsedTime().asSeconds() > 3)
+			return;
+
 	}
 
 	packet >> packetType;
