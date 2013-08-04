@@ -136,6 +136,9 @@ void CGame::receiveServerUpdate() {
 	case HEARTBEAT:
 		sendHeartbeat();
 		break;
+	case DISCONNECT:
+		setState(LOGIN);
+		break;
 	}
 
 

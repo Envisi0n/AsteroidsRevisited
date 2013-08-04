@@ -9,6 +9,7 @@
 #include "../shared/Net_shared.hpp"
 #include <iostream>
 #include "../shared/GameGlobals.hpp"
+#include <sstream>
 
 SGame::SGame() :
 		shellThread(&SGame::shell, this), gameServer(SERVER_PORT) {
@@ -37,6 +38,9 @@ void SGame::shutdown() {
 
 	std::cout << "Server shutting down..." << std::endl;
 	setState(SHUTDOWN);
+
+	// Disconnect clients
+	gameServer.disconnectAll();
 
 	// Login shutdown
 	std::cout << "Saving users...";
@@ -126,11 +130,27 @@ void SGame::shell() {
 
 int SGame::handleShellCommand(std::string command) {
 
-	if (command == "stop") {
+	std::stringstream commandStream(command);
+	std::string arg;
+
+	commandStream >> arg;
+
+	if (arg == "stop") {
 
 		setShellState(SHELL_SHUTDOWN);
 		setState(SHUTDOWN);
 		return 0;
+	}
+
+	if( arg == "kick") {
+
+		int client;
+
+		commandStream >> client;
+
+		gameServer.disconnectClient(client);
+		return 0;
+
 	}
 
 	return 1;
