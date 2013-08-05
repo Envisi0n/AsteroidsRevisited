@@ -35,8 +35,13 @@ public:
 	// Disconnect a client
 	void disconnectClient(int client);
 	void disconnectAll();
+
 	unsigned short int getPort() const;
 	void setPort(unsigned short int port);
+
+	sf::IpAddress getClientIp(int client);
+	short getClientPort(int client);
+	bool isClientConnected(int client);
 
 private:
 	sf::UdpSocket socket;
