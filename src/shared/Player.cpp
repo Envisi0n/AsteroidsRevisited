@@ -7,8 +7,9 @@
 
 #include "Player.hpp"
 
-Player::Player(int clientID) {
+Player::Player(int clientID, std::string userName) {
 	setClientId(clientID);
+	setUserName(userName);
 
 }
 
@@ -22,4 +23,12 @@ int Player::getClientId() const {
 
 void Player::setClientId(int clientId) {
 	clientID = clientId;
+}
+
+const std::string& Player::getUserName() const {
+	return userName;
+}
+
+void Player::setUserName(const std::string& userName) {
+	this->userName = userName;
 }

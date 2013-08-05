@@ -13,10 +13,12 @@
 
 class Player {
 public:
-	Player(int clientID);
+	Player(int clientID, std::string userName);
 	virtual ~Player();
 	int getClientId() const;
 	void setClientId(int clientId);
+	const std::string& getUserName() const;
+	void setUserName(const std::string& userName);
 
 private:
 	int clientID;

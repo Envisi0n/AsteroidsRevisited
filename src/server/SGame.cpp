@@ -210,6 +210,7 @@ void SGame::loginUser(int client, sf::Packet loginInfo) {
 
 		std::cout << username << " authenticated." << std::endl;
 
+		gameWorld.createPlayer(client,username);
 		response.packetType = LOGIN_AUTH_VALID;
 
 		break;
@@ -251,6 +252,7 @@ void SGame::registerUser(int client, sf::Packet loginInfo) {
 	case REG_SUCCESS:
 		std::cout << username << " " << "registered." << std::endl;
 		response.packetType = LOGIN_REG_SUCCESS;
+		gameWorld.createPlayer(client,username);
 		break;
 	case REG_INUSE:
 		response.packetType = LOGIN_REG_INUSE;
