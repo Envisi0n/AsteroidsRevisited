@@ -15,6 +15,8 @@ public:
 	Ship();
 	Ship(float x, float y);
 	virtual ~Ship();
+private:
+	float rotation;
 };
 
 #endif /* SHIP_HPP_ */

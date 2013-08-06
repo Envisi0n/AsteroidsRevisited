@@ -13,12 +13,17 @@ public:
 	Entity();
 	Entity(float x, float y);
 	virtual ~Entity();
+
+	virtual void update();
+
 	float getX() const;
 	void setX(float x);
 	float getY() const;
 	void setY(float y);
-
-	virtual void update();
+	float getVelX() const;
+	void setVelX(float velX);
+	float getVelY() const;
+	void setVelY(float velY);
 
 private:
 	float x, y;
