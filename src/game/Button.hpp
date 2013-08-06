@@ -32,15 +32,17 @@ public:
 	void setPosition(float x, float y);
 	int getAction() const;
 	void setAction(int action);
+	bool isPressed() const;
+	void setPressed(bool pressed);
 
 private:
 
 	// Drawable button
 	sf::Sprite sprite;
-	// Texture of button
-	//sf::Texture texture;
 	// What the buttons does when clicked
 	int action;
+	// Click flag
+	bool pressed;
 };
 
 #endif /* Button_HPP_ */
