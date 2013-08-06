@@ -153,6 +153,13 @@ int SGame::handleShellCommand(std::string command) {
 
 	}
 
+	if( arg == "add" ) {
+
+		std::cout << "added entity" << std::endl;
+		gameWorld.addEntity();
+		return 0;
+	}
+
 	return 1;
 }
 

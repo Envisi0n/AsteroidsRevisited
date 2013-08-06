@@ -12,18 +12,17 @@ World::World() {
 	// TODO Auto-generated constructor stub
 
 	entities.push_back(new Entity());
-	entities.push_back(new Entity(100, 100));
-	entities.push_back(new Entity(200, 200));
-	entities.push_back(new Entity(300, 300));
-	entities.push_back(new Entity(400, 400));
+
 }
 
 void World::update() {
 
+	int i = 0;
 	for (std::vector<Entity*>::iterator it = entities.begin();
 			it != entities.end(); ++it) {
 
 		(*it)->update();
+		i++;
 	}
 
 }
@@ -58,6 +57,10 @@ void World::removePlayer(std::string userName) {
 			return;
 		}
 	}
+}
+
+void World::addEntity() {
+	entities.push_back(new Entity());
 }
 
 sf::Packet World::toPacket() {

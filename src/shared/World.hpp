@@ -19,9 +19,12 @@ public:
 	virtual void update();
 	virtual ~World();
 
+	// Player functions
 	void createPlayer( int client, std::string userName );
 	void removePlayer( int client );
 	void removePlayer( std::string userName);
+
+	void addEntity();
 
 	sf::Packet toPacket();
 private:

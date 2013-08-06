@@ -52,15 +52,26 @@ void CWorld::packetToWorld(sf::Packet packet) {
 
 		return;
 	}
+	// We already have things
+	else {
 
-	for (std::vector<CEntity*>::iterator it = centities.begin();
-			it != centities.end(); ++it) {
+		for (std::vector<CEntity*>::iterator it = centities.begin();
+				it != centities.end(); ++it) {
 
-		packet >> tmpX;
-		packet >> tmpY;
+			packet >> tmpX;
+			packet >> tmpY;
 
-		(*it)->setPosition(tmpX,tmpY);
+			(*it)->setPosition(tmpX, tmpY);
 
+		}
+		// Add anything not updated
+		while (!packet.endOfPacket()) {
+
+			packet >> tmpX;
+			packet >> tmpY;
+
+			centities.push_back(new CEntity(tmpX, tmpY));
+		}
 	}
 
 }
