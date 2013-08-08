@@ -24,6 +24,8 @@ private:
 	int clientID;
 	std::string userName;
 	Ship ship;
+	float lastSeen;
+	float ping;
 };
 
 #endif /* PLAYER_HPP_ */

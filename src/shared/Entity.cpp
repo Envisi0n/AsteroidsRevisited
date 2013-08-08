@@ -47,9 +47,9 @@ void Entity::setY(float y) {
 void Entity::update() {
 
 	if (getX() + getVelX() > WORLD_WIDTH || getX() + getVelX()< 0)
-		setVelX(getVelX());
+		setVelX(-getVelX());
 	if (getY() + getVelY() > WORLD_HEIGHT || getY() + getVelY() < 0)
-		setVelY(getVelY());
+		setVelY(-getVelY());
 
 	setX(getX() + getVelX());
 	setY(getY() + getVelY());

@@ -158,6 +158,7 @@ void CGame::sendHeartbeat() {
 	sf::Packet packet;
 	genericPacket heartbeat;
 
+	std::cout << "Got heartbeat" << std::endl;
 	heartbeat.packetType = HEARTBEAT;
 	packet << heartbeat;
 	gameClient.send(packet);

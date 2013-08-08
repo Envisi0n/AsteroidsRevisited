@@ -74,7 +74,7 @@ void SGame::run() {
 		gameServer.broadcast(gameWorld.toPacket());
 
 		// Send heartbeat
-		if( heartBeatTimer.getElapsedTime().asSeconds() > 5) {
+		if (heartBeatTimer.getElapsedTime().asSeconds() > 5) {
 			sendHeartbeats();
 			heartBeatTimer.restart();
 		}
@@ -142,7 +142,7 @@ int SGame::handleShellCommand(std::string command) {
 		return 0;
 	}
 
-	if( arg == "kick") {
+	if (arg == "kick") {
 
 		int client;
 
@@ -153,7 +153,7 @@ int SGame::handleShellCommand(std::string command) {
 
 	}
 
-	if( arg == "add" ) {
+	if (arg == "add") {
 
 		std::cout << "added entity" << std::endl;
 		gameWorld.addEntity();
@@ -192,7 +192,8 @@ void SGame::handlePacket(int client, sf::Packet packet) {
 
 		break;
 	case HEARTBEAT:
-		std::cout << "Got heartbeat from " << client << std::endl;
+		std::cout << "Got heartbeat from " << client << " "
+				<< test.getElapsedTime().asMilliseconds() << std::endl;
 		break;
 
 	}
@@ -217,7 +218,7 @@ void SGame::loginUser(int client, sf::Packet loginInfo) {
 
 		std::cout << username << " authenticated." << std::endl;
 
-		gameWorld.createPlayer(client,username);
+		gameWorld.createPlayer(client, username);
 		response.packetType = LOGIN_AUTH_VALID;
 
 		break;
@@ -259,7 +260,7 @@ void SGame::registerUser(int client, sf::Packet loginInfo) {
 	case REG_SUCCESS:
 		std::cout << username << " " << "registered." << std::endl;
 		response.packetType = LOGIN_REG_SUCCESS;
-		gameWorld.createPlayer(client,username);
+		gameWorld.createPlayer(client, username);
 		break;
 	case REG_INUSE:
 		response.packetType = LOGIN_REG_INUSE;
@@ -279,5 +280,6 @@ void SGame::sendHeartbeats() {
 	heartbeat.packetType = HEARTBEAT;
 	packet << heartbeat;
 	gameServer.broadcast(packet);
+	test.restart();
 
 }
