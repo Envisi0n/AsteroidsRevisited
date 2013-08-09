@@ -13,8 +13,14 @@
 class Ship: public Entity {
 public:
 	Ship();
-	Ship(float x, float y);
+	Ship(float x, float y, float velX, float velY, float rotation);
 	virtual ~Ship();
+
+	virtual void update();
+
+	float getRotation() const;
+	void setRotation(float rotation);
+
 private:
 	float rotation;
 };

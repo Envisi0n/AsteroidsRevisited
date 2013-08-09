@@ -11,7 +11,7 @@
 class Entity {
 public:
 	Entity();
-	Entity(float x, float y);
+	Entity(float x, float y, float velX, float velY);
 	virtual ~Entity();
 
 	virtual void update();

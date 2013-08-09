@@ -47,7 +47,7 @@ void CWorld::packetToWorld(sf::Packet packet) {
 			packet >> tmpX;
 			packet >> tmpY;
 
-			centities.push_back(new CEntity(tmpX, tmpY));
+			centities.push_back(new CEntity(tmpX, tmpY,0,0));
 		}
 
 		return;
@@ -70,7 +70,7 @@ void CWorld::packetToWorld(sf::Packet packet) {
 			packet >> tmpX;
 			packet >> tmpY;
 
-			centities.push_back(new CEntity(tmpX, tmpY));
+			centities.push_back(new CEntity(tmpX, tmpY,0,0));
 		}
 	}
 

@@ -33,11 +33,11 @@ float Entity::getY() const {
 	return y;
 }
 
-Entity::Entity(float x, float y) {
+Entity::Entity(float x, float y,float velX, float velY) {
 	setX(x);
 	setY(y);
-	setVelX(1);
-	setVelY(1);
+	setVelX(velX);
+	setVelY(velY);
 }
 
 void Entity::setY(float y) {
