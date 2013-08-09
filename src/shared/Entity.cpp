@@ -8,8 +8,14 @@
 #include "Entity.hpp"
 #include "GameGlobals.hpp"
 #include <iostream>
+#include <sstream>
+
+unsigned int Entity::nextID = 0;
 
 Entity::Entity() {
+
+	id = nextID++;
+
 	setX(0);
 	setY(0);
 	setVelX(1);
@@ -33,7 +39,7 @@ float Entity::getY() const {
 	return y;
 }
 
-Entity::Entity(float x, float y,float velX, float velY) {
+Entity::Entity(float x, float y, float velX, float velY) {
 	setX(x);
 	setY(y);
 	setVelX(velX);
@@ -46,7 +52,7 @@ void Entity::setY(float y) {
 
 void Entity::update() {
 
-	if (getX() + getVelX() > WORLD_WIDTH || getX() + getVelX()< 0)
+	if (getX() + getVelX() > WORLD_WIDTH || getX() + getVelX() < 0)
 		setVelX(-getVelX());
 	if (getY() + getVelY() > WORLD_HEIGHT || getY() + getVelY() < 0)
 		setVelY(-getVelY());
@@ -68,6 +74,28 @@ float Entity::getVelY() const {
 	return velY;
 }
 
+std::string Entity::toString() {
+
+	std::stringstream tmp;
+
+	tmp << "[" << getId() << "] x=" << getX() << " y=" << getY() << " vX="
+			<< getVelX() << " vY=" << getVelY();
+
+	return tmp.str();
+
+}
+
 void Entity::setVelY(float velY) {
 	this->velY = velY;
+}
+
+void Entity::toPacket(sf::Packet* packet) {
+
+	*packet << getX();
+	*packet << getY();
+
+}
+
+unsigned int Entity::getId() const {
+	return id;
 }

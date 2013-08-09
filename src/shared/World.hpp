@@ -13,6 +13,14 @@
 #include "Player.hpp"
 #include <SFML/Network.hpp>
 
+enum WorldObjects {
+
+	ENTITY,
+	SHIP,
+	ASTEROID,
+
+};
+
 class World {
 public:
 	World();

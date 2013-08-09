@@ -73,8 +73,8 @@ sf::Packet World::toPacket() {
 
 	for (std::vector<Entity*>::iterator it = entities.begin();
 			it != entities.end(); ++it) {
-		gamePacket << (*it)->getX();
-		gamePacket << (*it)->getY();
+
+		(*it)->toPacket(&gamePacket);
 
 	}
 

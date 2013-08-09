@@ -8,6 +8,9 @@
 #ifndef ENTITY_HPP_
 #define ENTITY_HPP_
 
+#include <string>
+#include <SFML/Network.hpp>
+
 class Entity {
 public:
 	Entity();
@@ -15,6 +18,10 @@ public:
 	virtual ~Entity();
 
 	virtual void update();
+
+
+	void toPacket(sf::Packet *packet);
+	std::string toString();
 
 	float getX() const;
 	void setX(float x);
@@ -24,8 +31,11 @@ public:
 	void setVelX(float velX);
 	float getVelY() const;
 	void setVelY(float velY);
+	unsigned int getId() const;
 
 private:
+	static unsigned int nextID;
+	unsigned int id;
 	float x, y;
 	float velX, velY;
 };
