@@ -10,6 +10,7 @@
 
 #include "../shared/World.hpp"
 #include "CEntity.hpp"
+#include "CPlayer.hpp"
 #include <vector>
 
 class CWorld: public World {
@@ -22,6 +23,7 @@ public:
 	void handleEntityPacket(sf::Packet *packet);
 private:
 	std::vector<CEntity*> centities;
+	std::vector<CPlayer*> cplayers;
 };
 
 #endif /* CWORLD_HPP_ */

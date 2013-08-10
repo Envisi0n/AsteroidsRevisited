@@ -13,8 +13,20 @@
 
 class Player {
 public:
+	Player();
 	Player(int clientID, std::string userName);
 	virtual ~Player();
+
+	// Extracts info into packet
+	virtual void toPacket(sf::Packet *packet);
+	// Imports info from packet
+	virtual void fromPacket(sf::Packet *packet);
+	virtual std::string toString();
+
+	float getLastSeen() const;
+	void setLastSeen(float lastSeen);
+	float getPing() const;
+	void setPing(float ping);
 	int getClientId() const;
 	void setClientId(int clientId);
 	const std::string& getUserName() const;

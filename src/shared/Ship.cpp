@@ -6,6 +6,7 @@
  */
 
 #include "Ship.hpp"
+#include <sstream>
 
 Ship::Ship() : Entity(0,0,0,0) {
 
@@ -28,6 +29,35 @@ float Ship::getRotation() const {
 }
 
 void Ship::update() {
+
+}
+
+void Ship::toPacket(sf::Packet* packet) {
+
+	Entity::toPacket(packet);
+	*packet << getRotation();
+}
+
+void Ship::fromPacket(sf::Packet* packet) {
+
+	float rotation;
+
+	Entity::fromPacket(packet);
+	*packet >> rotation;
+
+	setRotation(rotation);
+}
+
+std::string Ship::toString() {
+
+	std::stringstream tmp;
+
+	tmp << Entity::toString();
+
+	tmp << " rotation=" << getRotation();
+
+
+	return tmp.str();
 
 }
 

@@ -12,6 +12,7 @@
 #include <SFML/Network.hpp>
 
 enum EntityTypes {
+	PLAYER,
 	SHIP,
 	ASTEROID,
 	ENTITY
@@ -26,10 +27,10 @@ public:
 	virtual void update();
 
 	// Extracts entity info into packet
-	void toPacket(sf::Packet *packet);
+	virtual void toPacket(sf::Packet *packet);
 	// Imports entity info from packet
-	void fromPacket(sf::Packet *packet);
-	std::string toString();
+	virtual void fromPacket(sf::Packet *packet);
+	virtual std::string toString();
 
 	float getX() const;
 	void setX(float x);

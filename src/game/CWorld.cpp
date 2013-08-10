@@ -67,7 +67,6 @@ void CWorld::handleEntityPacket(sf::Packet* packet) {
 	CEntity *tmp = new CEntity();
 
 	tmp->fromPacket(packet);
-
 	// Nothing currently in entities
 	if( centities.empty() ) {
 		centities.push_back(tmp);

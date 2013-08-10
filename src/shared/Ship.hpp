@@ -18,6 +18,12 @@ public:
 
 	virtual void update();
 
+	// Extracts info into packet
+	virtual void toPacket(sf::Packet *packet);
+	// Imports info from packet
+	virtual void fromPacket(sf::Packet *packet);
+	virtual std::string toString();
+
 	float getRotation() const;
 	void setRotation(float rotation);
 
