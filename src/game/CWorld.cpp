@@ -68,6 +68,26 @@ void CWorld::handleEntityPacket(sf::Packet* packet) {
 
 	tmp->fromPacket(packet);
 
+	// Nothing currently in entities
+	if( centities.empty() ) {
+		centities.push_back(tmp);
+		return;
+	}
+
+	// Need update entity
+	for(std::vector<CEntity*>::iterator it = centities.begin();
+			it != centities.end(); ++it) {
+		std::cout << tmp->toString() << std::endl;
+		if( (*it)->getId() == tmp->getId() ) {
+			(*it)->setPosition(tmp->getX(),tmp->getY());
+			return;
+		}
+
+	}
+
+	// This entity is new
+
 	centities.push_back(tmp);
+
 
 }

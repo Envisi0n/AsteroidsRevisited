@@ -79,7 +79,7 @@ std::string Entity::toString() {
 
 	std::stringstream tmp;
 
-	tmp << "[" << getId() << "] x=" << getX() << " y=" << getY() << " vX="
+	tmp << "[" << getType() << "-" << getId() << "] x=" << getX() << " y=" << getY() << " vX="
 			<< getVelX() << " vY=" << getVelY();
 
 	return tmp.str();
