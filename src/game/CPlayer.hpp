@@ -9,6 +9,7 @@
 #define CPLAYER_HPP_
 
 #include "../shared/Player.hpp"
+#include "CShip.hpp"
 
 class CPlayer: public Player {
 public:

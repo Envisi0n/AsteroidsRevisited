@@ -13,6 +13,7 @@
 
 class CShip: public Ship {
 public:
+	CShip();
 	CShip(float x, float y, float velX, float velY, float rotation, sf::Texture *texture);
 	virtual ~CShip();
 

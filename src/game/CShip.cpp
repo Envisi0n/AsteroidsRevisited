@@ -17,6 +17,9 @@ CShip::~CShip() {
 	// TODO Auto-generated destructor stub
 }
 
+CShip::CShip() {
+}
+
 void CShip::draw(sf::RenderWindow* window) {
 	sprite.rotate(getRotation());
 	window->draw(sprite);
