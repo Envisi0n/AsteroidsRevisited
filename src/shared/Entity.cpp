@@ -96,6 +96,18 @@ void Entity::toPacket(sf::Packet* packet) {
 
 }
 
+void Entity::fromPacket(sf::Packet* packet) {
+
+	float x, y;
+
+	*packet >> x;
+	*packet >> y;
+
+	setX(x);
+	setY(y);
+
+}
+
 unsigned int Entity::getId() const {
 	return id;
 }

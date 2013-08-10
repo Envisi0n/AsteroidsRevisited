@@ -19,8 +19,10 @@ public:
 
 	virtual void update();
 
-
+	// Extracts entity info into packet
 	void toPacket(sf::Packet *packet);
+	// Imports entity info from packet
+	void fromPacket(sf::Packet *packet);
 	std::string toString();
 
 	float getX() const;
