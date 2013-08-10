@@ -19,6 +19,7 @@ public:
 	void draw(sf::RenderWindow* window);
 	void update(sf::Event event);
 	void packetToWorld(sf::Packet packet);
+	void handleEntityPacket(sf::Packet *packet);
 private:
 	std::vector<CEntity*> centities;
 };

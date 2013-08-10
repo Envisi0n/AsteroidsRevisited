@@ -16,6 +16,7 @@ Entity::Entity() {
 
 	id = nextID++;
 
+	setType(ENTITY);
 	setX(0);
 	setY(0);
 	setVelX(1);
@@ -91,6 +92,8 @@ void Entity::setVelY(float velY) {
 
 void Entity::toPacket(sf::Packet* packet) {
 
+	*packet << getType();
+	*packet << getId();
 	*packet << getX();
 	*packet << getY();
 
@@ -99,10 +102,13 @@ void Entity::toPacket(sf::Packet* packet) {
 void Entity::fromPacket(sf::Packet* packet) {
 
 	float x, y;
+	unsigned int id;
 
+	*packet >> id;
 	*packet >> x;
 	*packet >> y;
 
+	setId(id);
 	setX(x);
 	setY(y);
 
@@ -110,4 +116,16 @@ void Entity::fromPacket(sf::Packet* packet) {
 
 unsigned int Entity::getId() const {
 	return id;
+}
+
+unsigned int Entity::getType() const {
+	return type;
+}
+
+void Entity::setType(unsigned int type) {
+	this->type = type;
+}
+
+void Entity::setId(unsigned int id) {
+	this->id = id;
 }

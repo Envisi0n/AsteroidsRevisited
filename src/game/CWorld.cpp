@@ -37,41 +37,37 @@ void CWorld::update(sf::Event event) {
 
 void CWorld::packetToWorld(sf::Packet packet) {
 
-	float tmpX;
-	float tmpY;
+	unsigned int type;
 
-	// Nothing in here yet
-	if (centities.empty()) {
-		while (!packet.endOfPacket()) {
+	while( !packet.endOfPacket() ) {
 
-			packet >> tmpX;
-			packet >> tmpY;
+		// Determine type of object
+		packet >> type;
 
-			centities.push_back(new CEntity(tmpX, tmpY,0,0));
+		switch(type) {
+
+		case ENTITY:
+			handleEntityPacket(&packet);
+			break;
+		case SHIP:
+		//	handleShipPacket(&packet);
+			break;
+		case ASTEROID:
+		//	handleAsteroidPacket(&packet);
+			break;
+
 		}
 
-		return;
 	}
-	// We already have things
-	else {
 
-		for (std::vector<CEntity*>::iterator it = centities.begin();
-				it != centities.end(); ++it) {
+}
 
-			packet >> tmpX;
-			packet >> tmpY;
+void CWorld::handleEntityPacket(sf::Packet* packet) {
 
-			(*it)->setPosition(tmpX, tmpY);
+	CEntity *tmp = new CEntity();
 
-		}
-		// Add anything not updated
-		while (!packet.endOfPacket()) {
+	tmp->fromPacket(packet);
 
-			packet >> tmpX;
-			packet >> tmpY;
-
-			centities.push_back(new CEntity(tmpX, tmpY,0,0));
-		}
-	}
+	centities.push_back(tmp);
 
 }
