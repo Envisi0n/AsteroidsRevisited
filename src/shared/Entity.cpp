@@ -40,6 +40,9 @@ float Entity::getY() const {
 }
 
 Entity::Entity(float x, float y, float velX, float velY) {
+
+	id = nextID++;
+
 	setX(x);
 	setY(y);
 	setVelX(velX);

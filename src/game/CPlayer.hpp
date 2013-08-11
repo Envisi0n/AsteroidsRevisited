@@ -16,6 +16,8 @@ public:
 	CPlayer();
 	virtual ~CPlayer();
 
+	void draw(sf::RenderWindow *window);
+
 	void setShipTexture(sf::Texture *texture);
 private:
 	CShip ship;
