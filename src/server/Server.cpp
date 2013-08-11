@@ -123,3 +123,15 @@ int Server::receive(sf::Packet* data) {
 	}
 	return -1;
 }
+
+sf::IpAddress Server::getClientIp(int client) {
+	return clients[client].ip;
+}
+
+short Server::getClientPort(int client) {
+	return clients[client].port;
+}
+
+bool Server::isClientConnected(int client) {
+	return clients[client].inUse;
+}

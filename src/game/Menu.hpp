@@ -13,7 +13,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
-#define CLICK_DELAY 0.1
+#define CLICK_DELAY 0.5
 
 using namespace std;
 

@@ -8,12 +8,18 @@
 #include "Entity.hpp"
 #include "GameGlobals.hpp"
 #include <iostream>
+#include <sstream>
+
+unsigned int Entity::nextID = 0;
 
 Entity::Entity() {
+
+	id = nextID++;
+
 	setX(0);
 	setY(0);
-	velX = 1;
-	velY = 1;
+	setVelX(1);
+	setVelY(1);
 
 }
 
@@ -33,11 +39,14 @@ float Entity::getY() const {
 	return y;
 }
 
-Entity::Entity(float x, float y) {
+Entity::Entity(float x, float y, float velX, float velY) {
+
+	id = nextID++;
+
 	setX(x);
 	setY(y);
-	velX = 1;
-	velY = 1;
+	setVelX(velX);
+	setVelY(velY);
 }
 
 void Entity::setY(float y) {
@@ -46,12 +55,77 @@ void Entity::setY(float y) {
 
 void Entity::update() {
 
-	if (getX() + velX > WORLD_WIDTH || getX() + velX < 0)
-		velX = -velX;
-	if (getY() + velY > WORLD_HEIGHT || getY() + velY < 0)
-		velY = -velY;
+	if (getX() + getVelX() > WORLD_WIDTH || getX() + getVelX() < 0)
+		setVelX(-getVelX());
+	if (getY() + getVelY() > WORLD_HEIGHT || getY() + getVelY() < 0)
+		setVelY(-getVelY());
 
-	setX(getX() + velX);
-	setY(getY() + velY);
+	setX(getX() + getVelX());
+	setY(getY() + getVelY());
 
+}
+
+float Entity::getVelX() const {
+	return velX;
+}
+
+void Entity::setVelX(float velX) {
+	this->velX = velX;
+}
+
+float Entity::getVelY() const {
+	return velY;
+}
+
+std::string Entity::toString() {
+
+	std::stringstream tmp;
+
+	tmp << "[" << getId() << "] x=" << getX() << " y=" << getY() << " vX="
+			<< getVelX() << " vY=" << getVelY();
+
+	return tmp.str();
+
+}
+
+void Entity::setVelY(float velY) {
+	this->velY = velY;
+}
+
+void Entity::toPacket(sf::Packet* packet) {
+
+	*packet << getId();
+	*packet << getX();
+	*packet << getY();
+	*packet << getVelX();
+	*packet << getVelY();
+
+}
+
+void Entity::fromPacket(sf::Packet* packet) {
+
+	float x, vX, y, vY;
+	unsigned int id;
+
+	*packet >> id;
+	*packet >> x;
+	*packet >> y;
+	*packet >> vX;
+	*packet >> vY;
+
+	setId(id);
+	setX(x);
+	setY(y);
+	setVelX(vX);
+	setVelY(vY);
+
+}
+
+unsigned int Entity::getId() const {
+	return id;
+}
+
+
+void Entity::setId(unsigned int id) {
+	this->id = id;
 }

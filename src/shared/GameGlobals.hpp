@@ -11,7 +11,7 @@
 #define WORLD_WIDTH 800
 #define WORLD_HEIGHT 600
 
-#define SERVER_TICK_SPEED 60
+#define SERVER_TICK_SPEED 33
 
 
 #endif /* GAMEGLOBALS_HPP_ */

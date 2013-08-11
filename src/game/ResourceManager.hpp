@@ -17,15 +17,15 @@ public:
 	ResourceManager();
 	virtual ~ResourceManager();
 	// Loads texture if not already and returns a pointer to it
-	virtual sf::Texture* loadTexture(std::string path);
+	static sf::Texture* loadTexture(std::string path);
 	// Loads font if not already and returns a pointer to it
-	virtual sf::Font* loadFont(std::string path);
+	static sf::Font* loadFont(std::string path);
 	// Loads image if not already and returns a pointer to it
-	virtual sf::Image* loadImage(std::string path);
+	static sf::Image* loadImage(std::string path);
 private:
-	std::map<std::string,sf::Texture*> textures;
-	std::map<std::string,sf::Font*> fonts;
-	std::map<std::string,sf::Image*> images;
+	static std::map<std::string,sf::Texture*> textures;
+	static std::map<std::string,sf::Font*> fonts;
+	static std::map<std::string,sf::Image*> images;
 };
 
 #endif /* TEXTUREMANAGER_HPP_ */

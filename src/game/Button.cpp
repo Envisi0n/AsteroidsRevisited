@@ -53,7 +53,7 @@ int Button::update(sf::Vector2f mouseLoc, sf::Event event) {
 
 	if (sprite.getGlobalBounds().contains(mouseLoc)) {
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		if (event.type == sf::Event::MouseButtonReleased) {
 			animate(CLICK);
 			return action;
 		} else {
@@ -61,10 +61,12 @@ int Button::update(sf::Vector2f mouseLoc, sf::Event event) {
 			return BUT_NOTHING;
 		}
 
-	} else
+	} else {
+
 		animate(NORMAL);
 
-	return BUT_NOTHING;
+		return BUT_NOTHING;
+	}
 
 }
 
@@ -74,4 +76,12 @@ int Button::getAction() const {
 
 void Button::setAction(int action) {
 	this->action = action;
+}
+
+bool Button::isPressed() const {
+	return pressed;
+}
+
+void Button::setPressed(bool pressed) {
+	this->pressed = pressed;
 }

@@ -17,8 +17,8 @@ CEntity::CEntity() {
 
 }
 
-CEntity::CEntity(float x, float y) :
-		Entity(x, y) {
+CEntity::CEntity(float x, float y, float velX, float velY) :
+		Entity(x, y, velX, velY) {
 
 	if (!texture.loadFromFile("images/test.png")) {
 		return;
