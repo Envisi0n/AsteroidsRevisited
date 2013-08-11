@@ -7,6 +7,7 @@
 
 #include "Player.hpp"
 #include <sstream>
+#include <iostream>
 
 Player::Player() {
 	setClientId(-1);
@@ -33,6 +34,14 @@ void Player::setClientId(int clientId) {
 
 const std::string& Player::getUserName() const {
 	return userName;
+}
+
+void Player::update() {
+
+	ship.thrust(0);
+	ship.update();
+	std::cout << ship.toString() << std::endl;
+
 }
 
 void Player::setUserName(const std::string& userName) {

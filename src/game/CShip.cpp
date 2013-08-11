@@ -21,10 +21,19 @@ CShip::CShip() {
 }
 
 void CShip::draw(sf::RenderWindow* window) {
-	sprite.rotate(getRotation());
+	//sprite.rotate(getRotation());
 	window->draw(sprite);
 }
 
 void CShip::setTexture(sf::Texture* texture) {
 	sprite.setTexture(*texture);
+}
+
+void CShip::setPosition(float x, float y) {
+
+	setX(x);
+	setY(y);
+
+	sprite.setPosition(getX(), getY());
+
 }

@@ -23,6 +23,8 @@ public:
 	virtual void fromPacket(sf::Packet *packet);
 	virtual std::string toString();
 
+	virtual void update();
+
 	float getLastSeen() const;
 	void setLastSeen(float lastSeen);
 	float getPing() const;

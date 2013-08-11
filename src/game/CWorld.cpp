@@ -114,4 +114,23 @@ void CWorld::handlePlayerPacket(sf::Packet* packet) {
 		return;
 	}
 
+
+	// Need update entity
+	for (std::vector<CPlayer*>::iterator it = cplayers.begin();
+			it != cplayers.end(); ++it) {
+		if ((*it)->getShipID() == tmp->getShipID()) {
+			(*it)->setShipPosition(tmp->getShipX(), tmp->getShipY());
+			delete tmp;
+			return;
+		}
+
+	}
+	/*
+	 // New
+	 // Prepare ship
+	 tmp->setShipTexture(ResourceManager::loadTexture("images/ship.png"));
+
+	 std::cout << "Created player" << std::endl;
+	 std::cout << tmp->toString() << std::endl;
+	 cplayers.push_back(tmp);*/
 }

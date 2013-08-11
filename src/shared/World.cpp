@@ -17,12 +17,18 @@ World::World() {
 
 void World::update() {
 
-	int i = 0;
+	// Update each entity
 	for (std::vector<Entity*>::iterator it = entities.begin();
 			it != entities.end(); ++it) {
 
 		(*it)->update();
-		i++;
+	}
+
+	for (std::vector<Player*>::iterator it = players.begin();
+			it != players.end(); ++it) {
+
+		(*it)->update();
+
 	}
 
 }
@@ -82,12 +88,12 @@ sf::Packet World::toPacket() {
 
 	}
 
-	// Entities
+	// Players
 	objectType = PLAYER;
 	for (std::vector<Player*>::iterator it = players.begin();
 			it != players.end(); ++it) {
 
-		gamePacket << PLAYER;
+		gamePacket << objectType;
 		(*it)->toPacket(&gamePacket);
 
 	}
