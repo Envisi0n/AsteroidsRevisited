@@ -10,7 +10,14 @@
 
 #include <vector>
 #include "Entity.hpp"
+#include "Player.hpp"
 #include <SFML/Network.hpp>
+
+enum WorldObjectTypes {
+	ENTITY,
+	PLAYER,
+	ASTEROID,
+};
 
 class World {
 public:
@@ -18,10 +25,18 @@ public:
 	virtual void update();
 	virtual ~World();
 
+	// Player functions
+	void createPlayer( int client, std::string userName );
+	void removePlayer( int client );
+	void removePlayer( std::string userName);
+
+	void addEntity();
+
 	sf::Packet toPacket();
 private:
 
 	std::vector<Entity*> entities;
+	std::vector<Player*> players;
 };
 
 #endif /* WORLD_HPP_ */

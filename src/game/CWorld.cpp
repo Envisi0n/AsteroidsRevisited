@@ -8,6 +8,7 @@
 #include "CWorld.hpp"
 #include "../shared/Net_shared.hpp"
 #include <iostream>
+#include "ResourceManager.hpp"
 
 CWorld::CWorld() {
 	// TODO Auto-generated constructor stub
@@ -25,6 +26,11 @@ void CWorld::draw(sf::RenderWindow* window) {
 		(*it)->draw(window);
 	}
 
+	for (std::vector<CPlayer*>::iterator it = cplayers.begin();
+			it != cplayers.end(); ++it) {
+		(*it)->draw(window);
+	}
+
 }
 
 void CWorld::update(sf::Event event) {
@@ -37,30 +43,75 @@ void CWorld::update(sf::Event event) {
 
 void CWorld::packetToWorld(sf::Packet packet) {
 
-	float tmpX;
-	float tmpY;
+	unsigned int type;
 
-	// Nothing in here yet
-	if (centities.empty()) {
-		while (!packet.endOfPacket()) {
+	while (!packet.endOfPacket()) {
 
-			packet >> tmpX;
-			packet >> tmpY;
+		// Determine type of object
+		packet >> type;
 
-			centities.push_back(new CEntity(tmpX, tmpY));
+		switch (type) {
+
+		case ENTITY:
+			handleEntityPacket(&packet);
+			break;
+		case PLAYER:
+			handlePlayerPacket(&packet);
+			break;
+		case ASTEROID:
+			//	handleAsteroidPacket(&packet);
+			break;
+
 		}
 
+	}
+
+}
+
+void CWorld::handleEntityPacket(sf::Packet* packet) {
+
+	CEntity *tmp = new CEntity();
+
+	tmp->fromPacket(packet);
+	// Nothing currently in entities
+	if (centities.empty()) {
+		centities.push_back(tmp);
 		return;
 	}
 
+	// Need update entity
 	for (std::vector<CEntity*>::iterator it = centities.begin();
 			it != centities.end(); ++it) {
+		if ((*it)->getId() == tmp->getId()) {
+			(*it)->setPosition(tmp->getX(), tmp->getY());
+			delete tmp;
+			return;
+		}
 
-		packet >> tmpX;
-		packet >> tmpY;
+	}
 
-		(*it)->setPosition(tmpX,tmpY);
+	// This entity is new
 
+	centities.push_back(tmp);
+
+}
+
+void CWorld::handlePlayerPacket(sf::Packet* packet) {
+
+	CPlayer *tmp = new CPlayer();
+
+	tmp->fromPacket(packet);
+
+	// Nothing currently in players
+	if (cplayers.empty()) {
+
+		// Prepare ship
+		tmp->setShipTexture(ResourceManager::loadTexture("images/ship.png"));
+
+		std::cout << "Created player" << std::endl;
+		std::cout << tmp->toString() << std::endl;
+		cplayers.push_back(tmp);
+		return;
 	}
 
 }

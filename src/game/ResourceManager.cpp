@@ -8,6 +8,9 @@
 #include "ResourceManager.hpp"
 #include <iostream>
 
+std::map<std::string,sf::Texture*> ResourceManager::textures;
+std::map<std::string,sf::Font*> ResourceManager::fonts;
+std::map<std::string,sf::Image*> ResourceManager::images;
 ResourceManager::ResourceManager() {
 	// TODO Auto-generated constructor stub
 

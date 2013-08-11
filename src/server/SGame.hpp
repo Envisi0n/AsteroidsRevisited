@@ -63,6 +63,7 @@ private:
 	void handlePacket(int client, sf::Packet packet);
 	sf::Clock heartBeatTimer;
 	void sendHeartbeats();
+	sf::Clock test;
 
 };
 

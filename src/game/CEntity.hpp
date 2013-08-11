@@ -15,7 +15,7 @@
 class CEntity: public Entity {
 public:
 	CEntity();
-	CEntity(float x, float y);
+	CEntity(float x, float y, float velX, float velY);
 	virtual ~CEntity();
 
 	virtual void setPosition(float x, float y);
