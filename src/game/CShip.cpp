@@ -24,3 +24,7 @@ void CShip::draw(sf::RenderWindow* window) {
 	sprite.rotate(getRotation());
 	window->draw(sprite);
 }
+
+void CShip::setTexture(sf::Texture* texture) {
+	sprite.setTexture(*texture);
+}

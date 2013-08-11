@@ -16,3 +16,6 @@ CPlayer::~CPlayer() {
 	// TODO Auto-generated destructor stub
 }
 
+void CPlayer::setShipTexture(sf::Texture* texture) {
+	ship.setTexture(texture);
+}

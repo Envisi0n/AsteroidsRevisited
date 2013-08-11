@@ -15,6 +15,8 @@ class CPlayer: public Player {
 public:
 	CPlayer();
 	virtual ~CPlayer();
+
+	void setShipTexture(sf::Texture *texture);
 private:
 	CShip ship;
 };

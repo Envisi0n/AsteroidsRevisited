@@ -17,6 +17,7 @@ public:
 	CShip(float x, float y, float velX, float velY, float rotation, sf::Texture *texture);
 	virtual ~CShip();
 
+	void setTexture(sf::Texture *texture);
 	void draw(sf::RenderWindow* window);
 
 private:

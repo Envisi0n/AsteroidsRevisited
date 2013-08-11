@@ -19,8 +19,11 @@ public:
 	virtual ~CWorld();
 	void draw(sf::RenderWindow* window);
 	void update(sf::Event event);
+
+	// World networking
 	void packetToWorld(sf::Packet packet);
 	void handleEntityPacket(sf::Packet *packet);
+	void handlePlayerPacket(sf::Packet *packet);
 private:
 	std::vector<CEntity*> centities;
 	std::vector<CPlayer*> cplayers;

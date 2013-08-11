@@ -8,6 +8,7 @@
 #include "CWorld.hpp"
 #include "../shared/Net_shared.hpp"
 #include <iostream>
+#include "ResourceManager.hpp"
 
 CWorld::CWorld() {
 	// TODO Auto-generated constructor stub
@@ -50,7 +51,7 @@ void CWorld::packetToWorld(sf::Packet packet) {
 			handleEntityPacket(&packet);
 			break;
 		case PLAYER:
-		//	handleShipPacket(&packet);
+		//	handlePlayerPacket(&packet);
 			break;
 		case ASTEROID:
 		//	handleAsteroidPacket(&packet);
@@ -78,6 +79,7 @@ void CWorld::handleEntityPacket(sf::Packet* packet) {
 			it != centities.end(); ++it) {
 		if( (*it)->getId() == tmp->getId() ) {
 			(*it)->setPosition(tmp->getX(),tmp->getY());
+			delete tmp;
 			return;
 		}
 
@@ -87,5 +89,24 @@ void CWorld::handleEntityPacket(sf::Packet* packet) {
 
 	centities.push_back(tmp);
 
+
+}
+
+void CWorld::handlePlayerPacket(sf::Packet* packet) {
+
+	CPlayer *tmp = new CPlayer();
+
+	tmp->fromPacket(packet);
+
+	// Nothing currently in players
+	if( cplayers.empty() ) {
+
+		// Prepare ship
+		tmp->setShipTexture(ResourceManager::loadTexture("images/ship.png"));
+
+
+		cplayers.push_back(tmp);
+		return;
+	}
 
 }

@@ -42,10 +42,6 @@ void Player::setUserName(const std::string& userName) {
 void Player::toPacket(sf::Packet* packet) {
 
 	// Extract player info
-
-	unsigned int type = PLAYER;
-
-	*packet << type;
 	*packet << getClientId();
 	*packet << getUserName();
 	*packet << getPing();

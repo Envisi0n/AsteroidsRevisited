@@ -82,6 +82,16 @@ sf::Packet World::toPacket() {
 
 	}
 
+	// Entities
+	objectType = PLAYER;
+	for (std::vector<Player*>::iterator it = players.begin();
+			it != players.end(); ++it) {
+
+		gamePacket << PLAYER;
+		(*it)->toPacket(&gamePacket);
+
+	}
+
 	return gamePacket;
 
 }
