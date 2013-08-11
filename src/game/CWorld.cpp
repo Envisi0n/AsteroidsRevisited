@@ -49,7 +49,7 @@ void CWorld::packetToWorld(sf::Packet packet) {
 		case ENTITY:
 			handleEntityPacket(&packet);
 			break;
-		case SHIP:
+		case PLAYER:
 		//	handleShipPacket(&packet);
 			break;
 		case ASTEROID:
@@ -76,7 +76,6 @@ void CWorld::handleEntityPacket(sf::Packet* packet) {
 	// Need update entity
 	for(std::vector<CEntity*>::iterator it = centities.begin();
 			it != centities.end(); ++it) {
-		std::cout << tmp->toString() << std::endl;
 		if( (*it)->getId() == tmp->getId() ) {
 			(*it)->setPosition(tmp->getX(),tmp->getY());
 			return;

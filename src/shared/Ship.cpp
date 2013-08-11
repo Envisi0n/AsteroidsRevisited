@@ -10,7 +10,6 @@
 
 Ship::Ship() : Entity(0,0,0,0) {
 
-	setType(SHIP);
 
 	setRotation(0);
 }

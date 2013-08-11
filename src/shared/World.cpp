@@ -66,14 +66,18 @@ void World::addEntity() {
 sf::Packet World::toPacket() {
 
 	short packetType;
+	unsigned int objectType;
 	sf::Packet gamePacket;
 
 	packetType = SERVER_UPDATE;
 	gamePacket << packetType;
 
+	// Entities
+	objectType = ENTITY;
 	for (std::vector<Entity*>::iterator it = entities.begin();
 			it != entities.end(); ++it) {
 
+		gamePacket << objectType;
 		(*it)->toPacket(&gamePacket);
 
 	}
