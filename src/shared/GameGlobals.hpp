@@ -13,5 +13,15 @@
 
 #define SERVER_TICK_SPEED 33
 
+// Client input
+enum userInput {
+
+	THRUSTUP,
+	THRUSTDOWN,
+	TURNLEFT,
+	TURNRIGHT,
+
+};
+
 
 #endif /* GAMEGLOBALS_HPP_ */

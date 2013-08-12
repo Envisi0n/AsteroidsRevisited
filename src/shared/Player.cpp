@@ -38,10 +38,13 @@ const std::string& Player::getUserName() const {
 
 void Player::update() {
 
-	ship.thrust(0);
 	ship.update();
-	std::cout << ship.toString() << std::endl;
 
+}
+
+void Player::shipUpdate(int clientAction) {
+
+	ship.clientUpdate(clientAction);
 }
 
 void Player::setUserName(const std::string& userName) {

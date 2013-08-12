@@ -9,6 +9,7 @@
 #include <sstream>
 #include <cmath>
 #include <iostream>
+#include "GameGlobals.hpp"
 
 Ship::Ship() :
 		Entity(0, 0, 0, 0) {
@@ -82,7 +83,6 @@ void Ship::thrust(int direction) {
 		setVelX(getVelX() - ACCELERATION * std::cos(getRotation()));
 		setVelY(getVelY() - ACCELERATION * std::sin(getRotation()));
 
-		std::cout << "NONONO";
 		if (getVelX() < -MAXSPEED)
 			setVelX(-MAXSPEED);
 		if (getVelY() < -MAXSPEED)
@@ -90,6 +90,19 @@ void Ship::thrust(int direction) {
 
 		return;
 
+	}
+
+}
+
+void Ship::clientUpdate(int clientAction) {
+
+	switch( clientAction ) {
+	case THRUSTUP:
+		thrust(FORWARD);
+		break;
+	case THRUSTDOWN:
+		thrust(REVERSE);
+		break;
 	}
 
 }

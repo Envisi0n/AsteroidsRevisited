@@ -37,14 +37,18 @@ public:
 	virtual void fromPacket(sf::Packet *packet);
 	virtual std::string toString();
 
-	// Game functions
-	virtual void thrust( int direction );
-	virtual void turn( int direction );
+	virtual void clientUpdate( int clientAction );
+
 
 	float getRotation() const;
 	void setRotation(float rotation);
 
 private:
+
+	// Game functions
+	virtual void thrust( int direction );
+	virtual void turn( int direction );
+
 	float rotation;
 };
 

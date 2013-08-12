@@ -40,6 +40,7 @@ public:
 	virtual void handlePacket(sf::Packet packet);
 	virtual void receiveServerUpdate();
 	virtual void sendHeartbeat();
+	virtual void sendUserInput();
 
 	void showMenu();
 

@@ -69,6 +69,25 @@ void World::addEntity() {
 	entities.push_back(new Entity());
 }
 
+void World::updatePlayer(int client, sf::Packet updatePacket) {
+
+	for(std::vector<Player*>::iterator it = players.begin();
+			it != players.end(); ++it) {
+
+		if( (*it)->getClientId() == client ) {
+
+			int action;
+			updatePacket >> action;
+
+			(*it)->shipUpdate(action);
+
+			return;
+		}
+
+	}
+
+}
+
 sf::Packet World::toPacket() {
 
 	short packetType;

@@ -10,6 +10,7 @@
 #include <string.h>
 #include "MD5.h"
 #include <SFML/Network.hpp>
+#include "../shared/GameGlobals.hpp"
 
 int SCREEN_WIDTH = 800;
 int SCREEN_HEIGHT = 600;
@@ -112,6 +113,7 @@ void CGame::run() {
 			window.clear();
 			window.draw(background);
 			gameWorld.draw(&window);
+			sendUserInput();
 			break;
 		case PAUSE:
 			break;
@@ -265,6 +267,32 @@ void CGame::login() {
 }
 
 void CGame::draw(sf::RenderWindow* window) {
+}
+
+void CGame::sendUserInput() {
+
+	sf::Packet clientUpdate;
+	short packetType;
+	int input;
+
+	packetType = CLIENT_UPDATE;
+	clientUpdate << packetType;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		input = THRUSTUP;
+		clientUpdate << input;
+
+		gameClient.send(clientUpdate);
+		return;
+
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		input = THRUSTDOWN;
+		clientUpdate << input;
+
+		gameClient.send(clientUpdate);
+		return;
+	}
 }
 
 void CGame::gameRegister() {
