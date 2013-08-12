@@ -125,12 +125,12 @@ void CWorld::handlePlayerPacket(sf::Packet* packet) {
 		}
 
 	}
-	/*
+
 	 // New
 	 // Prepare ship
 	 tmp->setShipTexture(ResourceManager::loadTexture("images/ship.png"));
 
 	 std::cout << "Created player" << std::endl;
 	 std::cout << tmp->toString() << std::endl;
-	 cplayers.push_back(tmp);*/
+	 cplayers.push_back(tmp);
 }
