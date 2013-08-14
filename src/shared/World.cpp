@@ -17,12 +17,18 @@ World::World() {
 
 void World::update() {
 
-	int i = 0;
+	// Update each entity
 	for (std::vector<Entity*>::iterator it = entities.begin();
 			it != entities.end(); ++it) {
 
 		(*it)->update();
-		i++;
+	}
+
+	for (std::vector<Player*>::iterator it = players.begin();
+			it != players.end(); ++it) {
+
+		(*it)->update();
+
 	}
 
 }
@@ -63,6 +69,25 @@ void World::addEntity() {
 	entities.push_back(new Entity());
 }
 
+void World::updatePlayer(int client, sf::Packet updatePacket) {
+
+	for(std::vector<Player*>::iterator it = players.begin();
+			it != players.end(); ++it) {
+
+		if( (*it)->getClientId() == client ) {
+
+			int action;
+			updatePacket >> action;
+
+			(*it)->shipUpdate(action);
+
+			return;
+		}
+
+	}
+
+}
+
 sf::Packet World::toPacket() {
 
 	short packetType;
@@ -82,12 +107,12 @@ sf::Packet World::toPacket() {
 
 	}
 
-	// Entities
+	// Players
 	objectType = PLAYER;
 	for (std::vector<Player*>::iterator it = players.begin();
 			it != players.end(); ++it) {
 
-		gamePacket << PLAYER;
+		gamePacket << objectType;
 		(*it)->toPacket(&gamePacket);
 
 	}

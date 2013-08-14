@@ -10,6 +10,19 @@
 
 #include "Entity.hpp"
 
+#define ACCELERATION .1
+#define MAXSPEED 3
+
+enum thrustDirections {
+	FORWARD,
+	REVERSE
+};
+
+enum turnDirections {
+	LEFT,
+	RIGHT
+};
+
 class Ship: public Entity {
 public:
 	Ship();
@@ -24,10 +37,18 @@ public:
 	virtual void fromPacket(sf::Packet *packet);
 	virtual std::string toString();
 
+	virtual void clientUpdate( int clientAction );
+
+
 	float getRotation() const;
 	void setRotation(float rotation);
 
 private:
+
+	// Game functions
+	virtual void thrust( int direction );
+	virtual void turn( int direction );
+
 	float rotation;
 };
 

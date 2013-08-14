@@ -7,14 +7,18 @@
 
 #include "Ship.hpp"
 #include <sstream>
+#include <cmath>
+#include <iostream>
+#include "GameGlobals.hpp"
 
-Ship::Ship() : Entity(0,0,0,0) {
-
+Ship::Ship() :
+		Entity(0, 0, 0, 0) {
 
 	setRotation(0);
 }
 
-Ship::Ship(float x, float y, float velX, float velY, float rotation) : Entity(x,y,velX,velY) {
+Ship::Ship(float x, float y, float velX, float velY, float rotation) :
+		Entity(x, y, velX, velY) {
 
 	setRotation(rotation);
 }
@@ -28,6 +32,7 @@ float Ship::getRotation() const {
 }
 
 void Ship::update() {
+	Entity::update();
 
 }
 
@@ -55,8 +60,60 @@ std::string Ship::toString() {
 
 	tmp << " rotation=" << getRotation();
 
-
 	return tmp.str();
+
+}
+
+void Ship::thrust(int direction) {
+
+	if (direction == FORWARD) {
+
+		setVelX(getVelX() + ACCELERATION * std::cos(getRotation()));
+		setVelY(getVelY() + ACCELERATION * std::sin(getRotation()));
+		std::cout << toString() << std::endl;
+
+		if (getVelX() > MAXSPEED)
+			setVelX(MAXSPEED);
+		if (getVelY() > MAXSPEED)
+			setVelY(MAXSPEED);
+		return;
+
+	} else {
+
+		setVelX(getVelX() - ACCELERATION * std::cos(getRotation()));
+		setVelY(getVelY() - ACCELERATION * std::sin(getRotation()));
+
+		if (getVelX() < -MAXSPEED)
+			setVelX(-MAXSPEED);
+		if (getVelY() < -MAXSPEED)
+			setVelY(-MAXSPEED);
+
+		return;
+
+	}
+
+}
+
+void Ship::clientUpdate(int clientAction) {
+
+	switch( clientAction ) {
+	case THRUSTUP:
+		thrust(FORWARD);
+		break;
+	case THRUSTDOWN:
+		thrust(REVERSE);
+		break;
+	}
+
+}
+
+void Ship::turn(int direction) {
+
+	if (direction == LEFT) {
+
+	} else {
+
+	}
 
 }
 

@@ -43,6 +43,7 @@ private:
 
 	// Asteroids game
 	World gameWorld;
+	void updateClient( int client, sf::Packet clientUpdate);
 
 	// Shell
 	int shellState;

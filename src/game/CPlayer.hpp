@@ -18,9 +18,15 @@ public:
 
 	void draw(sf::RenderWindow *window);
 
+	virtual void fromPacket(sf::Packet *packet);
+
 	void setShipTexture(sf::Texture *texture);
+	void setShipPosition(float x, float y);
+	unsigned int getShipID();
+	float getShipX();
+	float getShipY();
 private:
-	CShip ship;
+	CShip clientShip;
 };
 
 #endif /* CPLAYER_HPP_ */
