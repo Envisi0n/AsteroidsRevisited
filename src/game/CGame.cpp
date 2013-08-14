@@ -10,6 +10,7 @@
 #include <string.h>
 #include "MD5.h"
 #include <SFML/Network.hpp>
+#include "../shared/GameGlobals.hpp"
 
 int SCREEN_WIDTH = 800;
 int SCREEN_HEIGHT = 600;
@@ -70,6 +71,13 @@ void CGame::run() {
 	gameView.setSize(800, 600);
 	gameView.setCenter(400, 300);
 	window.setView(gameView);
+
+	// Game speed control
+	int loops;
+	float interpolation;
+	sf::Clock gameClock;
+	float nextTick = gameClock.getElapsedTime().asMilliseconds();
+
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -107,8 +115,14 @@ void CGame::run() {
 			break;
 
 		case PLAYING:
-			receiveServerUpdate();
-			gameWorld.update(event);
+			loops = 0;
+			while (gameClock.getElapsedTime().asMilliseconds() > nextTick
+					&& loops < MAX_FRAMESKIP) {
+				receiveServerUpdate();
+				sendUserInput();
+				nextTick += SKIP_TICKS;
+				loops++;
+			}
 			window.clear();
 			window.draw(background);
 			gameWorld.draw(&window);
@@ -265,6 +279,32 @@ void CGame::login() {
 }
 
 void CGame::draw(sf::RenderWindow* window) {
+}
+
+void CGame::sendUserInput() {
+
+	sf::Packet clientUpdate;
+	short packetType;
+	int input;
+
+	packetType = CLIENT_UPDATE;
+	clientUpdate << packetType;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		input = THRUSTUP;
+		clientUpdate << input;
+
+		gameClient.send(clientUpdate);
+		return;
+
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		input = THRUSTDOWN;
+		clientUpdate << input;
+
+		gameClient.send(clientUpdate);
+		return;
+	}
 }
 
 void CGame::gameRegister() {

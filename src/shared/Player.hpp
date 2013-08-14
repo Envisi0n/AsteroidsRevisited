@@ -17,11 +17,17 @@ public:
 	Player(int clientID, std::string userName);
 	virtual ~Player();
 
+	// Game functions
+	virtual void shipUpdate(int clientAction);
+
+
 	// Extracts info into packet
 	virtual void toPacket(sf::Packet *packet);
 	// Imports info from packet
 	virtual void fromPacket(sf::Packet *packet);
 	virtual std::string toString();
+
+	virtual void update();
 
 	float getLastSeen() const;
 	void setLastSeen(float lastSeen);

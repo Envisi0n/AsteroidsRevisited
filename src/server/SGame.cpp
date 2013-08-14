@@ -195,8 +195,11 @@ void SGame::handlePacket(int client, sf::Packet packet) {
 		std::cout << "Got heartbeat from " << client << " "
 				<< test.getElapsedTime().asMilliseconds() << std::endl;
 		break;
-
+	case CLIENT_UPDATE:
+		updateClient(client, packet);
+		break;
 	}
+
 
 }
 
@@ -269,6 +272,12 @@ void SGame::registerUser(int client, sf::Packet loginInfo) {
 
 	responsePacket << response.packetType;
 	gameServer.send(responsePacket, client);
+
+}
+
+void SGame::updateClient(int client, sf::Packet clientUpdate) {
+
+	gameWorld.updatePlayer(client,clientUpdate);
 
 }
 

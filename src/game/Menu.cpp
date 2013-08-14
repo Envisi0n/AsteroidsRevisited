@@ -52,7 +52,7 @@ int Menu::update(sf::Vector2f mouseLoc, sf::Event event) {
 	for (vector<Button*>::iterator it = buttons.begin(); it != buttons.end();
 			++it) {
 		if ((action = (*it)->update(mouseLoc, event))
-				!= BUT_NOTHING&& reset.getElapsedTime().asSeconds() > CLICK_DELAY) {
+				!= BUT_NOTHING && reset.getElapsedTime().asSeconds() > CLICK_DELAY) {
 			reset.restart();
 			return action;
 		}
