@@ -15,6 +15,7 @@
 #include "CWorld.hpp"
 #include "ResourceManager.hpp"
 #include <SFML/Graphics.hpp>
+#include "../shared/GameGlobals.hpp"
 
 enum gameState {
 

@@ -71,6 +71,13 @@ void CGame::run() {
 	gameView.setSize(800, 600);
 	gameView.setCenter(400, 300);
 	window.setView(gameView);
+
+	// Game speed control
+	int loops;
+	float interpolation;
+	sf::Clock gameClock;
+	float nextTick = gameClock.getElapsedTime().asMilliseconds();
+
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -108,12 +115,17 @@ void CGame::run() {
 			break;
 
 		case PLAYING:
-			receiveServerUpdate();
-			gameWorld.update(event);
+			loops = 0;
+			while (gameClock.getElapsedTime().asMilliseconds() > nextTick
+					&& loops < MAX_FRAMESKIP) {
+				receiveServerUpdate();
+				sendUserInput();
+				nextTick += SKIP_TICKS;
+				loops++;
+			}
 			window.clear();
 			window.draw(background);
 			gameWorld.draw(&window);
-			sendUserInput();
 			break;
 		case PAUSE:
 			break;
