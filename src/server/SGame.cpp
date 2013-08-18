@@ -59,10 +59,12 @@ void SGame::run() {
 	while (getState() == RUNNING) {
 
 		// Poll for a packet
-		client = gameServer.receive(&packet);
+		for (int i = 0; i < MAXCLIENTS; i++) {
+			client = gameServer.receive(&packet);
 
-		if (client != -1) {
-			handlePacket(client, packet);
+			if (client != -1) {
+				handlePacket(client, packet);
+			}
 		}
 
 		// Update game
@@ -200,7 +202,6 @@ void SGame::handlePacket(int client, sf::Packet packet) {
 		break;
 	}
 
-
 }
 
 void SGame::loginUser(int client, sf::Packet loginInfo) {
@@ -277,7 +278,7 @@ void SGame::registerUser(int client, sf::Packet loginInfo) {
 
 void SGame::updateClient(int client, sf::Packet clientUpdate) {
 
-	gameWorld.updatePlayer(client,clientUpdate);
+	gameWorld.updatePlayer(client, clientUpdate);
 
 }
 
