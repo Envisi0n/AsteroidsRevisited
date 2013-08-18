@@ -19,7 +19,7 @@ public:
 
 	virtual void setPosition(float x, float y);
 	void setTexture(sf::Texture *texture);
-	void draw(sf::RenderWindow* window);
+	void draw(sf::RenderWindow* window,float interpolation);
 
 private:
 	sf::Sprite sprite;

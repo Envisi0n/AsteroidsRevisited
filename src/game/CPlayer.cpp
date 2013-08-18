@@ -16,8 +16,8 @@ CPlayer::~CPlayer() {
 	// TODO Auto-generated destructor stub
 }
 
-void CPlayer::draw(sf::RenderWindow* window) {
-	clientShip.draw(window);
+void CPlayer::draw(sf::RenderWindow* window, float interpolation) {
+	clientShip.draw(window,interpolation);
 }
 
 void CPlayer::setShipTexture(sf::Texture* texture) {

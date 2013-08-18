@@ -7,7 +7,9 @@
 
 #include "CShip.hpp"
 
-CShip::CShip(float x, float y, float velX, float velY, float rotation, sf::Texture *texture) : Ship(x,y,velX,velY,rotation){
+CShip::CShip(float x, float y, float velX, float velY, float rotation,
+		sf::Texture *texture) :
+		Ship(x, y, velX, velY, rotation) {
 
 	sprite.setTexture(*texture);
 
@@ -20,8 +22,11 @@ CShip::~CShip() {
 CShip::CShip() {
 }
 
-void CShip::draw(sf::RenderWindow* window) {
-	//sprite.rotate(getRotation());
+void CShip::draw(sf::RenderWindow* window, float interpolation) {
+	float iX = getX() + (getVelX() * interpolation);
+	float iY = getY() + (getVelY() * interpolation);
+
+	sprite.setPosition(iX, iY);
 	window->draw(sprite);
 }
 

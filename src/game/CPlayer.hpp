@@ -16,7 +16,7 @@ public:
 	CPlayer();
 	virtual ~CPlayer();
 
-	void draw(sf::RenderWindow *window);
+	void draw(sf::RenderWindow *window, float interpolation);
 
 	virtual void fromPacket(sf::Packet *packet);
 
