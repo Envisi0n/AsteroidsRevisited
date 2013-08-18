@@ -164,7 +164,6 @@ void CGame::receiveServerUpdate() {
 		setState(LOGIN);
 		break;
 	}
-
 }
 
 void CGame::sendHeartbeat() {
