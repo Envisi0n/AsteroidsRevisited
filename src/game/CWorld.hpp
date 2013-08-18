@@ -17,7 +17,7 @@ class CWorld: public World {
 public:
 	CWorld();
 	virtual ~CWorld();
-	void draw(sf::RenderWindow* window);
+	void draw(sf::RenderWindow* window, float interpolation);
 	void update(sf::Event event);
 
 	// World networking

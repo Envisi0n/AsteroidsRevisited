@@ -56,32 +56,40 @@ void SGame::run() {
 
 	shellThread.launch();
 
+	int loops;
+	sf::Clock gameClock;
+	float nextTick = gameClock.getElapsedTime().asMilliseconds();
+
 	while (getState() == RUNNING) {
 
-		// Poll for a packet
-		client = gameServer.receive(&packet);
+		loops = 0;
+		while (gameClock.getElapsedTime().asMilliseconds() > nextTick
+				&& loops < MAX_FRAMESKIP) {
 
-		if (client != -1) {
-			handlePacket(client, packet);
+			// Poll for a packet
+			client = gameServer.receive(&packet);
+
+			if (client != -1)
+				handlePacket(client, packet);
+
+				// Update game
+
+				gameWorld.update();
+				// Send updates to clients
+
+				gameServer.broadcast(gameWorld.toPacket());
+
+				/* Send heartbeat
+				if (heartBeatTimer.getElapsedTime().asSeconds() > 5) {
+					sendHeartbeats();
+					heartBeatTimer.restart();
+				} */
+
+				nextTick += SKIP_TICKS;
+				loops++;
+			}
+
 		}
-
-		// Update game
-
-		gameWorld.update();
-
-		// Send updates to clients
-
-		gameServer.broadcast(gameWorld.toPacket());
-
-		// Send heartbeat
-		if (heartBeatTimer.getElapsedTime().asSeconds() > 5) {
-			sendHeartbeats();
-			heartBeatTimer.restart();
-		}
-
-		sf::sleep(sf::milliseconds(1000 / SERVER_TICK_SPEED));
-
-	}
 
 	shutdown();
 
@@ -200,7 +208,6 @@ void SGame::handlePacket(int client, sf::Packet packet) {
 		break;
 	}
 
-
 }
 
 void SGame::loginUser(int client, sf::Packet loginInfo) {
@@ -277,7 +284,7 @@ void SGame::registerUser(int client, sf::Packet loginInfo) {
 
 void SGame::updateClient(int client, sf::Packet clientUpdate) {
 
-	gameWorld.updatePlayer(client,clientUpdate);
+	gameWorld.updatePlayer(client, clientUpdate);
 
 }
 

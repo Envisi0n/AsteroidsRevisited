@@ -74,7 +74,6 @@ void CGame::run() {
 
 	// Game speed control
 	int loops;
-	float interpolation;
 	sf::Clock gameClock;
 	float nextTick = gameClock.getElapsedTime().asMilliseconds();
 
@@ -125,7 +124,9 @@ void CGame::run() {
 			}
 			window.clear();
 			window.draw(background);
-			gameWorld.draw(&window);
+			gameWorld.draw(&window,
+					(gameClock.getElapsedTime().asMilliseconds() + SKIP_TICKS
+							- nextTick) / ( SKIP_TICKS));
 			break;
 		case PAUSE:
 			break;
@@ -164,7 +165,6 @@ void CGame::receiveServerUpdate() {
 		setState(LOGIN);
 		break;
 	}
-
 }
 
 void CGame::sendHeartbeat() {
