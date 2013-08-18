@@ -37,11 +37,16 @@ void CEntity::setPosition(float x, float y) {
 	setX(x);
 	setY(y);
 
-	sprite.setPosition(getX(), getY());
+	//sprite.setPosition(getX(), getY());
 
 }
 
-void CEntity::draw(sf::RenderWindow* window) {
+void CEntity::draw(sf::RenderWindow* window, float interpolation) {
+
+	float iX = getX() + (getVelX()*interpolation);
+	float iY = getY() + (getVelY()*interpolation);
+
+	sprite.setPosition(iX,iY);
 
 	window->draw(sprite);
 }

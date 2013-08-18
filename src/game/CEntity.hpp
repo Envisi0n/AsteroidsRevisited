@@ -20,7 +20,7 @@ public:
 
 	virtual void setPosition(float x, float y);
 
-	virtual void draw(sf::RenderWindow* window);
+	virtual void draw(sf::RenderWindow* window, float interpolation);
 	virtual void update(sf::Event event);
 
 private:

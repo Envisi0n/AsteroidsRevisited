@@ -19,16 +19,16 @@ CWorld::~CWorld() {
 	// TODO Auto-generated destructor stub
 }
 
-void CWorld::draw(sf::RenderWindow* window) {
+void CWorld::draw(sf::RenderWindow* window, float interpolation) {
 
 	for (std::vector<CEntity*>::iterator it = centities.begin();
 			it != centities.end(); ++it) {
-		(*it)->draw(window);
+		(*it)->draw(window,interpolation);
 	}
 
 	for (std::vector<CPlayer*>::iterator it = cplayers.begin();
 			it != cplayers.end(); ++it) {
-		(*it)->draw(window);
+		(*it)->draw(window,interpolation);
 	}
 
 }
