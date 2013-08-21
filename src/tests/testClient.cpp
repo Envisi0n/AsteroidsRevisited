@@ -16,28 +16,42 @@ int main(int argc, char *argv[]) {
 	char buf[32];
 	sf::Packet testPacket;
 
-	testPacket << argv[1];
+	float sendAc = 0;
+	float sendRate = 30;
+	int bytes = 0;
+	float delta = 1.0/30.0f;
 
 	test.setAddress("127.0.0.1");
 	test.setRemotePort(30000);
 	test.Start(30001);
+	test.Connect("127.0.0.1");
 
 	while (1) {
 
-		test.SendPacket(testPacket);
+		sendAc += delta;
 
-		while (test.ReceivePacket(&testPacket) == 0) {
+		while (sendAc > 1.0f / sendRate) {
+			testPacket << "1";
+			test.SendPacket(testPacket);
+			testPacket.clear();
+			sendAc -= 1.0f / sendRate;
 		}
-		testPacket >> buf;
-		std::cout << "Received: " << buf << std::endl;
 
 		testPacket.clear();
-		buf[0] = '1';
-		buf[1] = 0;
-		testPacket << buf;
-		test.Update(33);
+
+		while (true) {
+
+			if ((bytes = test.ReceivePacket(&testPacket)) == 0)
+				break;
+
+			testPacket >> buf;
+			std::cout << "Received: " << buf << std::endl;
+			testPacket.clear();
+
+		}
+		test.Update(delta);
 		std::cout << test.getReliabilitySystem().toString() << std::endl;
-		sf::sleep(sf::milliseconds(33));
+		sf::sleep(sf::seconds(delta));
 	}
 	return 0;
 

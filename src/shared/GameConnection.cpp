@@ -55,7 +55,7 @@ void GameConnection::Stop() {
 void GameConnection::Listen() {
 
 	std::cout << "server listening for connection" << std::endl;
-	ClearData();
+	//ClearData();
 	if (isConnected())
 		OnDisconnect();
 	setMode(Server);
@@ -65,7 +65,7 @@ void GameConnection::Listen() {
 void GameConnection::Connect(sf::IpAddress address) {
 
 	std::cout << "client connecting to " << address.toString() << std::endl;
-	ClearData();
+	//ClearData();
 	if (isConnected())
 		OnDisconnect();
 	setMode(Client);
@@ -172,11 +172,20 @@ int GameConnection::ReceivePacket(sf::Packet *packet) {
 
 	int received_bytes;
 	unsigned int protocol, seq, ack, ack_bits;
+	sf::IpAddress sender;
+	unsigned short rPort;
 
-	socket.receive(*packet, address, remotePort);
+	socket.receive(*packet, sender, rPort);
+
+	if (sender == getAddress()) {
+
+		timeoutAccumulator = 0;
+
+	}
 
 	if ((received_bytes = packet->getDataSize()) < 12)
 		return 0;
+
 
 	*packet >> protocol;
 	*packet >> seq;
@@ -195,8 +204,15 @@ int GameConnection::ReceivePacket(sf::Packet *packet, sf::IpAddress *ipAddress,
 
 	int received_bytes;
 	unsigned int protocol, seq, ack, ack_bits;
+	sf::IpAddress sender;
 
-	socket.receive(*packet, *ipAddress, *port);
+	socket.receive(*packet, sender, *port);
+
+	if (sender == *ipAddress) {
+
+		timeoutAccumulator = 0;
+
+	}
 
 	if ((received_bytes = packet->getDataSize()) < 12)
 		return 0;

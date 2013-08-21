@@ -18,33 +18,42 @@ int main(int argc, char *argv[]) {
 	sf::Packet testPacket;
 	sf::IpAddress ip;
 	unsigned short port;
-	testPacket << argv[1];
 
 	test.setAddress("127.0.0.1");
-	test.setPort(30001);
+	test.setRemotePort(30001);
 	test.Start(30000);
+	test.Listen();
+
+	float sendAc = 0;
+	float sendRate = 30;
+	int bytes = 0;
+	float delta = 1.0 / 30.0f;
 
 	while (1) {
-	//	std::cout << "waiting for packet" << std::endl;
-		while (test.ReceivePacket(&testPacket) == 0) {
+		sendAc += delta;
+
+		while (sendAc > 1.0f / sendRate) {
+			testPacket << "2";
+			test.SendPacket(testPacket);
+			testPacket.clear();
+			sendAc -= 1.0f / sendRate;
+		}
+
+		testPacket.clear();
+
+		while (true) {
+
+			if ((bytes = test.ReceivePacket(&testPacket)) == 0)
+				break;
+
+			testPacket >> buf;
+			std::cout << "Received: " << buf << std::endl;
+			testPacket.clear();
 
 		}
-		testPacket >> buf;
-
-		std::cout << "Received: " << buf << std::endl;
-		testPacket.clear();
-		testPacket << buf;
-
-		test.SendPacket(testPacket);
-
-		test.Update(33);
-
+		test.Update(delta);
 		std::cout << test.getReliabilitySystem().toString() << std::endl;
-
-		buf[0] = '1';
-		buf[1] = 0;
-
-		sf::sleep(sf::milliseconds(33));
+		sf::sleep(sf::seconds(delta));
 	}
 	return 0;
 
