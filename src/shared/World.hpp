@@ -34,8 +34,10 @@ public:
 	void addEntity();
 
 	sf::Packet toPacket();
+
 private:
 
+	int seq;
 	std::vector<Entity*> entities;
 	std::vector<Player*> players;
 };

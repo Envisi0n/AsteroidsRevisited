@@ -11,6 +11,7 @@
 World::World() {
 	// TODO Auto-generated constructor stub
 
+	seq = 0;
 	entities.push_back(new Entity());
 
 }
@@ -95,8 +96,9 @@ sf::Packet World::toPacket() {
 	sf::Packet gamePacket;
 
 	packetType = SERVER_UPDATE;
-	gamePacket << packetType;
 
+	gamePacket << packetType;
+	gamePacket << seq++;
 	// Entities
 	objectType = ENTITY;
 	for (std::vector<Entity*>::iterator it = entities.begin();

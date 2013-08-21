@@ -25,6 +25,12 @@ public:
 	virtual void toPacket(sf::Packet *packet);
 	// Imports info from packet
 	virtual void fromPacket(sf::Packet *packet);
+
+	// Ship
+	virtual void toPacketShip(sf::Packet *packet);
+	virtual void fromPacketShip(sf::Packet *packet);
+
+
 	virtual std::string toString();
 
 	virtual void update();

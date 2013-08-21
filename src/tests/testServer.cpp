@@ -5,100 +5,56 @@
  *      Author: cam
  */
 
-#include "../server/Server.hpp"
-#include "../server/Login.hpp"
-#include "../shared/Net_shared.hpp"
+#include "../shared/GameConnection.hpp"
+#include "../shared/GameReliabilitySystem.hpp"
 #include <iostream>
+#include <SFML/System.hpp>
+
 int main(int argc, char *argv[]) {
 
-	Login loginHandler;
-	Server test(30000);
+	GameConnection test(PROTOCOL, TIMEOUT);
+	GameReliabilitySystem test2;
+	char buf[32];
 	sf::Packet testPacket;
-	int client;
+	sf::IpAddress ip;
+	unsigned short port;
+
+	test.setAddress("127.0.0.1");
+	test.setRemotePort(30001);
+	test.Start(30000);
+	test.Listen();
+
+	float sendAc = 0;
+	float sendRate = 30;
+	int bytes = 0;
+	float delta = 1.0 / 30.0f;
+
 	while (1) {
-		if ((client = test.receive(&testPacket)) != -1) {
+		sendAc += delta;
 
-			short packetType;
-			struct loginPacket login;
-			struct genericPacket response;
-
-			testPacket >> packetType;
-
-			switch (packetType) {
-
-			case GAMELOGIN:
-				testPacket >> login.username;
-				testPacket >> login.password;
-				testPacket.clear();
-
-				switch (loginHandler.authenticateUser(login.username,
-						login.password)) {
-
-				case AUTH_VALID:
-
-					std::cout << login.username << " authenticated."
-							<< std::endl;
-
-					response.packetType = LOGIN_AUTH_VALID;
-
-					break;
-				case AUTH_UNKNOWN_USER:
-
-					std::cout << login.username << " invalid user."
-							<< std::endl;
-
-					response.packetType = LOGIN_AUTH_UNKNOWN_USER;
-
-					break;
-
-				case AUTH_INVALID_PASSWORD:
-
-					std::cout << login.username << " invalid password."
-							<< std::endl;
-
-					response.packetType = LOGIN_AUTH_INVALID_PASSWORD;
-
-					break;
-				}
-
-				testPacket << response.packetType;
-				std::cout << "Sending to client: " << client;
-
-				test.send(testPacket, client);
-				testPacket.clear();
-
-				break;
-
-			case GAMEREGISTER:
-				testPacket >> login.username;
-				testPacket >> login.password;
-				testPacket.clear();
-
-				switch (loginHandler.registerUser(login.username,
-						login.password)) {
-				case REG_SUCCESS:
-					std::cout << login.username << " " << "registered."
-							<< std::endl;
-					response.packetType = LOGIN_REG_SUCCESS;
-					break;
-				case REG_INUSE:
-					std::cout << login.username << " " << "already in use."
-							<< std::endl;
-					response.packetType = LOGIN_REG_INUSE;
-					break;
-				}
-
-				testPacket << response.packetType;
-				std::cout << "Sending to client: " << client;
-
-				test.send(testPacket, client);
-				testPacket.clear();
-				break;
-
-			}
+		while (sendAc > 1.0f / sendRate) {
+			testPacket << "2";
+			test.SendPacket(testPacket);
 			testPacket.clear();
+			sendAc -= 1.0f / sendRate;
 		}
-	}
 
+		testPacket.clear();
+
+		while (true) {
+
+			if ((bytes = test.ReceivePacket(&testPacket)) == 0)
+				break;
+
+			testPacket >> buf;
+			std::cout << "Received: " << buf << std::endl;
+			testPacket.clear();
+
+		}
+		test.Update(delta);
+		std::cout << test.getReliabilitySystem().toString() << std::endl;
+		sf::sleep(sf::seconds(delta));
+	}
 	return 0;
+
 }
