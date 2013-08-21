@@ -266,9 +266,14 @@ std::string GameReliabilitySystem::toString() {
 
 	std::stringstream tmp;
 
-
-	tmp << "rtt " << rtt* 1000.0f << "ms,";
-
+	tmp << "rtt " << rtt * 1000.0f << "ms, ";
+	tmp << "sent " << sent_packets << ", ";
+	tmp << "acked " << acked_packets << ",";
+	tmp << "lost " << lost_packets << "(" << (sent_packets > 0.0f ?
+			(float) lost_packets / (float) sent_packets * 100.0f :
+			0.0f) << "%), ";
+	tmp << "sent bandwidth " << sent_bandwidth << " kbps ";
+	tmp << "acked bandwidth " << acked_bandwidth << " kbps";
 
 	return tmp.str();
 
