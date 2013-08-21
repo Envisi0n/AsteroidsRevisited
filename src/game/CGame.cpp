@@ -16,6 +16,7 @@ int SCREEN_WIDTH = 800;
 int SCREEN_HEIGHT = 600;
 
 CGame::CGame() {
+	seq = 0;
 	setState(INIT);
 }
 
@@ -51,7 +52,7 @@ void CGame::init() {
 	loginMenu.addButton(SCREEN_WIDTH - 50, SCREEN_HEIGHT - 50,
 			ResourceHandler.loadTexture("images/quit.png"), BUT_QUIT);
 	// Init networking
-	gameClient.setServerAddress("127.0.0.1");
+	gameClient.setServerAddress("192.168.1.102");
 	gameClient.setServerPort(SERVER_PORT);
 
 	setState(MENU);
@@ -148,6 +149,7 @@ void CGame::receiveServerUpdate() {
 
 	sf::Packet serverPacket;
 	short packetType;
+	int tmp;
 
 	gameClient.receive(&serverPacket);
 
@@ -156,6 +158,17 @@ void CGame::receiveServerUpdate() {
 	switch (packetType) {
 
 	case SERVER_UPDATE:
+
+		serverPacket >> tmp;
+
+		if( tmp > seq + TICKS_PER_SECOND) {
+
+		//	std::cout << "CORRECTING " << tmp-seq << std::endl;
+			seq = tmp;
+			break;
+		}
+		//std::cout << tmp << "~" << seq << std::endl;
+		seq++;
 		gameWorld.packetToWorld(serverPacket);
 		break;
 	case HEARTBEAT:

@@ -4,38 +4,56 @@
  *  Created on: May 9, 2013
  *      Author: cam
  */
-#include "../game/Client.hpp"
-
+#include "../shared/GameConnection.hpp"
+#include <SFML/System.hpp>
 #include <iostream>
+#include "../shared/GameReliabilitySystem.hpp"
 
-int main( int argc, char *argv[] ) {
+int main(int argc, char *argv[]) {
 
-	Client test;
+	GameConnection test(PROTOCOL, TIMEOUT);
+
 	char buf[32];
 	sf::Packet testPacket;
 
-	testPacket << argv[1];
+	float sendAc = 0;
+	float sendRate = 30;
+	int bytes = 0;
+	float delta = 1.0/30.0f;
 
-	test.setServerAddress("127.0.0.1");
-	test.setServerPort(30000);
+	test.setAddress("127.0.0.1");
+	test.setRemotePort(30000);
+	test.Start(30001);
+	test.Connect("127.0.0.1");
 
-	test.send(testPacket);
+	while (1) {
 
-	if( test.receive(&testPacket) == sf::Socket::Done ) {
+		sendAc += delta;
 
-		testPacket >> buf;
+		while (sendAc > 1.0f / sendRate) {
+			testPacket << "1";
+			test.SendPacket(testPacket);
+			testPacket.clear();
+			sendAc -= 1.0f / sendRate;
+		}
 
-		std::cout << "Recieved: " << buf << std::endl;
+		testPacket.clear();
 
+		while (true) {
 
+			if ((bytes = test.ReceivePacket(&testPacket)) == 0)
+				break;
+
+			testPacket >> buf;
+			std::cout << "Received: " << buf << std::endl;
+			testPacket.clear();
+
+		}
+		test.Update(delta);
+		std::cout << test.getReliabilitySystem().toString() << std::endl;
+		sf::sleep(sf::seconds(delta));
 	}
-
-
-
-
 	return 0;
 
 }
-
-
 

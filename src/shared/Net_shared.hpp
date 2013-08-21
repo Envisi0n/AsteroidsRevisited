@@ -60,6 +60,22 @@ struct serverUpdatePacket {
 };
 
 
+class GamePacket {
+
+public:
+
+	GamePacket();
+	virtual ~GamePacket();
+
+	sf::Packet toSFPacket();
+
+private:
+	int seq;
+	int type;
+
+};
+
+
 sf::Packet& operator <<(sf::Packet& packet, const genericPacket& connect);
 sf::Packet& operator >>(sf::Packet& packet, genericPacket& connect);
 

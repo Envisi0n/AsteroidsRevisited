@@ -78,6 +78,8 @@ private:
 	//Game view
 	sf::View gameView;
 
+	int seq;
+
 
 };
 

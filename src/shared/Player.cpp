@@ -47,6 +47,18 @@ void Player::shipUpdate(int clientAction) {
 	ship.clientUpdate(clientAction);
 }
 
+void Player::toPacketShip(sf::Packet* packet) {
+
+	// Extract ship info
+	ship.toPacket(packet);
+
+}
+
+void Player::fromPacketShip(sf::Packet* packet) {
+
+	ship.fromPacket(packet);
+}
+
 void Player::setUserName(const std::string& userName) {
 	this->userName = userName;
 }
@@ -78,7 +90,6 @@ void Player::fromPacket(sf::Packet* packet) {
 	setPing(ping);
 
 	ship.fromPacket(packet);
-
 
 }
 
