@@ -111,7 +111,8 @@ bool GameConnection::SendPacket(sf::Packet packet) {
 	gamePacket << reliabilitySystem.GenerateAckBits();
 
 	// Copy data into packet
-	gamePacket << packet.getData();
+	gamePacket.append(packet.getData(),packet.getDataSize());
+	//gamePacket << packet.getData();
 
 	socket.send(gamePacket, getAddress(), getRemotePort());
 

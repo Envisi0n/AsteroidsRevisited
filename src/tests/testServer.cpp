@@ -18,7 +18,6 @@ int main(int argc, char *argv[]) {
 	testPacket << argv[1];
 
 	test.setAddress("127.0.0.1");
-	test.setPort(30000);
 	test.Start(30000);
 
 	std::cout << "waiting for packet" << std::endl;

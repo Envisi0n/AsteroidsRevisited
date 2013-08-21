@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
 	if (test.ReceivePacket(&testPacket) > 0) {
 
 		testPacket >> buf;
-
 		std::cout << "Received: " << buf << std::endl;
 
 	}
