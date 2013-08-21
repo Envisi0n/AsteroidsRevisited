@@ -12,6 +12,7 @@ const int headerSize = 16;
 
 GameConnection::GameConnection(unsigned int protocolId, float timeout) {
 
+	socket.setBlocking(false);
 	setProtocolId(protocolId);
 	setTimeout(timeout);
 	setMode(None);
@@ -120,7 +121,7 @@ bool GameConnection::SendPacket(sf::Packet packet) {
 }
 
 bool GameConnection::SendPacket(sf::Packet packet, sf::IpAddress ipAddress,
-		int port) {
+		unsigned short port, GameReliabilitySystem & clientInstance) {
 
 	sf::Packet gamePacket;
 
@@ -129,17 +130,62 @@ bool GameConnection::SendPacket(sf::Packet packet, sf::IpAddress ipAddress,
 
 	// Write packet header
 	gamePacket << getProtocolId();
-	gamePacket << reliabilitySystem.GetLocalSequence();
-	gamePacket << reliabilitySystem.GetRemoteSequence();
-	gamePacket << reliabilitySystem.GenerateAckBits();
+	gamePacket << clientInstance.GetLocalSequence();
+	gamePacket << clientInstance.GetRemoteSequence();
+	gamePacket << clientInstance.GenerateAckBits();
 
 	// Copy data into packet
 	gamePacket << packet.getData();
 
 	socket.send(gamePacket, ipAddress, port);
 
-	reliabilitySystem.PacketSent(gamePacket.getDataSize());
+	clientInstance.PacketSent(gamePacket.getDataSize());
 	return true;
+
+}
+
+int GameConnection::ReceivePacket(sf::Packet *packet) {
+
+	int received_bytes;
+	unsigned int protocol, seq, ack, ack_bits;
+
+	socket.receive(*packet, address, port);
+
+	if ((received_bytes = packet->getDataSize()) < 12)
+		return 0;
+
+	*packet >> protocol;
+	*packet >> seq;
+	*packet >> ack;
+	*packet >> ack_bits;
+
+	reliabilitySystem.PacketReceived(seq, received_bytes - headerSize);
+	reliabilitySystem.ProcessAck(ack, ack_bits);
+
+	return packet->getDataSize();
+
+}
+
+int GameConnection::ReceivePacket(sf::Packet *packet, sf::IpAddress *ipAddress,
+		unsigned short *port, GameReliabilitySystem & clientInstance) {
+
+	int received_bytes;
+	unsigned int protocol, seq, ack, ack_bits;
+
+	socket.receive(*packet, *ipAddress, *port);
+
+	if ((received_bytes = packet->getDataSize()) < 12)
+		return 0;
+
+	*packet >> protocol;
+	*packet >> seq;
+	*packet >> ack;
+	*packet >> ack_bits;
+
+	clientInstance.PacketReceived(seq, received_bytes - headerSize);
+	clientInstance.ProcessAck(ack, ack_bits);
+
+	return packet->getDataSize();
 
 }
 
@@ -159,11 +205,11 @@ void GameConnection::setMode(Mode mode) {
 	this->mode = mode;
 }
 
-int GameConnection::getPort() const {
+unsigned short GameConnection::getPort() const {
 	return port;
 }
 
-void GameConnection::setPort(int port) {
+void GameConnection::setPort(unsigned short port) {
 	this->port = port;
 }
 
@@ -229,4 +275,5 @@ void GameConnection::ClearData() {
 	setTimeoutAccumulator(0.0f);
 	setAddress(address.None);
 	setPort(0);
+	reliabilitySystem.Reset();
 }
