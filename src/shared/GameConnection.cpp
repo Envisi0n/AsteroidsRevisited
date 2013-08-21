@@ -97,6 +97,30 @@ void GameConnection::Update(float deltaTime) {
 
 }
 
+void GameConnection::Update(float deltaTime,
+		GameReliabilitySystem& clientInstance) {
+
+	timeoutAccumulator += deltaTime;
+	if (timeoutAccumulator > timeout) {
+		if (isConnecting()) {
+			std::cout << "connect timed out" << std::endl;
+			ClearData();
+			setState(ConnectFail);
+			OnDisconnect();
+		} else if (isConnected()) {
+			std::cout << "connection timed out\n" << std::endl;
+			ClearData();
+			if (isConnecting()) {
+				setState(ConnectFail);
+			}
+			OnDisconnect();
+		}
+	}
+
+	clientInstance.Update(deltaTime);
+
+}
+
 bool GameConnection::SendPacket(sf::Packet packet) {
 
 	sf::Packet gamePacket;
@@ -111,7 +135,7 @@ bool GameConnection::SendPacket(sf::Packet packet) {
 	gamePacket << reliabilitySystem.GenerateAckBits();
 
 	// Copy data into packet
-	gamePacket.append(packet.getData(),packet.getDataSize());
+	gamePacket.append(packet.getData(), packet.getDataSize());
 
 	socket.send(gamePacket, getAddress(), getRemotePort());
 
@@ -290,3 +314,4 @@ unsigned short GameConnection::getRemotePort() const {
 void GameConnection::setRemotePort(unsigned short remotePort) {
 	this->remotePort = remotePort;
 }
+

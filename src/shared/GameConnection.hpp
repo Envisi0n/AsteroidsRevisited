@@ -34,6 +34,7 @@ public:
 	void Listen();
 	void Connect(sf::IpAddress address);
 	virtual void Update(float deltaTime);
+	virtual void Update(float deltaTime, GameReliabilitySystem & clientInstance);
 	// Sends packet to pre-set destination
 	virtual bool SendPacket(sf::Packet packet);
 	// Sends packet to specified destination using its seq/ack system
