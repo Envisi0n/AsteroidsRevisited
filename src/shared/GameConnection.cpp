@@ -113,7 +113,7 @@ bool GameConnection::SendPacket(sf::Packet packet) {
 	// Copy data into packet
 	gamePacket << packet.getData();
 
-	socket.send(gamePacket, getAddress(), getPort());
+	socket.send(gamePacket, getAddress(), getRemotePort());
 
 	reliabilitySystem.PacketSent(gamePacket.getDataSize());
 	return true;
@@ -149,7 +149,7 @@ int GameConnection::ReceivePacket(sf::Packet *packet) {
 	int received_bytes;
 	unsigned int protocol, seq, ack, ack_bits;
 
-	socket.receive(*packet, address, port);
+	socket.receive(*packet, address, remotePort);
 
 	if ((received_bytes = packet->getDataSize()) < 12)
 		return 0;
@@ -275,5 +275,18 @@ void GameConnection::ClearData() {
 	setTimeoutAccumulator(0.0f);
 	setAddress(address.None);
 	setPort(0);
+	setRemotePort(0);
 	reliabilitySystem.Reset();
+}
+
+GameReliabilitySystem& GameConnection::getReliabilitySystem() {
+	return reliabilitySystem;
+}
+
+unsigned short GameConnection::getRemotePort() const {
+	return remotePort;
+}
+
+void GameConnection::setRemotePort(unsigned short remotePort) {
+	this->remotePort = remotePort;
 }

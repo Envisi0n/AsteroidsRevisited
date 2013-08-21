@@ -68,6 +68,9 @@ public:
 	void setTimeout(float timeout);
 	float getTimeoutAccumulator() const;
 	void setTimeoutAccumulator(float timeoutAccumulator);
+	GameReliabilitySystem& getReliabilitySystem();
+	unsigned short getRemotePort() const;
+	void setRemotePort(unsigned short remotePort);
 
 protected:
 	virtual void OnStart() {
@@ -91,8 +94,10 @@ private:
 	State state;
 	sf::UdpSocket socket;
 	float timeoutAccumulator;
+
 	sf::IpAddress address;
 	unsigned short port;
+	unsigned short remotePort;
 
 	GameReliabilitySystem reliabilitySystem;
 };
