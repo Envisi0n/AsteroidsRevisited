@@ -6,6 +6,7 @@
  */
 
 #include "GameReliabilitySystem.hpp"
+#include <sstream>
 
 GameReliabilitySystem::GameReliabilitySystem(unsigned int max_sequence) {
 	this->rtt_maximum = rtt_maximum;
@@ -259,6 +260,18 @@ void GameReliabilitySystem::UpdateQueues() {
 		pendingAckQueue.pop_front();
 		lost_packets++;
 	}
+}
+
+std::string GameReliabilitySystem::toString() {
+
+	std::stringstream tmp;
+
+
+	tmp << "rtt " << rtt* 1000.0f << "ms,";
+
+
+	return tmp.str();
+
 }
 
 void GameReliabilitySystem::UpdateStats() {

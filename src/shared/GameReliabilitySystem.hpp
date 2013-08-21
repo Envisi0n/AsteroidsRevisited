@@ -12,6 +12,7 @@
 #include "GamePacketQueue.hpp"
 #include <vector>
 #include <stdio.h>
+#include <string>
 
 class GameReliabilitySystem {
 public:
@@ -31,6 +32,8 @@ public:
 	void Update(float deltaTime);
 
 	void Validate();
+
+	std::string toString();
 
 	// utility functions
 

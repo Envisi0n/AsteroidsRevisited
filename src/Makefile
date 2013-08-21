@@ -55,6 +55,9 @@ SHARED_SRCSRAW =  $(foreach d,.,$(wildcard $(addprefix $(d)/shared/*,.cpp)))
 SHARED_FILTER =
 SHARED_SRCS =  $(filter-out $(SHARED_FILTER),$(SHARED_SRCSRAW))
 
+# Test executables
+TESTS = testServer testClient
+
 # define the C object files 
 #
 # This uses Suffix Replacement within a macro:
@@ -84,7 +87,7 @@ endif
 
 .PHONY: depend clean
 
-all:    $(CLIENT_MAIN) $(SERVER_MAIN) install
+all:    $(CLIENT_MAIN) $(SERVER_MAIN) install $(TESTS)
 	@echo  Asteroids Build Successful
 
 install: $(CLIENT_MAIN) $(SERVER_MAIN)

@@ -30,6 +30,10 @@ int main(int argc, char *argv[]) {
 
 	test.SendPacket(testPacket,ip,port,test.getReliabilitySystem());
 
+	test.Update(0);
+
+	std::cout << test.getReliabilitySystem().toString() << std::endl;
+
 	return 0;
 
 }

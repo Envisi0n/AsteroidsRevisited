@@ -112,7 +112,6 @@ bool GameConnection::SendPacket(sf::Packet packet) {
 
 	// Copy data into packet
 	gamePacket.append(packet.getData(),packet.getDataSize());
-	//gamePacket << packet.getData();
 
 	socket.send(gamePacket, getAddress(), getRemotePort());
 
