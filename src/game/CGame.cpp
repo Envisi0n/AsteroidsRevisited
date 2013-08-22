@@ -74,6 +74,9 @@ void CGame::run() {
 	int loops;
 	sf::Clock gameClock;
 	float nextTick = gameClock.getElapsedTime().asMilliseconds();
+	float sendAc = 0;
+	float sendRate = 30;
+	sf::Clock delta;
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -118,7 +121,7 @@ void CGame::run() {
 				receiveServerUpdate();
 				sendUserInput();
 				//sendHeartbeat();
-				gameClient.update(SKIP_TICKS/1000);
+				gameClient.update(delta.restart().asSeconds());
 				gameClient.printStats();
 				nextTick += SKIP_TICKS;
 				loops++;
@@ -126,8 +129,8 @@ void CGame::run() {
 			window.clear();
 			window.draw(background);
 			gameWorld.draw(&window,
-					(gameClock.getElapsedTime().asMilliseconds() + SKIP_TICKS
-							- nextTick) / ( SKIP_TICKS));
+					((gameClock.getElapsedTime().asMilliseconds() + SKIP_TICKS
+							- nextTick) / ( SKIP_TICKS)) + gameClient.getRTT());
 			break;
 		case PAUSE:
 			break;
@@ -150,21 +153,22 @@ void CGame::receiveServerUpdate() {
 	sf::Packet serverPacket;
 	short packetType;
 
-	gameClient.receive(&serverPacket);
+	while (gameClient.receive(&serverPacket) != 0) {
 
-	serverPacket >> packetType;
+		serverPacket >> packetType;
 
-	switch (packetType) {
+		switch (packetType) {
 
-	case SERVER_UPDATE:
-		gameWorld.packetToWorld(serverPacket);
-		break;
-	case HEARTBEAT:
-		sendHeartbeat();
-		break;
-	case DISCONNECT:
-		setState(LOGIN);
-		break;
+		case SERVER_UPDATE:
+			gameWorld.packetToWorld(serverPacket);
+			break;
+		case HEARTBEAT:
+			sendHeartbeat();
+			break;
+		case DISCONNECT:
+			setState(LOGIN);
+			break;
+		}
 	}
 }
 

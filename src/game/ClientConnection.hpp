@@ -19,6 +19,7 @@ public:
 	int receive( sf::Packet *data);
 	void update(float delta);
 	void printStats();
+	float getRTT();
 private:
 
 	GameConnection connection;

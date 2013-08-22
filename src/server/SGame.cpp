@@ -59,6 +59,9 @@ void SGame::run() {
 	int loops;
 	sf::Clock gameClock;
 	float nextTick = gameClock.getElapsedTime().asMilliseconds();
+	sf::Clock delta;
+	float sendAc = 0;
+	float sendRate = 30;
 
 	while (getState() == RUNNING) {
 
@@ -67,11 +70,10 @@ void SGame::run() {
 				&& loops < MAX_FRAMESKIP) {
 
 			// Poll for a packet
-			client = gameServer.receive(&packet);
+			while ((client = gameServer.receive(&packet)) != -1) {
 
-			if (client != -1)
 				handlePacket(client, packet);
-
+			}
 			packet.clear();
 			// Update game
 
@@ -80,7 +82,7 @@ void SGame::run() {
 
 			gameServer.broadcast(gameWorld.toPacket());
 
-			gameServer.update(SKIP_TICKS/1000);
+			gameServer.update(delta.restart().asSeconds());
 
 			//Send heartbeat
 			if (heartBeatTimer.getElapsedTime().asSeconds() > 5) {
@@ -204,8 +206,8 @@ void SGame::handlePacket(int client, sf::Packet packet) {
 
 		break;
 	case HEARTBEAT:
-	//	std::cout << "Got heartbeat from " << client << " "
-	//			<< test.getElapsedTime().asMilliseconds() << std::endl;
+		//	std::cout << "Got heartbeat from " << client << " "
+		//			<< test.getElapsedTime().asMilliseconds() << std::endl;
 		break;
 	case CLIENT_UPDATE:
 		updateClient(client, packet);
@@ -254,8 +256,9 @@ void SGame::loginUser(int client, sf::Packet loginInfo) {
 	}
 
 	responsePacket << response.packetType;
-	if( !gameServer.send(responsePacket, client) ) {
-		std::cout << "failed to send login response to: " << client << std::endl;
+	if (!gameServer.send(responsePacket, client)) {
+		std::cout << "failed to send login response to: " << client
+				<< std::endl;
 	}
 
 }

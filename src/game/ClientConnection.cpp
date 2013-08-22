@@ -46,3 +46,7 @@ void ClientConnection::printStats() {
 	std::cout << connection.getReliabilitySystem().toString() << std::endl;
 
 }
+
+float ClientConnection::getRTT() {
+	return connection.getReliabilitySystem().GetRoundTripTime();
+}
