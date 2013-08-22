@@ -18,6 +18,9 @@
 // Networking
 #define SERVER_PORT 30000
 #define CLIENT_PORT 30001
+#define PROTOCOL 1
+#define TIMEOUT 10
+
 
 // Client input
 enum userInput {

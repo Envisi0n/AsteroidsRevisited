@@ -5,34 +5,33 @@
  *      Author: cam
  */
 
-#include "Client.hpp"
-#include <iostream>
+#include "ClientConnection.hpp"
 #include "../shared/GameGlobals.hpp"
 
-Client::Client() {
+ClientConnection::ClientConnection() : connection(PROTOCOL,TIMEOUT) {
 
 	connection.setRemotePort(SERVER_PORT);
-	connection.Start(CLIENT_PORT);
+	connection.Start();
 }
 
-Client::~Client() {
+ClientConnection::~ClientConnection() {
 	// TODO Auto-generated destructor stub
 }
 
 
-sf::Socket::Status Client::send( sf::Packet data) {
+bool ClientConnection::send( sf::Packet data) {
 
 	return connection.SendPacket(data);
 
 }
 
-void Client::Connect(sf::IpAddress ip) {
+void ClientConnection::Connect(sf::IpAddress ip) {
 
 	connection.Connect(ip);
 
 }
 
-sf::Socket::Status Client::receive( sf::Packet *data) {
+int ClientConnection::receive( sf::Packet *data) {
 
 	return connection.ReceivePacket( data );
 }

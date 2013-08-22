@@ -15,7 +15,7 @@
 #include "ResourceManager.hpp"
 #include <SFML/Graphics.hpp>
 #include "../shared/GameGlobals.hpp"
-#include "Client.hpp"
+#include "ClientConnection.hpp"
 
 enum gameState {
 
@@ -67,7 +67,7 @@ private:
 	Menu loginMenu;
 
 	// Networking
-	Client gameClient;
+	ClientConnection gameClient;
 
 	// Asteroids game
 	CWorld gameWorld;

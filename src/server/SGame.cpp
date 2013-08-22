@@ -12,7 +12,7 @@
 #include <sstream>
 
 SGame::SGame() :
-		shellThread(&SGame::shell, this), gameServer(SERVER_PORT) {
+		shellThread(&SGame::shell, this) {
 
 	setState(INIT);
 	setShellState(SHELL_RUNNING);
@@ -72,24 +72,28 @@ void SGame::run() {
 			if (client != -1)
 				handlePacket(client, packet);
 
-				// Update game
+			packet.clear();
+			// Update game
 
-				gameWorld.update();
-				// Send updates to clients
+			gameWorld.update();
+			// Send updates to clients
 
-				gameServer.broadcast(gameWorld.toPacket());
+			gameServer.broadcast(gameWorld.toPacket());
 
-				/* Send heartbeat
-				if (heartBeatTimer.getElapsedTime().asSeconds() > 5) {
-					sendHeartbeats();
-					heartBeatTimer.restart();
-				} */
+			gameServer.update(0.033);
 
-				nextTick += SKIP_TICKS;
-				loops++;
+			//Send heartbeat
+			if (heartBeatTimer.getElapsedTime().asSeconds() > 5) {
+
+				gameServer.printStats();
+				heartBeatTimer.restart();
 			}
 
+			nextTick += SKIP_TICKS;
+			loops++;
 		}
+
+	}
 
 	shutdown();
 
@@ -250,7 +254,9 @@ void SGame::loginUser(int client, sf::Packet loginInfo) {
 	}
 
 	responsePacket << response.packetType;
-	gameServer.send(responsePacket, client);
+	if( !gameServer.send(responsePacket, client) ) {
+		std::cout << "failed to send login response to: " << client << std::endl;
+	}
 
 }
 

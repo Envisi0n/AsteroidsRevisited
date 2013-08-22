@@ -8,6 +8,7 @@
 #include <SFML/System.hpp>
 #include <iostream>
 #include "../shared/GameReliabilitySystem.hpp"
+#include "../shared/GameGlobals.hpp"
 
 int main(int argc, char *argv[]) {
 

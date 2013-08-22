@@ -10,13 +10,13 @@
 
 #include "../shared/GameConnection.hpp"
 
-class Client {
+class ClientConnection {
 public:
-	Client();
-	virtual ~Client();
+	ClientConnection();
+	virtual ~ClientConnection();
 	void Connect(sf::IpAddress ip);
-	sf::Socket::Status send( sf::Packet data );
-	sf::Socket::Status receive( sf::Packet *data);
+	bool send( sf::Packet data );
+	int receive( sf::Packet *data);
 private:
 
 	GameConnection connection;

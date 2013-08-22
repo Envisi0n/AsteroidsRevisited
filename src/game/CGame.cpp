@@ -10,13 +10,11 @@
 #include <string.h>
 #include "MD5.h"
 #include <SFML/Network.hpp>
-#include "../shared/GameGlobals.hpp"
 
 int SCREEN_WIDTH = 800;
 int SCREEN_HEIGHT = 600;
 
 CGame::CGame() {
-	seq = 0;
 	setState(INIT);
 }
 
@@ -119,6 +117,7 @@ void CGame::run() {
 					&& loops < MAX_FRAMESKIP) {
 				receiveServerUpdate();
 				sendUserInput();
+				//sendHeartbeat();
 				nextTick += SKIP_TICKS;
 				loops++;
 			}
@@ -157,17 +156,6 @@ void CGame::receiveServerUpdate() {
 	switch (packetType) {
 
 	case SERVER_UPDATE:
-
-		serverPacket >> tmp;
-
-		if( tmp > seq + TICKS_PER_SECOND) {
-
-		//	std::cout << "CORRECTING " << tmp-seq << std::endl;
-			seq = tmp;
-			break;
-		}
-		//std::cout << tmp << "~" << seq << std::endl;
-		seq++;
 		gameWorld.packetToWorld(serverPacket);
 		break;
 	case HEARTBEAT:
@@ -184,7 +172,6 @@ void CGame::sendHeartbeat() {
 	sf::Packet packet;
 	genericPacket heartbeat;
 
-	std::cout << "Got heartbeat" << std::endl;
 	heartbeat.packetType = HEARTBEAT;
 	packet << heartbeat;
 	gameClient.send(packet);
@@ -249,7 +236,7 @@ void CGame::login() {
 	packet << info;
 
 	// Send login packet to server
-	if (gameClient.send(packet)) {
+	if (!gameClient.send(packet)) {
 		std::cout << "failed to login" << std::endl;
 		setState(QUIT);
 	}
@@ -258,14 +245,17 @@ void CGame::login() {
 	packet.clear();
 	std::cout << "Waiting for server response...";
 	retry.restart();
-	while (gameClient.receive(&packet) != sf::Socket::Done) {
+	while (gameClient.receive(&packet) == 0) {
 
-		if (retry.getElapsedTime().asSeconds() > 3)
+		if (retry.getElapsedTime().asSeconds() > 3) {
+			std::cout << "timed out" << std::endl;
 			return;
+		}
 
 	}
 
 	packet >> packetType;
+	std::cout << packetType << endl;
 
 	switch (packetType) {
 
@@ -337,7 +327,7 @@ void CGame::gameRegister() {
 	packet << info;
 
 	// Send login packet to server
-	if (gameClient.send(packet)) {
+	if (!gameClient.send(packet)) {
 		std::cout << "failed to login" << std::endl;
 		setState(QUIT);
 	}
@@ -346,7 +336,7 @@ void CGame::gameRegister() {
 	packet.clear();
 	std::cout << "Waiting for server response...";
 	retry.restart();
-	while (gameClient.receive(&packet) != sf::Socket::Done) {
+	while (gameClient.receive(&packet) == 0) {
 
 		if (retry.getElapsedTime().asSeconds() > 3)
 			return;

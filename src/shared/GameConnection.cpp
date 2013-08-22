@@ -30,12 +30,24 @@ GameConnection::~GameConnection() {
 
 bool GameConnection::Start(int port) {
 
-	std::cout << "start connection on port " << port << std::endl;
-
 	if (!socket.bind(port))
 		return false;
 	setRunning(true);
+	setPort(port);
 	OnStart();
+	std::cout << "start connection on port " << getPort() << std::endl;
+	return true;
+
+}
+
+bool GameConnection::Start() {
+
+	if (!socket.bind(sf::Socket::AnyPort))
+		return false;
+	setPort(socket.getLocalPort());
+	setRunning(true);
+	OnStart();
+	std::cout << "start connection on port " << getPort() << std::endl;
 	return true;
 
 }
@@ -149,7 +161,7 @@ bool GameConnection::SendPacket(sf::Packet packet, sf::IpAddress ipAddress,
 
 	sf::Packet gamePacket;
 
-	if (address == address.None)
+	if (ipAddress == address.None)
 		return false;
 
 	// Write packet header
@@ -159,7 +171,7 @@ bool GameConnection::SendPacket(sf::Packet packet, sf::IpAddress ipAddress,
 	gamePacket << clientInstance.GenerateAckBits();
 
 	// Copy data into packet
-	gamePacket << packet.getData();
+	gamePacket.append(packet.getData(), packet.getDataSize());
 
 	socket.send(gamePacket, ipAddress, port);
 
@@ -185,7 +197,6 @@ int GameConnection::ReceivePacket(sf::Packet *packet) {
 
 	if ((received_bytes = packet->getDataSize()) < 12)
 		return 0;
-
 
 	*packet >> protocol;
 	*packet >> seq;
@@ -226,6 +237,36 @@ int GameConnection::ReceivePacket(sf::Packet *packet, sf::IpAddress *ipAddress,
 	clientInstance.ProcessAck(ack, ack_bits);
 
 	return packet->getDataSize();
+
+}
+
+int GameConnection::ReceivePacket(sf::Packet* packet, sf::IpAddress* ipAddress,
+		unsigned short *port) {
+
+	int received_bytes;
+	sf::IpAddress sender;
+
+	socket.receive(*packet, *ipAddress, *port);
+
+	if ((received_bytes = packet->getDataSize()) < 12)
+		return 0;
+
+	return packet->getDataSize();
+
+}
+
+void GameConnection::ProcessRecieve(sf::Packet *packet, int size,
+		GameReliabilitySystem& clientInstance) {
+
+	unsigned int protocol, seq, ack, ack_bits;
+
+	*packet >> protocol;
+	*packet >> seq;
+	*packet >> ack;
+	*packet >> ack_bits;
+
+	clientInstance.PacketReceived(seq, size - headerSize);
+	clientInstance.ProcessAck(ack, ack_bits);
 
 }
 
