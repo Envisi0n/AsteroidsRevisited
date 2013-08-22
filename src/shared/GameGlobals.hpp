@@ -15,6 +15,10 @@
 #define SKIP_TICKS 1000 / TICKS_PER_SECOND
 #define MAX_FRAMESKIP 5
 
+// Networking
+#define SERVER_PORT 30000
+#define CLIENT_PORT 30001
+
 // Client input
 enum userInput {
 

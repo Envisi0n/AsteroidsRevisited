@@ -52,8 +52,7 @@ void CGame::init() {
 	loginMenu.addButton(SCREEN_WIDTH - 50, SCREEN_HEIGHT - 50,
 			ResourceHandler.loadTexture("images/quit.png"), BUT_QUIT);
 	// Init networking
-	gameClient.setServerAddress("192.168.1.102");
-	gameClient.setServerPort(SERVER_PORT);
+	gameClient.Connect("127.0.0.1");
 
 	setState(MENU);
 

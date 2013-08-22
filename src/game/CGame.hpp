@@ -10,12 +10,12 @@
 
 #include "Menu.hpp"
 #include "CGame_shared.hpp"
-#include "Client.hpp"
 #include "../shared/Net_shared.hpp"
 #include "CWorld.hpp"
 #include "ResourceManager.hpp"
 #include <SFML/Graphics.hpp>
 #include "../shared/GameGlobals.hpp"
+#include "Client.hpp"
 
 enum gameState {
 
