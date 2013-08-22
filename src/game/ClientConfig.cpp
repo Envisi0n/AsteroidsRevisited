@@ -59,6 +59,9 @@ void ClientConfig::saveConfig() {
 	config.open("client.cfg");
 
 	// Write server ip
+	if( getServerIp().empty()) {
+		setServerIp("127.0.0.1");
+	}
 	config << "Host: " << getServerIp() << std::endl;
 
 	config.close();
