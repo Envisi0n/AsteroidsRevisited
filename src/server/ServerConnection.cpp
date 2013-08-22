@@ -53,7 +53,13 @@ void ServerConnection::printStats() {
 
 		if (clients[i].inUse) {
 
-			std::cout << clients[i].stats.toString() << std::endl;
+			float loss = (clients[i].stats.GetLostPackets() / clients[i].stats.GetSentPackets() ) * 100;
+
+			std::cout << "Client[" << i << "] ";
+			std::cout << "Ping: " << clients[i].stats.GetRoundTripTime() * 1000 << "ms ";
+			std::cout << "Loss: " << loss << "% ";
+			std::cout << "Rate: " << clients[i].stats.GetSentBandwidth() << " kbps";
+			std::cout << std::endl;
 
 		}
 	}

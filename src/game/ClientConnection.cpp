@@ -48,5 +48,5 @@ void ClientConnection::printStats() {
 }
 
 float ClientConnection::getRTT() {
-	return connection.getReliabilitySystem().GetRoundTripTime();
+	return connection.getReliabilitySystem().GetRoundTripTime()*1000;
 }

@@ -125,7 +125,7 @@ void CGame::run() {
 				sendUserInput();
 				//sendHeartbeat();
 				gameClient.update(delta.restart().asSeconds());
-				gameClient.printStats();
+				//gameClient.printStats();
 				nextTick += SKIP_TICKS;
 				loops++;
 			}
@@ -133,7 +133,7 @@ void CGame::run() {
 			window.draw(background);
 			gameWorld.draw(&window,
 					((gameClock.getElapsedTime().asMilliseconds() + SKIP_TICKS
-							- nextTick) / ( SKIP_TICKS)) + gameClient.getRTT());
+							- nextTick) / ( SKIP_TICKS)));
 			break;
 		case PAUSE:
 			break;
