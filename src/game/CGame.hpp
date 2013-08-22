@@ -16,6 +16,7 @@
 #include <SFML/Graphics.hpp>
 #include "../shared/GameGlobals.hpp"
 #include "ClientConnection.hpp"
+#include "ClientConfig.hpp"
 
 enum gameState {
 
@@ -78,7 +79,8 @@ private:
 	//Game view
 	sf::View gameView;
 
-	int seq;
+	// Config
+	ClientConfig config;
 
 
 };

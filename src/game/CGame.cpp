@@ -19,10 +19,13 @@ CGame::CGame() {
 }
 
 CGame::~CGame() {
-	// TODO Auto-generated destructor stub
+	config.saveConfig();
 }
 
 void CGame::init() {
+
+	// Load game config
+	config.loadConfig();
 
 	// Init the background.
 	background.setSize(sf::Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -50,7 +53,7 @@ void CGame::init() {
 	loginMenu.addButton(SCREEN_WIDTH - 50, SCREEN_HEIGHT - 50,
 			ResourceHandler.loadTexture("images/quit.png"), BUT_QUIT);
 	// Init networking
-	gameClient.Connect("127.0.0.1");
+	gameClient.Connect(config.getServerIp());
 
 	setState(MENU);
 
