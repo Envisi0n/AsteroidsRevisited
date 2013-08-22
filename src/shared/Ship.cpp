@@ -70,7 +70,6 @@ void Ship::thrust(int direction) {
 
 		setVelX(getVelX() + ACCELERATION * std::cos(getRotation()));
 		setVelY(getVelY() + ACCELERATION * std::sin(getRotation()));
-		std::cout << toString() << std::endl;
 
 		if (getVelX() > MAXSPEED)
 			setVelX(MAXSPEED);

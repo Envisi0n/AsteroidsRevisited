@@ -118,6 +118,8 @@ void CGame::run() {
 				receiveServerUpdate();
 				sendUserInput();
 				//sendHeartbeat();
+				gameClient.update(SKIP_TICKS/1000);
+				gameClient.printStats();
 				nextTick += SKIP_TICKS;
 				loops++;
 			}
@@ -147,7 +149,6 @@ void CGame::receiveServerUpdate() {
 
 	sf::Packet serverPacket;
 	short packetType;
-	int tmp;
 
 	gameClient.receive(&serverPacket);
 
@@ -307,6 +308,8 @@ void CGame::sendUserInput() {
 		gameClient.send(clientUpdate);
 		return;
 	}
+
+	sendHeartbeat();
 }
 
 void CGame::gameRegister() {

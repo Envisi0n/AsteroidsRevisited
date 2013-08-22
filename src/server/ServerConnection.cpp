@@ -78,6 +78,7 @@ void ServerConnection::disconnectClient(int client) {
 	clients[client].ip = "0.0.0.0";
 	clients[client].port = 0;
 	clients[client].inUse = false;
+	clients[client].stats.Reset();
 
 }
 

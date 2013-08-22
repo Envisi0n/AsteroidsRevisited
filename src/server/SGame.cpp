@@ -80,7 +80,7 @@ void SGame::run() {
 
 			gameServer.broadcast(gameWorld.toPacket());
 
-			gameServer.update(0.033);
+			gameServer.update(SKIP_TICKS/1000);
 
 			//Send heartbeat
 			if (heartBeatTimer.getElapsedTime().asSeconds() > 5) {
@@ -204,8 +204,8 @@ void SGame::handlePacket(int client, sf::Packet packet) {
 
 		break;
 	case HEARTBEAT:
-		std::cout << "Got heartbeat from " << client << " "
-				<< test.getElapsedTime().asMilliseconds() << std::endl;
+	//	std::cout << "Got heartbeat from " << client << " "
+	//			<< test.getElapsedTime().asMilliseconds() << std::endl;
 		break;
 	case CLIENT_UPDATE:
 		updateClient(client, packet);

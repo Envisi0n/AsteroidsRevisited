@@ -7,6 +7,7 @@
 
 #include "ClientConnection.hpp"
 #include "../shared/GameGlobals.hpp"
+#include <iostream>
 
 ClientConnection::ClientConnection() : connection(PROTOCOL,TIMEOUT) {
 
@@ -34,4 +35,14 @@ void ClientConnection::Connect(sf::IpAddress ip) {
 int ClientConnection::receive( sf::Packet *data) {
 
 	return connection.ReceivePacket( data );
+}
+
+void ClientConnection::update(float delta) {
+	connection.Update(delta);
+}
+
+void ClientConnection::printStats() {
+
+	std::cout << connection.getReliabilitySystem().toString() << std::endl;
+
 }
