@@ -17,7 +17,8 @@ public:
 	CShip(float x, float y, float velX, float velY, float rotation, sf::Texture *texture);
 	virtual ~CShip();
 
-	virtual void setPosition(float x, float y);
+	virtual void update(float x, float y, float rotation);
+	virtual void rotateSprite();
 	void setTexture(sf::Texture *texture);
 	void draw(sf::RenderWindow* window,float interpolation);
 

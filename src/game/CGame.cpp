@@ -315,7 +315,20 @@ void CGame::sendUserInput() {
 		gameClient.send(clientUpdate);
 		return;
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		input = TURNLEFT;
+		clientUpdate << input;
 
+		gameClient.send(clientUpdate);
+		return;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		input = TURNRIGHT;
+		clientUpdate << input;
+
+		gameClient.send(clientUpdate);
+		return;
+	}
 	sendHeartbeat();
 }
 

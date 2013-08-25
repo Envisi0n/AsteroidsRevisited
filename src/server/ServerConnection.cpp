@@ -53,6 +53,7 @@ void ServerConnection::printStats() {
 
 		if (clients[i].inUse) {
 
+			std::cout << clients[i].inUse << std::endl;
 			float loss = (clients[i].stats.GetLostPackets() / clients[i].stats.GetSentPackets() ) * 100;
 
 			std::cout << "Client[" << i << "] ";
