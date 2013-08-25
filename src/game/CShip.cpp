@@ -23,17 +23,11 @@ CShip::~CShip() {
 CShip::CShip() {
 }
 
-void CShip::rotateSprite() {
-
-
-}
-
 void CShip::draw(sf::RenderWindow* window, float interpolation) {
 	float iX = getX() + (getVelX() * interpolation);
 	float iY = getY() + (getVelY() * interpolation);
 
 	sprite.setPosition(iX, iY);
-	//std::cout << "rotation:" << getRotation() << std::endl;
 	sprite.setRotation(getRotation());
 	window->draw(sprite);
 }

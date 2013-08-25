@@ -17,12 +17,15 @@ public:
 	CShip(float x, float y, float velX, float velY, float rotation, sf::Texture *texture);
 	virtual ~CShip();
 
+	// Used by network updates
 	virtual void update(float x, float y, float rotation);
-	virtual void rotateSprite();
+	// Sets the texture of ship sprite
 	void setTexture(sf::Texture *texture);
-	void draw(sf::RenderWindow* window,float interpolation);
+	// Draws the ship (interpolated position, rotation etc)
+	void draw(sf::RenderWindow* window, float interpolation);
 
 private:
+	// Graphics of the sprite
 	sf::Sprite sprite;
 };
 
