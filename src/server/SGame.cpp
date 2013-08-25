@@ -12,7 +12,7 @@
 #include <sstream>
 
 SGame::SGame() :
-		shellThread(&SGame::shell, this), gameServer(SERVER_PORT) {
+		shellThread(&SGame::shell, this) {
 
 	setState(INIT);
 	setShellState(SHELL_RUNNING);
@@ -59,6 +59,9 @@ void SGame::run() {
 	int loops;
 	sf::Clock gameClock;
 	float nextTick = gameClock.getElapsedTime().asMilliseconds();
+	sf::Clock delta;
+	float sendAc = 0;
+	float sendRate = 30;
 
 	while (getState() == RUNNING) {
 
@@ -67,29 +70,32 @@ void SGame::run() {
 				&& loops < MAX_FRAMESKIP) {
 
 			// Poll for a packet
-			client = gameServer.receive(&packet);
+			while ((client = gameServer.receive(&packet)) != -1) {
 
-			if (client != -1)
 				handlePacket(client, packet);
+			}
+			packet.clear();
+			// Update game
 
-				// Update game
+			gameWorld.update();
+			// Send updates to clients
 
-				gameWorld.update();
-				// Send updates to clients
+			gameServer.broadcast(gameWorld.toPacket());
 
-				gameServer.broadcast(gameWorld.toPacket());
+			gameServer.update(delta.restart().asSeconds());
 
-				/* Send heartbeat
-				if (heartBeatTimer.getElapsedTime().asSeconds() > 5) {
-					sendHeartbeats();
-					heartBeatTimer.restart();
-				} */
+			//Send heartbeat
+			if (heartBeatTimer.getElapsedTime().asSeconds() > 5) {
 
-				nextTick += SKIP_TICKS;
-				loops++;
+				gameServer.printStats();
+				heartBeatTimer.restart();
 			}
 
+			nextTick += SKIP_TICKS;
+			loops++;
 		}
+
+	}
 
 	shutdown();
 
@@ -200,8 +206,8 @@ void SGame::handlePacket(int client, sf::Packet packet) {
 
 		break;
 	case HEARTBEAT:
-		std::cout << "Got heartbeat from " << client << " "
-				<< test.getElapsedTime().asMilliseconds() << std::endl;
+		//	std::cout << "Got heartbeat from " << client << " "
+		//			<< test.getElapsedTime().asMilliseconds() << std::endl;
 		break;
 	case CLIENT_UPDATE:
 		updateClient(client, packet);
@@ -250,7 +256,10 @@ void SGame::loginUser(int client, sf::Packet loginInfo) {
 	}
 
 	responsePacket << response.packetType;
-	gameServer.send(responsePacket, client);
+	if (!gameServer.send(responsePacket, client)) {
+		std::cout << "failed to send login response to: " << client
+				<< std::endl;
+	}
 
 }
 

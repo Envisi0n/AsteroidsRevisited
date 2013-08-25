@@ -11,9 +11,6 @@
 #include <SFML/Network.hpp>
 #include "GameReliabilitySystem.hpp"
 
-#define PROTOCOL 1
-#define TIMEOUT 10
-
 enum Mode {
 	None, Client, Server
 };
@@ -30,6 +27,7 @@ public:
 
 	// Operations
 	bool Start(int port);
+	bool Start();
 	void Stop();
 	void Listen();
 	void Connect(sf::IpAddress address);
@@ -40,13 +38,16 @@ public:
 	// Sends packet to specified destination using its seq/ack system
 	virtual bool SendPacket(sf::Packet packet, sf::IpAddress ipAddress, unsigned short port,
 			GameReliabilitySystem & clientInstance);
-	// Sends packet to pre-set destination
+	// Receive packet from specified source destination
 	virtual int ReceivePacket(sf::Packet *packet);
-	// Sends packet to specified destination using its seq/ack system
+	// Receive packet from specified source using its seq/ack system
 	virtual int ReceivePacket(sf::Packet *packet, sf::IpAddress *ipAddress, unsigned short *port,
 			GameReliabilitySystem & clientInstance);
+	// Receive packet from unknown source
+	virtual int ReceivePacket(sf::Packet *packet, sf::IpAddress *ipAddress, unsigned short *port);
 	// Utility
 
+	void ProcessRecieve(sf::Packet *packet, int size, GameReliabilitySystem & clientInstance);
 	bool isConnected() const;
 	bool isConnecting() const;
 	bool isConnectFailed() const;

@@ -10,21 +10,22 @@
 #include <string.h>
 #include "MD5.h"
 #include <SFML/Network.hpp>
-#include "../shared/GameGlobals.hpp"
 
 int SCREEN_WIDTH = 800;
 int SCREEN_HEIGHT = 600;
 
 CGame::CGame() {
-	seq = 0;
 	setState(INIT);
 }
 
 CGame::~CGame() {
-	// TODO Auto-generated destructor stub
+	config.saveConfig();
 }
 
 void CGame::init() {
+
+	// Load game config
+	config.loadConfig();
 
 	// Init the background.
 	background.setSize(sf::Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -52,8 +53,7 @@ void CGame::init() {
 	loginMenu.addButton(SCREEN_WIDTH - 50, SCREEN_HEIGHT - 50,
 			ResourceHandler.loadTexture("images/quit.png"), BUT_QUIT);
 	// Init networking
-	gameClient.setServerAddress("192.168.1.102");
-	gameClient.setServerPort(SERVER_PORT);
+	gameClient.Connect(config.getServerIp());
 
 	setState(MENU);
 
@@ -77,6 +77,9 @@ void CGame::run() {
 	int loops;
 	sf::Clock gameClock;
 	float nextTick = gameClock.getElapsedTime().asMilliseconds();
+	float sendAc = 0;
+	float sendRate = 30;
+	sf::Clock delta;
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -120,14 +123,17 @@ void CGame::run() {
 					&& loops < MAX_FRAMESKIP) {
 				receiveServerUpdate();
 				sendUserInput();
+				//sendHeartbeat();
+				gameClient.update(delta.restart().asSeconds());
+				//gameClient.printStats();
 				nextTick += SKIP_TICKS;
 				loops++;
 			}
 			window.clear();
 			window.draw(background);
 			gameWorld.draw(&window,
-					(gameClock.getElapsedTime().asMilliseconds() + SKIP_TICKS
-							- nextTick) / ( SKIP_TICKS));
+					((gameClock.getElapsedTime().asMilliseconds() + SKIP_TICKS
+							- nextTick) / ( SKIP_TICKS)));
 			break;
 		case PAUSE:
 			break;
@@ -149,34 +155,23 @@ void CGame::receiveServerUpdate() {
 
 	sf::Packet serverPacket;
 	short packetType;
-	int tmp;
 
-	gameClient.receive(&serverPacket);
+	while (gameClient.receive(&serverPacket) != 0) {
 
-	serverPacket >> packetType;
+		serverPacket >> packetType;
 
-	switch (packetType) {
+		switch (packetType) {
 
-	case SERVER_UPDATE:
-
-		serverPacket >> tmp;
-
-		if( tmp > seq + TICKS_PER_SECOND) {
-
-		//	std::cout << "CORRECTING " << tmp-seq << std::endl;
-			seq = tmp;
+		case SERVER_UPDATE:
+			gameWorld.packetToWorld(serverPacket);
+			break;
+		case HEARTBEAT:
+			sendHeartbeat();
+			break;
+		case DISCONNECT:
+			setState(LOGIN);
 			break;
 		}
-		//std::cout << tmp << "~" << seq << std::endl;
-		seq++;
-		gameWorld.packetToWorld(serverPacket);
-		break;
-	case HEARTBEAT:
-		sendHeartbeat();
-		break;
-	case DISCONNECT:
-		setState(LOGIN);
-		break;
 	}
 }
 
@@ -185,7 +180,6 @@ void CGame::sendHeartbeat() {
 	sf::Packet packet;
 	genericPacket heartbeat;
 
-	std::cout << "Got heartbeat" << std::endl;
 	heartbeat.packetType = HEARTBEAT;
 	packet << heartbeat;
 	gameClient.send(packet);
@@ -250,7 +244,7 @@ void CGame::login() {
 	packet << info;
 
 	// Send login packet to server
-	if (gameClient.send(packet)) {
+	if (!gameClient.send(packet)) {
 		std::cout << "failed to login" << std::endl;
 		setState(QUIT);
 	}
@@ -259,14 +253,17 @@ void CGame::login() {
 	packet.clear();
 	std::cout << "Waiting for server response...";
 	retry.restart();
-	while (gameClient.receive(&packet) != sf::Socket::Done) {
+	while (gameClient.receive(&packet) == 0) {
 
-		if (retry.getElapsedTime().asSeconds() > 3)
+		if (retry.getElapsedTime().asSeconds() > 3) {
+			std::cout << "timed out" << std::endl;
 			return;
+		}
 
 	}
 
 	packet >> packetType;
+	std::cout << packetType << endl;
 
 	switch (packetType) {
 
@@ -318,6 +315,21 @@ void CGame::sendUserInput() {
 		gameClient.send(clientUpdate);
 		return;
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		input = TURNLEFT;
+		clientUpdate << input;
+
+		gameClient.send(clientUpdate);
+		return;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		input = TURNRIGHT;
+		clientUpdate << input;
+
+		gameClient.send(clientUpdate);
+		return;
+	}
+	sendHeartbeat();
 }
 
 void CGame::gameRegister() {
@@ -338,7 +350,7 @@ void CGame::gameRegister() {
 	packet << info;
 
 	// Send login packet to server
-	if (gameClient.send(packet)) {
+	if (!gameClient.send(packet)) {
 		std::cout << "failed to login" << std::endl;
 		setState(QUIT);
 	}
@@ -347,7 +359,7 @@ void CGame::gameRegister() {
 	packet.clear();
 	std::cout << "Waiting for server response...";
 	retry.restart();
-	while (gameClient.receive(&packet) != sf::Socket::Done) {
+	while (gameClient.receive(&packet) == 0) {
 
 		if (retry.getElapsedTime().asSeconds() > 3)
 			return;

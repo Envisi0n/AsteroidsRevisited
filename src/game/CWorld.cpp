@@ -119,7 +119,7 @@ void CWorld::handlePlayerPacket(sf::Packet* packet) {
 	for (std::vector<CPlayer*>::iterator it = cplayers.begin();
 			it != cplayers.end(); ++it) {
 		if ((*it)->getShipID() == tmp->getShipID()) {
-			(*it)->setShipPosition(tmp->getShipX(), tmp->getShipY());
+			(*it)->updateShip(tmp->getShipX(),tmp->getShipY(),tmp->getShipRotation());
 			delete tmp;
 			return;
 		}

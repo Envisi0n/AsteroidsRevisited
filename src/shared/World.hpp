@@ -37,7 +37,6 @@ public:
 
 private:
 
-	int seq;
 	std::vector<Entity*> entities;
 	std::vector<Player*> players;
 };

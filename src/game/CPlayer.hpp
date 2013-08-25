@@ -21,10 +21,11 @@ public:
 	virtual void fromPacket(sf::Packet *packet);
 
 	void setShipTexture(sf::Texture *texture);
-	void setShipPosition(float x, float y);
+	void updateShip(float x, float y, float rotation);
 	unsigned int getShipID();
 	float getShipX();
 	float getShipY();
+	float getShipRotation();
 private:
 	CShip clientShip;
 };

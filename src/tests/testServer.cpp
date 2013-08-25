@@ -7,6 +7,7 @@
 
 #include "../shared/GameConnection.hpp"
 #include "../shared/GameReliabilitySystem.hpp"
+#include "../shared/GameGlobals.hpp"
 #include <iostream>
 #include <SFML/System.hpp>
 
@@ -17,7 +18,6 @@ int main(int argc, char *argv[]) {
 	char buf[32];
 	sf::Packet testPacket;
 	sf::IpAddress ip;
-	unsigned short port;
 
 	test.setAddress("127.0.0.1");
 	test.setRemotePort(30001);
