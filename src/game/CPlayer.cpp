@@ -22,6 +22,7 @@ void CPlayer::draw(sf::RenderWindow* window, float interpolation) {
 
 void CPlayer::setShipTexture(sf::Texture* texture) {
 	clientShip.setTexture(texture);
+	clientShip.init();
 }
 
 void CPlayer::updateShip(float x, float y, float rotation) {

@@ -95,7 +95,7 @@ void Ship::thrust(int direction) {
 
 void Ship::clientUpdate(int clientAction) {
 
-	switch( clientAction ) {
+	switch (clientAction) {
 	case THRUSTUP:
 		thrust(FORWARD);
 		break;
@@ -115,10 +115,20 @@ void Ship::turn(int direction) {
 
 	if (direction == LEFT) {
 
-		setRotation(getRotation()-1);
+		if (getRotation() - 1 < 0) {
+			setRotation(359);
+		} else {
 
+			setRotation(getRotation() - 1);
+		}
 	} else {
-		setRotation(getRotation()+1);
+
+		if (getRotation() + 1 > 360) {
+			setRotation(0);
+		} else {
+
+			setRotation(getRotation() + 1);
+		}
 	}
 
 }

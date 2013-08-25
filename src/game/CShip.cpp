@@ -12,7 +12,11 @@ CShip::CShip(float x, float y, float velX, float velY, float rotation,
 		sf::Texture *texture) :
 		Ship(x, y, velX, velY, rotation) {
 
+	float w, h;
+
 	sprite.setTexture(*texture);
+
+	init();
 
 }
 
@@ -23,7 +27,16 @@ CShip::~CShip() {
 CShip::CShip() {
 }
 
+void CShip::init() {
+
+	float w = sprite.getTexture()->getSize().x;
+	float h = sprite.getTexture()->getSize().y;
+
+	sprite.setOrigin(w / 2, h / 2);
+}
+
 void CShip::draw(sf::RenderWindow* window, float interpolation) {
+
 	float iX = getX() + (getVelX() * interpolation);
 	float iY = getY() + (getVelY() * interpolation);
 
