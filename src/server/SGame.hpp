@@ -9,7 +9,7 @@
 #define SGAME_HPP_
 
 #include <SFML/System.hpp>
-#include "Server.hpp"
+#include "ServerConnection.hpp"
 #include "Login.hpp"
 #include "../shared/World.hpp"
 #include <string>
@@ -60,7 +60,7 @@ private:
 	void registerUser( int client, sf::Packet loginInfo );
 
 	// Networking for server
-	Server gameServer;
+	ServerConnection gameServer;
 	void handlePacket(int client, sf::Packet packet);
 	sf::Clock heartBeatTimer;
 	void sendHeartbeats();

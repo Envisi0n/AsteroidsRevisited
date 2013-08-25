@@ -9,25 +9,26 @@
 #ifndef SERVER_HPP_
 #define SERVER_HPP_
 
-#include <SFML/Network.hpp>
+#include "../shared/GameConnection.hpp"
 
-#define MAXCLIENTS 2
+#define MAXCLIENTS 16
 
 struct clientInfo {
 	sf::IpAddress ip;
 	unsigned short int port;
 	bool inUse;
+	GameReliabilitySystem stats;
 };
 
-class Server {
+class ServerConnection {
 public:
-	Server( unsigned short int port);
-	virtual ~Server();
+	ServerConnection();
+	virtual ~ServerConnection();
 
 	// Sends to a specific client
-	sf::Socket::Status send(sf::Packet data, int client);
+	bool send(sf::Packet data, int client);
 	// Receives from a specific client
-	sf::Socket::Status receive(sf::Packet *data, int client);
+	int receive(sf::Packet *data, int client);
 	// Sends to all clients
 	int broadcast(sf::Packet data);
 	// Receives a packet from any source
@@ -36,16 +37,16 @@ public:
 	void disconnectClient(int client);
 	void disconnectAll();
 
-	unsigned short int getPort() const;
-	void setPort(unsigned short int port);
+	void printStats();
+	void update(float delta);
 
 	sf::IpAddress getClientIp(int client);
 	short getClientPort(int client);
 	bool isClientConnected(int client);
 
 private:
-	sf::UdpSocket socket;
-	unsigned short int port;
+
+	GameConnection connection;
 
 	struct clientInfo clients[MAXCLIENTS];
 

@@ -24,8 +24,8 @@ void CPlayer::setShipTexture(sf::Texture* texture) {
 	clientShip.setTexture(texture);
 }
 
-void CPlayer::setShipPosition(float x, float y) {
-	clientShip.setPosition(x,y);
+void CPlayer::updateShip(float x, float y, float rotation) {
+	clientShip.update(x,y,rotation);
 }
 
 unsigned int CPlayer::getShipID() {
@@ -57,4 +57,8 @@ void CPlayer::fromPacket(sf::Packet* packet) {
 	clientShip.fromPacket(packet);
 
 
+}
+
+float CPlayer::getShipRotation() {
+	return clientShip.getRotation();
 }

@@ -70,7 +70,6 @@ void Ship::thrust(int direction) {
 
 		setVelX(getVelX() + ACCELERATION * std::cos(getRotation()));
 		setVelY(getVelY() + ACCELERATION * std::sin(getRotation()));
-		std::cout << toString() << std::endl;
 
 		if (getVelX() > MAXSPEED)
 			setVelX(MAXSPEED);
@@ -103,16 +102,23 @@ void Ship::clientUpdate(int clientAction) {
 	case THRUSTDOWN:
 		thrust(REVERSE);
 		break;
+	case TURNLEFT:
+		turn(LEFT);
+		break;
+	case TURNRIGHT:
+		turn(RIGHT);
+		break;
 	}
-
 }
 
 void Ship::turn(int direction) {
 
 	if (direction == LEFT) {
 
-	} else {
+		setRotation(getRotation()-1);
 
+	} else {
+		setRotation(getRotation()+1);
 	}
 
 }
