@@ -20,7 +20,7 @@ Entity::Entity() {
 	setY(0);
 	setVelX(1);
 	setVelY(1);
-
+	;
 }
 
 Entity::~Entity() {
@@ -124,7 +124,6 @@ void Entity::fromPacket(sf::Packet* packet) {
 unsigned int Entity::getId() const {
 	return id;
 }
-
 
 void Entity::setId(unsigned int id) {
 	this->id = id;

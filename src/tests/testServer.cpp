@@ -30,14 +30,6 @@ int main(int argc, char *argv[]) {
 	float delta = 1.0 / 30.0f;
 
 	while (1) {
-		sendAc += delta;
-
-		while (sendAc > 1.0f / sendRate) {
-			testPacket << "2";
-			test.SendPacket(testPacket);
-			testPacket.clear();
-			sendAc -= 1.0f / sendRate;
-		}
 
 		testPacket.clear();
 
@@ -51,7 +43,17 @@ int main(int argc, char *argv[]) {
 			testPacket.clear();
 
 		}
-		test.Update(delta);
+
+		sendAc += delta;
+
+		while (sendAc > 1.0f / sendRate) {
+			testPacket << "2";
+			test.SendPacket(testPacket);
+			testPacket.clear();
+			sendAc -= 1.0f / sendRate;
+		}
+
+		test.Update(0);
 		std::cout << test.getReliabilitySystem().toString() << std::endl;
 		sf::sleep(sf::seconds(delta));
 	}

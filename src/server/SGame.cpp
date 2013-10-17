@@ -94,6 +94,7 @@ void SGame::run() {
 			nextTick += SKIP_TICKS;
 			loops++;
 		}
+		sf::sleep(sf::milliseconds(0));
 
 	}
 
