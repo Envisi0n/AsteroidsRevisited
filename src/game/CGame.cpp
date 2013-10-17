@@ -67,6 +67,7 @@ void CGame::run() {
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids");
 	window.setIcon(96, 96,
 			ResourceHandler.loadImage("images/icon.png")->getPixelsPtr());
+	// This will regulate the draw rate and the amount of the time the thread sleeps
 	window.setFramerateLimit(FRAMES_PER_SECOND);
 	gameView.setSize(800, 600);
 	gameView.setCenter(400, 300);

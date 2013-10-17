@@ -94,6 +94,7 @@ void SGame::run() {
 			nextTick += SKIP_TICKS;
 			loops++;
 		}
+		// This tells the OS to give up the remaining timeslice
 		sf::sleep(sf::milliseconds(0));
 
 	}
