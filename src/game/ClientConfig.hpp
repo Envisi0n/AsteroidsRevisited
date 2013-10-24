@@ -10,6 +10,13 @@
 
 #include <string>
 
+/* List of supported config options
+ *
+ * Host: Ip or hostname of the server to connect to.
+ * Fullscreen: true or false whether to use fullscreen
+ */
+
+
 class ClientConfig {
 public:
 	ClientConfig();
@@ -20,9 +27,15 @@ public:
 
 	const std::string& getServerIp() const;
 	void setServerIp(const std::string& serverIp);
+	bool isFullScreen() const;
+	void setFullScreen(bool fullScreen);
 
 private:
+
+	// Hostname of server
 	std::string serverIP;
+	// Whether fullscreen is enabled
+	bool fullScreen;
 };
 
 #endif /* CLIENTCONFIG_HPP_ */

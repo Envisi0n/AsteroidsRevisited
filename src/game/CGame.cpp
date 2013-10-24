@@ -64,7 +64,13 @@ void CGame::run() {
 	// Init window
 	SCREEN_HEIGHT = sf::VideoMode::getDesktopMode().height;
 	SCREEN_WIDTH = sf::VideoMode::getDesktopMode().width;
-	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids");
+	// Set window fullscreen
+	if( config.isFullScreen() ) {
+		window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids", sf::Style::Fullscreen);
+	}
+	else {
+		window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids", sf::Style::Close);
+	}
 	window.setIcon(96, 96,
 			ResourceHandler.loadImage("images/icon.png")->getPixelsPtr());
 	// This will regulate the draw rate and the amount of the time the thread sleeps

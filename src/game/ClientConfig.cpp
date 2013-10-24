@@ -11,7 +11,8 @@
 #include <sstream>
 
 ClientConfig::ClientConfig() {
-	// TODO Auto-generated constructor stub
+	setFullScreen(false);
+	setServerIp("127.0.0.1");
 
 }
 
@@ -35,6 +36,9 @@ void ClientConfig::loadConfig() {
 		std::stringstream lineParser(token);
 		lineParser >> tmp;
 
+		// Handle each key here
+
+		// Server address
 		if (tmp == "Host:") {
 			lineParser >> tmp;
 
@@ -43,7 +47,26 @@ void ClientConfig::loadConfig() {
 			} else {
 				setServerIp(tmp);
 			}
-		} else {
+		}
+		// Full screen
+		else if (tmp == "Fullscreen:") {
+
+			lineParser >> tmp;
+
+			if (tmp.empty()) {
+				setFullScreen(false);
+			}
+			else if( tmp == "true") {
+				setFullScreen(true);
+			}
+			else if( tmp == "false") {
+				setFullScreen(false);
+			}
+			else {
+				setFullScreen(false);
+			}
+		}
+		else {
 			std::cout << "Invalid key: " << tmp << std::endl;
 		}
 
@@ -59,10 +82,17 @@ void ClientConfig::saveConfig() {
 	config.open("client.cfg");
 
 	// Write server ip
-	if( getServerIp().empty()) {
+	if (getServerIp().empty()) {
 		setServerIp("127.0.0.1");
 	}
 	config << "Host: " << getServerIp() << std::endl;
+	// Write full screen
+	if( isFullScreen() ) {
+		config << "Fullscreen: true" << std::endl;
+	}
+	else {
+		config << "Fullscreen: false" << std::endl;
+	}
 
 	config.close();
 
@@ -71,4 +101,12 @@ void ClientConfig::saveConfig() {
 
 void ClientConfig::setServerIp(const std::string& serverIp) {
 	serverIP = serverIp;
+}
+
+bool ClientConfig::isFullScreen() const {
+	return fullScreen;
+}
+
+void ClientConfig::setFullScreen(bool fullScreen) {
+	this->fullScreen = fullScreen;
 }
