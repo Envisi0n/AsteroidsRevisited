@@ -82,8 +82,8 @@ void SGame::run() {
 
 			gameServer.broadcast(gameWorld.toPacket());
 
-			gameServer.update(delta.restart().asSeconds());
 
+			gameServer.update(1.0f/TICKS_PER_SECOND);
 			//Send heartbeat
 			if (heartBeatTimer.getElapsedTime().asSeconds() > 5) {
 
@@ -94,6 +94,7 @@ void SGame::run() {
 			nextTick += SKIP_TICKS;
 			loops++;
 		}
+
 		// This tells the OS to give up the remaining timeslice
 		sf::sleep(sf::milliseconds(0));
 

@@ -131,7 +131,7 @@ void CGame::run() {
 				receiveServerUpdate();
 				sendUserInput();
 				//sendHeartbeat();
-				gameClient.update(delta.restart().asSeconds());
+				gameClient.update(1.0f/TICKS_PER_SECOND);
 				//gameClient.printStats();
 				nextTick += SKIP_TICKS;
 				loops++;
