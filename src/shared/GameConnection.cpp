@@ -8,7 +8,7 @@
 #include "GameConnection.hpp"
 #include <iostream>
 
-const int headerSize = 16;
+const int headerSize = sizeof(int)*4;
 
 GameConnection::GameConnection(unsigned int protocolId, float timeout) {
 

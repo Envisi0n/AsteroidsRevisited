@@ -53,13 +53,15 @@ void ServerConnection::printStats() {
 
 		if (clients[i].inUse) {
 
-			std::cout << clients[i].inUse << std::endl;
-			float loss = (clients[i].stats.GetLostPackets() / clients[i].stats.GetSentPackets() ) * 100;
+			float loss = (clients[i].stats.GetLostPackets()
+					/ clients[i].stats.GetSentPackets()) * 100;
 
 			std::cout << "Client[" << i << "] ";
-			std::cout << "Ping: " << clients[i].stats.GetRoundTripTime() * 1000 << "ms ";
+			std::cout << "Ping: " << clients[i].stats.GetRoundTripTime() * 1000
+					<< "ms ";
 			std::cout << "Loss: " << loss << "% ";
-			std::cout << "Rate: " << clients[i].stats.GetSentBandwidth() << " kbps";
+			std::cout << "Rate: " << clients[i].stats.GetSentBandwidth()
+					<< " kbps";
 			std::cout << std::endl;
 
 		}
@@ -81,6 +83,8 @@ void ServerConnection::disconnectClient(int client) {
 	disconnectPacket << data;
 
 	send(disconnectPacket, client);
+
+	while( receive(&disconnectPacket,client) );
 
 	clients[client].ip = "0.0.0.0";
 	clients[client].port = 0;
@@ -161,4 +165,21 @@ short ServerConnection::getClientPort(int client) {
 
 bool ServerConnection::isClientConnected(int client) {
 	return clients[client].inUse;
+}
+
+void ServerConnection::printClients() {
+
+	std::cout << "Clients:" << std::endl;
+
+	for (int i = 0; i < MAXCLIENTS; i++) {
+
+		if (clients[i].inUse) {
+
+			std::cout << "[" << i << "]";
+			std::cout << " " << clients[i].ip;
+			std::cout << ":" << clients[i].port << std::endl;
+
+		}
+	}
+
 }

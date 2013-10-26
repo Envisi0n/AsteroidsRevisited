@@ -15,6 +15,7 @@ public:
 	ClientConnection();
 	virtual ~ClientConnection();
 	void Connect(sf::IpAddress ip);
+	void Reset();
 	bool send( sf::Packet data );
 	int receive( sf::Packet *data);
 	void update(float delta);
