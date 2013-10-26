@@ -299,3 +299,6 @@ void GameReliabilitySystem::UpdateStats() {
 	acked_bandwidth = acked_bytes_per_second * (8 / 1000.0f);
 }
 
+float GameReliabilitySystem::getLoss() const {
+	return (float) lost_packets / (float) sent_packets * 100.0f;
+}

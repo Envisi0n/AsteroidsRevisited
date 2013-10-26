@@ -53,12 +53,12 @@ void ServerConnection::printStats() {
 
 		if (clients[i].inUse) {
 
-			float loss = ((float)clients[i].stats.GetLostPackets()
-					/ ((float)clients[i].stats.GetSentPackets())) * 100.0f;
+			float loss = ((float) clients[i].stats.GetLostPackets()
+					/ ((float) clients[i].stats.GetSentPackets())) * 100.0f;
 
 			std::cout << "Client[" << i << "] ";
-			std::cout << "Ping: " << clients[i].stats.GetRoundTripTime() * 1000.0f
-					<< "ms ";
+			std::cout << "Ping: "
+					<< clients[i].stats.GetRoundTripTime() * 1000.0f << "ms ";
 			std::cout << "Loss: " << loss << "% ";
 			std::cout << "Rate: " << clients[i].stats.GetSentBandwidth()
 					<< " kbps";
@@ -84,7 +84,8 @@ void ServerConnection::disconnectClient(int client) {
 
 	send(disconnectPacket, client);
 
-	while( receive(&disconnectPacket,client) );
+	while (receive(&disconnectPacket, client))
+		;
 
 	clients[client].ip = "0.0.0.0";
 	clients[client].port = 0;
@@ -151,6 +152,15 @@ void ServerConnection::update(float delta) {
 
 	for (int i = 0; i < MAXCLIENTS; i++) {
 		clients[i].stats.Update(delta);
+	}
+
+	// Check for lost clients
+
+	for (int i = 0; i < MAXCLIENTS; i++) {
+		if( clients[i].stats.getLoss() > MAX_LOSS ) {
+			std::cout << "Client " << i << " lost." << std::endl;
+			disconnectClient(i);
+		}
 	}
 
 }

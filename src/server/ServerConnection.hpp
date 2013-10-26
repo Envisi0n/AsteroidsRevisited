@@ -13,6 +13,8 @@
 
 #define MAXCLIENTS 16
 
+#define MAX_LOSS 10
+
 struct clientInfo {
 	sf::IpAddress ip;
 	unsigned short int port;
