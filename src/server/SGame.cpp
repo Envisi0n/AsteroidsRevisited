@@ -205,7 +205,6 @@ void SGame::handlePacket(int client, sf::Packet packet) {
 	switch (packetType) {
 
 	case GAMELOGIN:
-		std::cout << "Handling login..." << std::endl;
 		loginUser(client, packet);
 
 		break;
