@@ -32,6 +32,11 @@ float Ship::getRotation() const {
 }
 
 void Ship::update() {
+
+	// Slow down
+	setVelX(getVelX()*SLOWDOWN);
+	setVelY(getVelY()*SLOWDOWN);
+
 	Entity::update();
 
 }
@@ -66,10 +71,10 @@ std::string Ship::toString() {
 
 void Ship::thrust(int direction) {
 
-	if (direction == FORWARD) {
+	if (direction == REVERSE) {
 
-		setVelX(getVelX() + ACCELERATION * std::cos(getRotation()));
-		setVelY(getVelY() + ACCELERATION * std::sin(getRotation()));
+		setVelX(getVelX() + ACCELERATION * std::cos(getRotation()/3.14*180.0));
+		setVelY(getVelY() + ACCELERATION * std::sin(getRotation()/3.14*180.0));
 
 		if (getVelX() > MAXSPEED)
 			setVelX(MAXSPEED);
@@ -79,8 +84,8 @@ void Ship::thrust(int direction) {
 
 	} else {
 
-		setVelX(getVelX() - ACCELERATION * std::cos(getRotation()));
-		setVelY(getVelY() - ACCELERATION * std::sin(getRotation()));
+		setVelX(getVelX() - ACCELERATION * std::cos(getRotation()/3.14*180.0));
+		setVelY(getVelY() - ACCELERATION * std::sin(getRotation()/3.14*180.0));
 
 		if (getVelX() < -MAXSPEED)
 			setVelX(-MAXSPEED);
@@ -115,22 +120,21 @@ void Ship::turn(int direction) {
 
 	if (direction == LEFT) {
 
-		if (getRotation() - 1 < 0) {
-			setRotation(359);
+		if (getRotation() - TURNSPEED < 0) {
+			setRotation(360-TURNSPEED);
 		} else {
 
-			setRotation(getRotation() - 1);
+			setRotation(getRotation() - TURNSPEED);
 		}
 	} else {
 
-		if (getRotation() + 1 > 360) {
+		if (getRotation() + TURNSPEED > 360) {
 			setRotation(0);
 		} else {
 
-			setRotation(getRotation() + 1);
+			setRotation(getRotation() + TURNSPEED);
 		}
 	}
-
 }
 
 void Ship::setRotation(float rotation) {

@@ -10,8 +10,11 @@
 
 #include "Entity.hpp"
 
-#define ACCELERATION .1
+
+#define ACCELERATION 0.1
 #define MAXSPEED 3
+#define TURNSPEED 0.001
+#define SLOWDOWN 0.99
 
 enum thrustDirections {
 	FORWARD,
