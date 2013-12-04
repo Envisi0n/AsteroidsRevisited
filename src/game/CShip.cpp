@@ -45,6 +45,7 @@ void CShip::draw(sf::RenderWindow* window, float interpolation) {
 	float rads = getRotation()/3.14*180;
 	float px = iX-30*std::cos(rads);
 	float py = iY-30*std::sin(rads);
+
 	sprite.setPosition(iX, iY);
 	// Set rotation at the point
 	sprite.setRotation( -std::atan2(px - iX, py - iY)*180/3.14);
