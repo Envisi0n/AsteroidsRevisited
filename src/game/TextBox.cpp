@@ -45,17 +45,18 @@ void TextBox::setSize(float pWidth) {
 
 void TextBox::update(sf::Vector2f mouseLoc, sf::Event event) {
 
-	bool Focus = getHasFocus();
-	sf::String myString;
+	sf::String tmp;
 
+	// User click on the text box
 	if (rectangle.getGlobalBounds().contains(mouseLoc)) {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 			setHasFocus(true);
 
 		}
-	} else {
-
+	}
+	// User clicked elsewhere 
+	else {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 			setHasFocus(false);
@@ -63,39 +64,55 @@ void TextBox::update(sf::Vector2f mouseLoc, sf::Event event) {
 		}
 	}
 
-	if (Focus) {
+	// This textbox is in focus
+	if (getHasFocus()) {
 
+		// User typed text
 		if (event.type == sf::Event::TextEntered) {
 
-			if ((prevEvent == event.text.unicode && reset.getElapsedTime().asMilliseconds() > TYPE_DELAY)
-					|| prevEvent != event.text.unicode) {
+			// Limit the number of times a character repeats
+			if ((prevEvent == event.text.unicode && 
+					reset.getElapsedTime().asMilliseconds() > TYPE_DELAY) ||
+					 prevEvent != event.text.unicode) {
 
-				//backspace
+				// Handle backspace
 				if (event.text.unicode == 8) {
 
-					myString = Text.getString();
+					// Get current text
+					tmp = Text.getString();
 
-					if (myString != "") {
-						myString.erase(myString.getSize() - 1, 1);
-						Text.setString(myString);
+					// If not blank erase one character then update
+					if (tmp != "") {
+						tmp.erase(tmp.getSize() - 1, 1);
+						Text.setString(tmp);
 					}
 
+					// Restart repeat timeout
 					reset.restart();
 
-				} else if (event.text.unicode > 0x21
+				} 
+				// Valid character
+				else if (event.text.unicode > 0x21
 						&& event.text.unicode < 0x7e) {
 
-					myString = Text.getString();
-					myString = myString + (event.text.unicode);
-					Text.setString(myString);
+					// Get current text
+					tmp = Text.getString();
+					// Append character
+					tmp = tmp + (event.text.unicode);
+					// Update text fields
+					Text.setString(tmp);
 
+					// Reset repeat timeout
 					reset.restart();
 
-				} else {
-					std::cout << "FUCK YOU CAM" << std::endl;
+				} 
+				// Invalid character
+				else {
+					
 				}
 			}
 
+			// Remember last character
 			prevEvent = event.text.unicode;
 		}
 	}

@@ -11,7 +11,8 @@
 #include <SFML/Graphics.hpp>
 #include "CGame_shared.hpp"
 #include <string>
-#define TYPE_DELAY 125
+
+#define TYPE_DELAY 200
 
 class TextBox {
 public:
