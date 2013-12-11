@@ -82,8 +82,8 @@ void SGame::run() {
 
 			gameServer.broadcast(gameWorld.toPacket());
 
-			gameServer.update(delta.restart().asSeconds());
 
+			gameServer.update(1.0f/TICKS_PER_SECOND);
 			//Send heartbeat
 			if (heartBeatTimer.getElapsedTime().asSeconds() > 5) {
 
@@ -94,6 +94,9 @@ void SGame::run() {
 			nextTick += SKIP_TICKS;
 			loops++;
 		}
+
+		// This tells the OS to give up the remaining timeslice
+		sf::sleep(sf::milliseconds(0));
 
 	}
 
@@ -174,6 +177,12 @@ int SGame::handleShellCommand(std::string command) {
 		return 0;
 	}
 
+	if( arg == "list" ) {
+
+		gameServer.printClients();
+		return 0;
+	}
+
 	return 1;
 }
 
@@ -196,7 +205,6 @@ void SGame::handlePacket(int client, sf::Packet packet) {
 	switch (packetType) {
 
 	case GAMELOGIN:
-
 		loginUser(client, packet);
 
 		break;
@@ -261,6 +269,13 @@ void SGame::loginUser(int client, sf::Packet loginInfo) {
 				<< std::endl;
 	}
 
+	// Disconnect bad sessions
+	if (response.packetType == LOGIN_AUTH_UNKNOWN_USER
+			|| response.packetType == LOGIN_AUTH_INVALID_PASSWORD) {
+		std::cout << "Disconnecting...login" << std::endl;
+		gameServer.disconnectClient(client);
+	}
+
 }
 
 void SGame::registerUser(int client, sf::Packet loginInfo) {
@@ -288,6 +303,11 @@ void SGame::registerUser(int client, sf::Packet loginInfo) {
 
 	responsePacket << response.packetType;
 	gameServer.send(responsePacket, client);
+
+	// Disconnect bad sessions
+	if (response.packetType == LOGIN_REG_INUSE) {
+		gameServer.disconnectClient(client);
+	}
 
 }
 

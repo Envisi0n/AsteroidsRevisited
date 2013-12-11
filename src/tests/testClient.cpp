@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 	float sendAc = 0;
 	float sendRate = 30;
 	int bytes = 0;
-	float delta = 1.0/30.0f;
+	float delta = 1.0 / 30.0f;
 
 	test.setAddress("127.0.0.1");
 	test.setRemotePort(30000);
@@ -28,15 +28,6 @@ int main(int argc, char *argv[]) {
 	test.Connect("127.0.0.1");
 
 	while (1) {
-
-		sendAc += delta;
-
-		while (sendAc > 1.0f / sendRate) {
-			testPacket << "1";
-			test.SendPacket(testPacket);
-			testPacket.clear();
-			sendAc -= 1.0f / sendRate;
-		}
 
 		testPacket.clear();
 
@@ -50,6 +41,16 @@ int main(int argc, char *argv[]) {
 			testPacket.clear();
 
 		}
+
+		sendAc += delta;
+
+		while (sendAc > 1.0f / sendRate) {
+			testPacket << "1";
+			test.SendPacket(testPacket);
+			testPacket.clear();
+			sendAc -= 1.0f / sendRate;
+		}
+
 		test.Update(delta);
 		std::cout << test.getReliabilitySystem().toString() << std::endl;
 		sf::sleep(sf::seconds(delta));

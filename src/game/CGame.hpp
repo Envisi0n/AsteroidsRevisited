@@ -43,6 +43,7 @@ public:
 	virtual void receiveServerUpdate();
 	virtual void sendHeartbeat();
 	virtual void sendUserInput();
+	virtual void setupConnection();
 
 	void showMenu();
 

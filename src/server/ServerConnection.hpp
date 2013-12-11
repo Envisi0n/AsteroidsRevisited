@@ -13,10 +13,13 @@
 
 #define MAXCLIENTS 16
 
+#define MAX_LOSS 10
+
 struct clientInfo {
 	sf::IpAddress ip;
 	unsigned short int port;
 	bool inUse;
+	int state;
 	GameReliabilitySystem stats;
 };
 
@@ -36,6 +39,9 @@ public:
 	// Disconnect a client
 	void disconnectClient(int client);
 	void disconnectAll();
+
+	// List clients
+	void printClients();
 
 	void printStats();
 	void update(float delta);

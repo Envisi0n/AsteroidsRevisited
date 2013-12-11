@@ -76,6 +76,8 @@ public:
 
 	int GetHeaderSize() const;
 
+	float getLoss() const;
+
 protected:
 
 	void AdvanceQueueTime(float deltaTime);

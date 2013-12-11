@@ -53,7 +53,7 @@ void CGame::init() {
 	loginMenu.addButton(SCREEN_WIDTH - 50, SCREEN_HEIGHT - 50,
 			ResourceHandler.loadTexture("images/quit.png"), BUT_QUIT);
 	// Init networking
-	gameClient.Connect(config.getServerIp());
+	setupConnection();
 
 	setState(MENU);
 
@@ -64,10 +64,17 @@ void CGame::run() {
 	// Init window
 	SCREEN_HEIGHT = sf::VideoMode::getDesktopMode().height;
 	SCREEN_WIDTH = sf::VideoMode::getDesktopMode().width;
-	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",
-			sf::Style::Fullscreen);
+	// Set window fullscreen
+	if (config.isFullScreen()) {
+		window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",
+				sf::Style::Fullscreen);
+	} else {
+		window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",
+				sf::Style::Close);
+	}
 	window.setIcon(96, 96,
 			ResourceHandler.loadImage("images/icon.png")->getPixelsPtr());
+	// This will regulate the draw rate and the amount of the time the thread sleeps
 	window.setFramerateLimit(FRAMES_PER_SECOND);
 	gameView.setSize(800, 600);
 	gameView.setCenter(400, 300);
@@ -124,7 +131,7 @@ void CGame::run() {
 				receiveServerUpdate();
 				sendUserInput();
 				//sendHeartbeat();
-				gameClient.update(delta.restart().asSeconds());
+				gameClient.update(1.0f/TICKS_PER_SECOND);
 				//gameClient.printStats();
 				nextTick += SKIP_TICKS;
 				loops++;
@@ -243,6 +250,9 @@ void CGame::login() {
 	strcpy(info.password, md5(tmp).c_str());
 	packet << info;
 
+	// Init connection
+	setupConnection();
+
 	// Send login packet to server
 	if (!gameClient.send(packet)) {
 		std::cout << "failed to login" << std::endl;
@@ -257,13 +267,13 @@ void CGame::login() {
 
 		if (retry.getElapsedTime().asSeconds() > 3) {
 			std::cout << "timed out" << std::endl;
+			gameClient.Reset();
 			return;
 		}
 
 	}
 
 	packet >> packetType;
-	std::cout << packetType << endl;
 
 	switch (packetType) {
 
@@ -280,6 +290,12 @@ void CGame::login() {
 	case LOGIN_AUTH_INVALID_PASSWORD:
 		std::cout << "Unknown password!" << std::endl;
 		setState(LOGIN);
+		return;
+		break;
+	default:
+		std::cout << "Unexpected response: " << packetType << std::endl;
+		setState(LOGIN);
+		gameClient.Reset();
 		return;
 		break;
 	}
@@ -332,6 +348,11 @@ void CGame::sendUserInput() {
 	sendHeartbeat();
 }
 
+void CGame::setupConnection() {
+
+	gameClient.Connect(config.getServerIp());
+}
+
 void CGame::gameRegister() {
 
 	sf::Packet packet;
@@ -341,6 +362,9 @@ void CGame::gameRegister() {
 	sf::Clock retry;
 
 	std::cout << "Sending register..." << std::endl;
+
+	// Setup connection
+	setupConnection();
 
 	// Setup login packet
 	info.packetType = GAMEREGISTER;
@@ -361,9 +385,11 @@ void CGame::gameRegister() {
 	retry.restart();
 	while (gameClient.receive(&packet) == 0) {
 
-		if (retry.getElapsedTime().asSeconds() > 3)
-			return;
+		if (retry.getElapsedTime().asSeconds() > 3) {
+			gameClient.Reset();
 
+			return;
+		}
 	}
 
 	packet >> packetType;
@@ -378,6 +404,12 @@ void CGame::gameRegister() {
 	case LOGIN_REG_INUSE:
 		std::cout << "User already in use!" << std::endl;
 		setState(LOGIN);
+		return;
+		break;
+	default:
+		std::cout << "Unexpected response: " << packetType << std::endl;
+		setState(LOGIN);
+		gameClient.Reset();
 		return;
 		break;
 	}

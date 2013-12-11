@@ -19,6 +19,8 @@ public:
 
 	// Used by network updates
 	virtual void update(float x, float y, float rotation);
+	// Init ship
+	virtual void init();
 	// Sets the texture of ship sprite
 	void setTexture(sf::Texture *texture);
 	// Draws the ship (interpolated position, rotation etc)

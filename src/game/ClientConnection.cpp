@@ -9,18 +9,17 @@
 #include "../shared/GameGlobals.hpp"
 #include <iostream>
 
-ClientConnection::ClientConnection() : connection(PROTOCOL,TIMEOUT) {
+ClientConnection::ClientConnection() :
+		connection(PROTOCOL, TIMEOUT) {
 
-	connection.setRemotePort(SERVER_PORT);
-	connection.Start();
+	Reset();
 }
 
 ClientConnection::~ClientConnection() {
 	// TODO Auto-generated destructor stub
 }
 
-
-bool ClientConnection::send( sf::Packet data) {
+bool ClientConnection::send(sf::Packet data) {
 
 	return connection.SendPacket(data);
 
@@ -28,13 +27,17 @@ bool ClientConnection::send( sf::Packet data) {
 
 void ClientConnection::Connect(sf::IpAddress ip) {
 
-	connection.Connect(ip);
+	if (!connection.isRunning()) {
+
+		connection.Connect(ip);
+
+	}
 
 }
 
-int ClientConnection::receive( sf::Packet *data) {
+int ClientConnection::receive(sf::Packet *data) {
 
-	return connection.ReceivePacket( data );
+	return connection.ReceivePacket(data);
 }
 
 void ClientConnection::update(float delta) {
@@ -48,5 +51,13 @@ void ClientConnection::printStats() {
 }
 
 float ClientConnection::getRTT() {
-	return connection.getReliabilitySystem().GetRoundTripTime()*1000;
+	return connection.getReliabilitySystem().GetRoundTripTime() * 1000;
+}
+
+void ClientConnection::Reset() {
+	connection.Stop();
+	connection.setRemotePort(SERVER_PORT);
+	connection.setProtocolId(PROTOCOL);
+	connection.setTimeout(TIMEOUT);
+	connection.Start();
 }

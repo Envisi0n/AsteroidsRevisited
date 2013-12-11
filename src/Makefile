@@ -108,10 +108,10 @@ windows: $(CLIENT_MAIN)
 	@echo  Asteroids Build Successful
 
 $(CLIENT_MAIN): $(CLIENT_OBJS) $(SHARED_OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(CLIENT_MAIN) game/Asteroids.cpp $(CLIENT_OBJS) $(SHARED_OBJS) $(LFLAGS) $(LIBS) $(OTHER)
+	$(CC) $(OTHER) $(CFLAGS) $(INCLUDES) -o $(CLIENT_MAIN) game/Asteroids.cpp $(CLIENT_OBJS) $(SHARED_OBJS) $(LFLAGS) $(LIBS)
 
 $(SERVER_MAIN): $(SERVER_OBJS) $(SHARED_OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(SERVER_MAIN) server/AsteroidsServer.cpp $(SERVER_OBJS) $(SHARED_OBJS) $(LFLAGS) $(LIBS) $(OTHER)
+	$(CC) $(OTHER) $(CFLAGS) $(INCLUDES) -o $(SERVER_MAIN) server/AsteroidsServer.cpp $(SERVER_OBJS) $(SHARED_OBJS) $(LFLAGS) $(LIBS)
 
 # this is a suffix replacement rule for building .o's from .c's
 # it uses automatic variables $<: the name of the prerequisite of
